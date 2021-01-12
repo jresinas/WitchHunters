@@ -49,8 +49,8 @@ public class HunterController : MonoBehaviour
     }
 
     private void ChangeWeapon(int nextWeapon) {
-        anim.SetBool(weapons[weapon], false);
-        anim.SetLayerWeight(weapon, 0f);
+        //anim.SetBool(weapons[weapon], false);
+        //anim.SetLayerWeight(weapon, 0f);
 
 
         if (nextWeapon < 0) {
@@ -63,7 +63,7 @@ public class HunterController : MonoBehaviour
 
         Debug.Log(weapon);
 
-        anim.SetLayerWeight(weapon, 1f);
+        //anim.SetLayerWeight(weapon, 1f);
         anim.SetBool(weapons[weapon], true);
 
     }
@@ -103,16 +103,26 @@ public class HunterController : MonoBehaviour
         anim.SetBool("Aim", false);
     }
 
-    private void ToggleParameter(string parameterName) {
-        if (anim.GetBool(parameterName)) {
-            anim.SetBool(parameterName, false);
-        } else {
-            anim.SetBool(parameterName, true);
-        }
-    }
+    //private void ToggleParameter(string parameterName) {
+    //    if (anim.GetBool(parameterName)) {
+    //        anim.SetBool(parameterName, false);
+    //    } else {
+    //        anim.SetBool(parameterName, true);
+    //    }
+    //}
 
     private bool Busy() {
-        return anim.GetBool("Crossbow");
+        return anim.GetBool("Unarmed") || 
+            anim.GetBool("Crossbow");
+    }
+
+    //private void SetBusy(bool value) {
+    //    busy = value;
+    //}
+
+    private void EndAnimation(string animParamName) {
+        Debug.Log(animParamName);
+        anim.SetBool(animParamName, false);
     }
 
 }
