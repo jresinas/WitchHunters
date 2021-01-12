@@ -17,6 +17,10 @@ public class HunterController : MonoBehaviour
     float aimInput;
     string[] weapons = { "Unarmed", "Crossbow" };
     int weapon = 0;
+    public GameObject crossbow;
+    public GameObject crossbowKeep;
+    public GameObject crossbowBag;
+    public GameObject rightHand;
 
     // Start is called before the first frame update
     void Start()
@@ -28,10 +32,17 @@ public class HunterController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        WeaponsPosition();
         if (!Busy()) {
             Inputs();
             Move();
         }
+    }
+
+    private void WeaponsPosition() {
+        crossbow.transform.position = rightHand.transform.position;
+        crossbowKeep.transform.position = crossbowBag.transform.position;
+        //crossbow.transform.rotation = rightHand.transform.rotation;
     }
 
     private void Inputs() {
@@ -123,6 +134,19 @@ public class HunterController : MonoBehaviour
     private void EndAnimation(string animParamName) {
         Debug.Log(animParamName);
         anim.SetBool(animParamName, false);
+    }
+
+    private void EnableWeapon(string name) {
+        switch (name) {
+            case ("Unarmed"):
+                crossbow.SetActive(false);
+                crossbowKeep.SetActive(true);
+                break;
+            case ("Crossbow"):
+                crossbow.SetActive(true);
+                crossbowKeep.SetActive(false);
+                break;
+        } 
     }
 
 }
