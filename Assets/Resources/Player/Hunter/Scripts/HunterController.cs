@@ -4,149 +4,212 @@ using UnityEngine;
 
 public class HunterController : MonoBehaviour
 {
-    float walkSpeed = 3f;
-    float runSpeed = 7f;
     Rigidbody rb;
     Animator anim;
+    // Empty object in the character back to keep unused weapons
+    public GameObject bag;
+    // Character right hand
+    public GameObject rightHand;
+    // Crossbow in character hands
+    public GameObject crossbow;
+    // Crossbow keep in the character back bag
+    public GameObject crossbowKeep;
+    // Axe in character hands
+    public GameObject axe;
+    // Axe keep in the character back bag
+    public GameObject axeKeep;
+    // Bolts throws from crossbow
+    public GameObject bolt;
+
+    float walkSpeed = 3f;
+    float runSpeed = 7f;
+    
     float life = 100f;
     float stamina = 100f;
 
     float verticalInput;
     float horizontalInput;
+    float verticalViewInput;
+    float horizontalViewInput;
     float runInput;
-    float aimInput;
-    string[] weapons = { "Unarmed", "Crossbow" };
-    int weapon = 0;
-    public GameObject crossbow;
-    public GameObject crossbowKeep;
-    public GameObject crossbowBag;
-    public GameObject rightHand;
+
+    // Control not holding attack button
+    bool holdAttackButton = false;
+
+    // List of equiped weapons
+    string[] weapons = { "Crossbow", "Melee2H" };
+    // Current weapon
+    int weapon = 1;
+    // Next weapon to select
+    int nextWeapon = 0;
 
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         anim = GetComponent<Animator>();
+        ChangeWeapon();
     }
 
     // Update is called once per frame
     void Update()
     {
         WeaponsPosition();
-        if (!Busy()) {
-            Inputs();
-            Move();
-        }
+        Inputs();
+        Move();
     }
 
+    // Attach weapons to character movements
     private void WeaponsPosition() {
         crossbow.transform.position = rightHand.transform.position;
-        crossbowKeep.transform.position = crossbowBag.transform.position;
-        //crossbow.transform.rotation = rightHand.transform.rotation;
+        crossbowKeep.transform.position = bag.transform.position;
+        axe.transform.position = rightHand.transform.position;
+        axe.transform.rotation = rightHand.transform.rotation;
+        axeKeep.transform.position = bag.transform.position;
     }
 
+    // Inputs controller
     private void Inputs() {
+        // Movement and rotation
         verticalInput = Input.GetAxis("Vertical");
         horizontalInput = Input.GetAxis("Horizontal");
+        verticalViewInput = Input.GetAxis("VerticalView");
+        horizontalViewInput = Input.GetAxis("HorizontalView");
         runInput = Input.GetAxis("Run");
-        aimInput = Input.GetAxis("Aim");
 
-        if (Input.GetButtonDown("Switch Weapon Left")) {
-            ChangeWeapon(weapon -1);
-        }
-        if (Input.GetButtonDown("Switch Weapon Right")) {
-            ChangeWeapon(weapon + 1);
+        if (!HandsBusy()) {
+            // Change weapon
+            if (Input.GetButtonDown("Switch Weapon Left")) {
+                //ChangeWeapon(weapon -1);
+                SetNextWeapon(-1);
+                anim.SetBool("ChangeWeapon", true);
+            }
+            if (Input.GetButtonDown("Switch Weapon Right")) {
+                SetNextWeapon(1);
+                anim.SetBool("ChangeWeapon", true);
+                //ChangeWeapon(weapon + 1);
+            }
+
+            // Attack
+            float attackInput = Input.GetAxis("Attack");
+
+            if (attackInput == 1 && !holdAttackButton) {
+                Attack();
+                holdAttackButton = true;
+            }
+            if (attackInput == 0) {
+                holdAttackButton = false;
+            }
         }
     }
 
-    private void ChangeWeapon(int nextWeapon) {
-        //anim.SetBool(weapons[weapon], false);
-        //anim.SetLayerWeight(weapon, 0f);
-
-
-        if (nextWeapon < 0) {
-            weapon = weapons.Length - 1;
-        } else if (nextWeapon >= weapons.Length) {
-            weapon = 0;
-        } else {
-            weapon = nextWeapon;
-        }
-
-        Debug.Log(weapon);
-
-        //anim.SetLayerWeight(weapon, 1f);
-        anim.SetBool(weapons[weapon], true);
-
-    }
-
+    // Movement and rotation controller
     private void Move() {
+        // Get move and view vectors
         Vector3 move = new Vector3(horizontalInput, 0f, verticalInput).normalized;
-        transform.LookAt(transform.position + move);
+        Vector3 view = new Vector3(horizontalViewInput, 0f, verticalViewInput);
 
-        // float speed = (RunInput <= 0.5) ? walkSpeed : runSpeed;
+        // If no view vector, character look at movement direction
+        if (view == Vector3.zero) {
+            view = move;
+        }
+
+        // Rotate character to view vector direction
+        transform.LookAt(transform.position + view);
+
+        // Set MoveRotation animation parameter in function of move and view vectors
+        // MoveRotation controls foot blend animations (WalkBlend:WalkBack/WalkLeft/WalkForward/WalkRight and RunBlend:RunBack/RunLeft/RunForward/RunRight)
+        Vector3 aux = Vector3.Cross(move, view);
+        int sign = (aux.y < 0) ? 1 : -1;
+        float angle = Vector3.Angle(move, view);
+        anim.SetFloat("MoveRotation", sign * angle / 90);
+
         ClearMoveAnimations();
-        if (aimInput <= 0.5) {
+        if (verticalInput != 0 || horizontalInput != 0) {
             if (runInput <= 0.5) {
                 // Walk
-                if (verticalInput != 0 || horizontalInput != 0) {
-                    anim.SetBool("Walk", true);
-                }
-
-                anim.SetFloat("WalkAnimationSpeed", move.magnitude);
+                anim.SetBool("Walk", true);
                 rb.MovePosition(rb.position + move * walkSpeed * Time.deltaTime);
             } else {
                 // Run
-                if (verticalInput != 0 || horizontalInput != 0) {
-                    anim.SetBool("Run", true);
-                }
-
+                anim.SetBool("Run", true);
                 rb.MovePosition(rb.position + move * runSpeed * Time.deltaTime);
             }
-        } else {
-            // Aim
-            anim.SetBool("Aim", true);
         }
     }
 
+    // Set to false all animations move parameters
     private void ClearMoveAnimations() {
         anim.SetBool("Walk", false);
         anim.SetBool("Run", false);
         anim.SetBool("Aim", false);
     }
 
-    //private void ToggleParameter(string parameterName) {
-    //    if (anim.GetBool(parameterName)) {
-    //        anim.SetBool(parameterName, false);
-    //    } else {
-    //        anim.SetBool(parameterName, true);
-    //    }
-    //}
-
-    private bool Busy() {
-        return anim.GetBool("Unarmed") || 
-            anim.GetBool("Crossbow");
+    // Returns if hands are busy (it is not possible to make new actions with hands)
+    private bool HandsBusy() {
+        return anim.GetBool("ChangeWeapon") ||
+            anim.GetBool("Attack");
     }
 
-    //private void SetBusy(bool value) {
-    //    busy = value;
-    //}
-
-    private void EndAnimation(string animParamName) {
-        Debug.Log(animParamName);
-        anim.SetBool(animParamName, false);
+    // Attack controller
+    private void Attack() {
+        anim.SetBool("Attack", true);
+        switch (weapons[weapon]) {
+            case ("Crossbow"):
+                Instantiate(bolt, transform.position + new Vector3(1f, 0f, 0f), transform.rotation);
+                break;
+            case ("Axe"):
+                break;
+            default:
+                break;
+        }
     }
 
-    private void EnableWeapon(string name) {
-        switch (name) {
-            case ("Unarmed"):
+    // Select next weapon
+    private void SetNextWeapon(int next) {
+        nextWeapon += next;
+        if (nextWeapon < 0) {
+            nextWeapon = weapons.Length - 1;
+        } else if (nextWeapon >= weapons.Length) {
+            nextWeapon = 0;
+        }
+    }
+
+    // Callback from animations to keep current weapon and draw new weapon
+    private void ChangeWeapon() {
+        switch (weapons[weapon]) {
+            case ("Crossbow"):
                 crossbow.SetActive(false);
                 crossbowKeep.SetActive(true);
                 break;
+            case ("Melee2H"):
+                axe.SetActive(false);
+                axeKeep.SetActive(true);
+                break;
+        }
+
+        switch (weapons[nextWeapon]) {
             case ("Crossbow"):
                 crossbow.SetActive(true);
                 crossbowKeep.SetActive(false);
                 break;
-        } 
+            case ("Melee2H"):
+                axe.SetActive(true);
+                axeKeep.SetActive(false);
+                break;
+        }
+
+        anim.SetLayerWeight(anim.GetLayerIndex(weapons[weapon]), 0f);
+        anim.SetLayerWeight(anim.GetLayerIndex(weapons[nextWeapon]), 1f);
+        weapon = nextWeapon;
     }
+
+    // Callback from animations to notify it is finished
+    private void EndAnimation(string animParamName) {
+        anim.SetBool(animParamName, false);
+    }
+
+
+    
 
 }
