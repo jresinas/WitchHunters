@@ -2,8 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HunterController : MonoBehaviour
-{
+public class HunterController : MonoBehaviour {
     Rigidbody rb;
     Animator anim;
     // Empty object in the character back to keep unused weapons
@@ -23,7 +22,7 @@ public class HunterController : MonoBehaviour
 
     float walkSpeed = 3f;
     float runSpeed = 7f;
-    
+
     float life = 100f;
     float stamina = 100f;
 
@@ -39,21 +38,19 @@ public class HunterController : MonoBehaviour
     // List of equiped weapons
     string[] weapons = { "Crossbow", "Melee2H" };
     // Current weapon
-    int weapon = 1;
+    int weapon = 0;
     // Next weapon to select
-    int nextWeapon = 0;
+    int nextWeapon = 1;
 
     // Start is called before the first frame update
-    void Start()
-    {
+    void Start() {
         rb = GetComponent<Rigidbody>();
         anim = GetComponent<Animator>();
         ChangeWeapon();
     }
 
     // Update is called once per frame
-    void Update()
-    {
+    void Update() {
         WeaponsPosition();
         Inputs();
         Move();
@@ -154,15 +151,19 @@ public class HunterController : MonoBehaviour
     // Attack controller
     private void Attack() {
         anim.SetBool("Attack", true);
-        switch (weapons[weapon]) {
-            case ("Crossbow"):
-                Instantiate(bolt, transform.position + new Vector3(1f, 0f, 0f), transform.rotation);
-                break;
-            case ("Axe"):
-                break;
-            default:
-                break;
-        }
+        //switch (weapons[weapon]) {
+        //    case ("Crossbow"):
+        //        break;
+        //    case ("Axe"):
+        //        break;
+        //    default:
+        //        break;
+        //}
+    }
+
+    private void FireBolt() { 
+        Vector3 offset = transform.forward*1.5f + transform.up*1.5f + transform.right*0.3f;
+        Instantiate(bolt, transform.position+offset, transform.rotation);
     }
 
     // Select next weapon
