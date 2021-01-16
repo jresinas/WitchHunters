@@ -21,7 +21,7 @@ public class HunterController : MonoBehaviour {
     public GameObject bolt;
 
     float walkSpeed = 3f;
-    float runSpeed = 7f;
+    float runSpeed = 8f;
 
     float life = 100f;
     float stamina = 100f;
@@ -41,6 +41,9 @@ public class HunterController : MonoBehaviour {
     int weapon = 0;
     // Next weapon to select
     int nextWeapon = 1;
+
+
+    string status = "Idle";
 
     // Start is called before the first frame update
     void Start() {
@@ -125,21 +128,34 @@ public class HunterController : MonoBehaviour {
         if (verticalInput != 0 || horizontalInput != 0) {
             if (runInput <= 0.5) {
                 // Walk
-                anim.SetBool("Walk", true);
+                //anim.SetBool("Walk", true);
+                status = "Walk";
+                anim.SetLayerWeight(anim.GetLayerIndex("Walk"), 1f);
                 rb.MovePosition(rb.position + move * walkSpeed * Time.deltaTime);
             } else {
                 // Run
-                anim.SetBool("Run", true);
+                //anim.SetBool("Run", true);
+                status = "Run";
+                anim.SetLayerWeight(anim.GetLayerIndex("Run"), 1f);
                 rb.MovePosition(rb.position + move * runSpeed * Time.deltaTime);
             }
+        } else {
+            // Idle
+            status = "Idle";
         }
+        anim.SetLayerWeight(anim.GetLayerIndex(weapons[weapon] + status), 1f);
     }
 
     // Set to false all animations move parameters
     private void ClearMoveAnimations() {
-        anim.SetBool("Walk", false);
-        anim.SetBool("Run", false);
-        anim.SetBool("Aim", false);
+        //anim.SetBool("Walk", false);
+        //anim.SetBool("Run", false);
+        //anim.SetBool("Aim", false);
+        anim.SetLayerWeight(anim.GetLayerIndex("Walk"), 0f);
+        anim.SetLayerWeight(anim.GetLayerIndex("Run"), 0f);
+        anim.SetLayerWeight(anim.GetLayerIndex("Melee2HWalk"), 0f);
+        anim.SetLayerWeight(anim.GetLayerIndex("Melee2HRun"), 0f);
+        anim.SetLayerWeight(anim.GetLayerIndex("Melee2HIdle"), 0f);
     }
 
     // Returns if hands are busy (it is not possible to make new actions with hands)
@@ -200,8 +216,8 @@ public class HunterController : MonoBehaviour {
                 break;
         }
 
-        anim.SetLayerWeight(anim.GetLayerIndex(weapons[weapon]), 0f);
-        anim.SetLayerWeight(anim.GetLayerIndex(weapons[nextWeapon]), 1f);
+        anim.SetLayerWeight(anim.GetLayerIndex(weapons[weapon]+status), 0f);
+        anim.SetLayerWeight(anim.GetLayerIndex(weapons[nextWeapon]+status), 1f);
         weapon = nextWeapon;
     }
 
