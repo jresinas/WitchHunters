@@ -43,7 +43,9 @@ public class HunterController : MonoBehaviour {
     int nextWeapon = 1;
 
 
-    string status = "Idle";
+    //string status = "Idle";
+    //string nextState = "Idle";
+    int nextState = 0;
 
     // Start is called before the first frame update
     void Start() {
@@ -57,6 +59,7 @@ public class HunterController : MonoBehaviour {
         WeaponsPosition();
         Inputs();
         Move();
+        ChangeState();
     }
 
     // Attach weapons to character movements
@@ -124,26 +127,59 @@ public class HunterController : MonoBehaviour {
         float angle = Vector3.Angle(move, view);
         anim.SetFloat("MoveRotation", sign * angle / 90);
 
-        ClearMoveAnimations();
+        //ClearMoveAnimations();
         if (verticalInput != 0 || horizontalInput != 0) {
             if (runInput <= 0.5) {
                 // Walk
-                //anim.SetBool("Walk", true);
-                status = "Walk";
-                anim.SetLayerWeight(anim.GetLayerIndex("Walk"), 1f);
+                //status = "Walk";
+                //anim.SetLayerWeight(anim.GetLayerIndex("Walk"), 1f);
+                //anim.SetFloat("MoveType", 1f);
+                nextState = 1;
                 rb.MovePosition(rb.position + move * walkSpeed * Time.deltaTime);
             } else {
                 // Run
-                //anim.SetBool("Run", true);
-                status = "Run";
-                anim.SetLayerWeight(anim.GetLayerIndex("Run"), 1f);
+                //status = "Run";
+                //anim.SetLayerWeight(anim.GetLayerIndex("Run"), 1f);
+                //anim.SetFloat("MoveType", 2f);
+                nextState = 2;
                 rb.MovePosition(rb.position + move * runSpeed * Time.deltaTime);
             }
         } else {
             // Idle
-            status = "Idle";
+            //status = "Idle";
+            //anim.SetFloat("MoveType", 0f);
+            nextState = 0;
         }
-        anim.SetLayerWeight(anim.GetLayerIndex(weapons[weapon] + status), 1f);
+        //anim.SetLayerWeight(anim.GetLayerIndex(weapons[weapon] + status), 1f);
+    }
+
+    private void ChangeState() {
+        //switch (nextState) {
+        //    case ("Idle"):
+        //        if (anim.GetFloat("MoveType") > 0) {
+        //            anim.SetFloat("MoveType", anim.GetFloat("MoveType") - 0.1f);
+        //        }
+        //        break;
+        //    case ("Walk"):
+        //        if (anim.GetFloat("MoveType") < 1) {
+        //            anim.SetFloat("MoveType", anim.GetFloat("MoveType") + 0.1f);
+        //        }
+        //        if (anim.GetFloat("MoveType") > 1) {
+        //            anim.SetFloat("MoveType", anim.GetFloat("MoveType") - 0.1f);
+        //        }
+        //        break;
+        //    case ("Run"):
+        //        if (anim.GetFloat("MoveType") < 2) {
+        //            anim.SetFloat("MoveType", anim.GetFloat("MoveType") + 0.1f);
+        //        }
+        //        break;
+        //}
+        if (anim.GetFloat("MoveType") < nextState) {
+            anim.SetFloat("MoveType", anim.GetFloat("MoveType") + 0.05f);
+        }
+        if (anim.GetFloat("MoveType") > nextState) {
+            anim.SetFloat("MoveType", anim.GetFloat("MoveType") - 0.05f);
+        }
     }
 
     // Set to false all animations move parameters
@@ -216,8 +252,10 @@ public class HunterController : MonoBehaviour {
                 break;
         }
 
-        anim.SetLayerWeight(anim.GetLayerIndex(weapons[weapon]+status), 0f);
-        anim.SetLayerWeight(anim.GetLayerIndex(weapons[nextWeapon]+status), 1f);
+        anim.SetLayerWeight(anim.GetLayerIndex(weapons[weapon]), 0f);
+        anim.SetLayerWeight(anim.GetLayerIndex(weapons[nextWeapon]), 1f);
+        //anim.SetLayerWeight(anim.GetLayerIndex(weapons[weapon]+status), 0f);
+        //anim.SetLayerWeight(anim.GetLayerIndex(weapons[nextWeapon]+status), 1f);
         weapon = nextWeapon;
     }
 
