@@ -38,14 +38,11 @@ public class HunterController : MonoBehaviour {
     // List of equiped weapons
     string[] weapons = { "Crossbow", "Melee2H" };
     // Current weapon
-    int weapon = 0;
+    int weapon = 1;
     // Next weapon to select
-    int nextWeapon = 1;
-
-
-    //string status = "Idle";
-    //string nextState = "Idle";
-    int nextState = 0;
+    int nextWeapon = 0;
+    // Next movement state (0:idle, 1:walk, 2:run)
+    float nextState = 0f;
 
     // Start is called before the first frame update
     void Start() {
@@ -60,6 +57,7 @@ public class HunterController : MonoBehaviour {
         Inputs();
         Move();
         ChangeState();
+        Debug.Log(anim.GetFloat("MoveType"));
     }
 
     // Attach weapons to character movements
@@ -83,14 +81,12 @@ public class HunterController : MonoBehaviour {
         if (!HandsBusy()) {
             // Change weapon
             if (Input.GetButtonDown("Switch Weapon Left")) {
-                //ChangeWeapon(weapon -1);
                 SetNextWeapon(-1);
                 anim.SetBool("ChangeWeapon", true);
             }
             if (Input.GetButtonDown("Switch Weapon Right")) {
                 SetNextWeapon(1);
                 anim.SetBool("ChangeWeapon", true);
-                //ChangeWeapon(weapon + 1);
             }
 
             // Attack
@@ -127,71 +123,31 @@ public class HunterController : MonoBehaviour {
         float angle = Vector3.Angle(move, view);
         anim.SetFloat("MoveRotation", sign * angle / 90);
 
-        //ClearMoveAnimations();
         if (verticalInput != 0 || horizontalInput != 0) {
             if (runInput <= 0.5) {
                 // Walk
-                //status = "Walk";
-                //anim.SetLayerWeight(anim.GetLayerIndex("Walk"), 1f);
-                //anim.SetFloat("MoveType", 1f);
-                nextState = 1;
+                nextState = 1f;
                 rb.MovePosition(rb.position + move * walkSpeed * Time.deltaTime);
             } else {
                 // Run
-                //status = "Run";
-                //anim.SetLayerWeight(anim.GetLayerIndex("Run"), 1f);
-                //anim.SetFloat("MoveType", 2f);
-                nextState = 2;
+                nextState = 2f;
                 rb.MovePosition(rb.position + move * runSpeed * Time.deltaTime);
             }
         } else {
             // Idle
-            //status = "Idle";
-            //anim.SetFloat("MoveType", 0f);
-            nextState = 0;
+            nextState = 0f;
         }
-        //anim.SetLayerWeight(anim.GetLayerIndex(weapons[weapon] + status), 1f);
     }
 
+    // Set param MoveType gradually to make smooth transitions between states (idle, walk and run)
     private void ChangeState() {
-        //switch (nextState) {
-        //    case ("Idle"):
-        //        if (anim.GetFloat("MoveType") > 0) {
-        //            anim.SetFloat("MoveType", anim.GetFloat("MoveType") - 0.1f);
-        //        }
-        //        break;
-        //    case ("Walk"):
-        //        if (anim.GetFloat("MoveType") < 1) {
-        //            anim.SetFloat("MoveType", anim.GetFloat("MoveType") + 0.1f);
-        //        }
-        //        if (anim.GetFloat("MoveType") > 1) {
-        //            anim.SetFloat("MoveType", anim.GetFloat("MoveType") - 0.1f);
-        //        }
-        //        break;
-        //    case ("Run"):
-        //        if (anim.GetFloat("MoveType") < 2) {
-        //            anim.SetFloat("MoveType", anim.GetFloat("MoveType") + 0.1f);
-        //        }
-        //        break;
-        //}
+        //anim.SetFloat("MoveType", nextState);
         if (anim.GetFloat("MoveType") < nextState) {
             anim.SetFloat("MoveType", anim.GetFloat("MoveType") + 0.05f);
         }
         if (anim.GetFloat("MoveType") > nextState) {
             anim.SetFloat("MoveType", anim.GetFloat("MoveType") - 0.05f);
         }
-    }
-
-    // Set to false all animations move parameters
-    private void ClearMoveAnimations() {
-        //anim.SetBool("Walk", false);
-        //anim.SetBool("Run", false);
-        //anim.SetBool("Aim", false);
-        anim.SetLayerWeight(anim.GetLayerIndex("Walk"), 0f);
-        anim.SetLayerWeight(anim.GetLayerIndex("Run"), 0f);
-        anim.SetLayerWeight(anim.GetLayerIndex("Melee2HWalk"), 0f);
-        anim.SetLayerWeight(anim.GetLayerIndex("Melee2HRun"), 0f);
-        anim.SetLayerWeight(anim.GetLayerIndex("Melee2HIdle"), 0f);
     }
 
     // Returns if hands are busy (it is not possible to make new actions with hands)
@@ -203,16 +159,9 @@ public class HunterController : MonoBehaviour {
     // Attack controller
     private void Attack() {
         anim.SetBool("Attack", true);
-        //switch (weapons[weapon]) {
-        //    case ("Crossbow"):
-        //        break;
-        //    case ("Axe"):
-        //        break;
-        //    default:
-        //        break;
-        //}
     }
 
+    // Callback from fire crossbow animation to fire a bolt
     private void FireBolt() { 
         Vector3 offset = transform.forward*1.5f + transform.up*1.5f + transform.right*0.3f;
         Instantiate(bolt, transform.position+offset, transform.rotation);
@@ -254,8 +203,7 @@ public class HunterController : MonoBehaviour {
 
         anim.SetLayerWeight(anim.GetLayerIndex(weapons[weapon]), 0f);
         anim.SetLayerWeight(anim.GetLayerIndex(weapons[nextWeapon]), 1f);
-        //anim.SetLayerWeight(anim.GetLayerIndex(weapons[weapon]+status), 0f);
-        //anim.SetLayerWeight(anim.GetLayerIndex(weapons[nextWeapon]+status), 1f);
+
         weapon = nextWeapon;
     }
 
