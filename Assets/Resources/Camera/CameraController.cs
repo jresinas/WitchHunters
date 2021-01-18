@@ -7,7 +7,8 @@ public class CameraController : MonoBehaviour
     public GameObject player;
     Vector3 offset;
 
-    RaycastHit hit;
+    //RaycastHit hit;
+    RaycastHit[] hits;
     List<Renderer> transparentBuildings = new List<Renderer>();
 
     public Material transparent;
@@ -28,29 +29,23 @@ public class CameraController : MonoBehaviour
     {
         transform.position = player.transform.position + offset;
 
-        
         RemoveTransparency();
         SetTransparency();
-        
     }
 
     private void RemoveTransparency() {
         for (int i = 0; i<transparentBuildings.Count; i++){
             Renderer build = transparentBuildings[i];
             build.material = opaque;
-            //build.material.color = new Color(1f, 1f, 1f, 1f);
-            //build.enabled = true;
             transparentBuildings.Remove(build);
         }
     }
 
     private void SetTransparency() {
-        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, (player.transform.position - transform.position).magnitude)) {
+        hits = Physics.RaycastAll(transform.position, transform.TransformDirection(Vector3.forward), (player.transform.position - transform.position).magnitude);
+        foreach (RaycastHit hit in hits) { 
             if (hit.collider.name != "Player") {
                 SetAllChildMeshTransparent(hit.collider);
-                //MeshRenderer mesh = hit.collider.GetComponent<MeshRenderer>();
-                //mesh.material.color = new Color(1f, 1f, 1f, 0.1f);
-                //transparentBuildings.Add(mesh);
             }
         }
     }
@@ -60,8 +55,6 @@ public class CameraController : MonoBehaviour
         Debug.Log(obj + " " +childs.Length);
         foreach (Renderer mesh in childs) {
             mesh.material = transparent;
-            //mesh.material.color = new Color(1f, 1f, 1f, 0.01f);
-            //mesh.enabled = false;
             transparentBuildings.Add(mesh);
         }
     }
