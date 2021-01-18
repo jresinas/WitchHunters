@@ -11,8 +11,10 @@ public class CameraController : MonoBehaviour
     RaycastHit[] hits;
     List<Renderer> transparentBuildings = new List<Renderer>();
 
-    public Material transparent;
-    public Material opaque;
+    public Material houseTransparent;
+    public Material houseOpaque;
+    public Material churchTransparent;
+    public Material churchOpaque;
 
 
     // Start is called before the first frame update
@@ -36,7 +38,14 @@ public class CameraController : MonoBehaviour
     private void RemoveTransparency() {
         for (int i = 0; i<transparentBuildings.Count; i++){
             Renderer build = transparentBuildings[i];
-            build.material = opaque;
+            switch (build.transform.parent.tag) {
+                case ("House"):
+                    build.material = houseOpaque;
+                    break;
+                case ("Church"):
+                    build.material = churchOpaque;
+                    break;
+            }
             transparentBuildings.Remove(build);
         }
     }
@@ -54,7 +63,14 @@ public class CameraController : MonoBehaviour
         Renderer[] childs = obj.GetComponentsInChildren<Renderer>();
         Debug.Log(obj + " " +childs.Length);
         foreach (Renderer mesh in childs) {
-            mesh.material = transparent;
+            switch (mesh.transform.parent.tag) {
+                case ("House"):
+                    mesh.material = houseTransparent;
+                    break;
+                case ("Church"):
+                    mesh.material = churchTransparent;
+                    break;
+            }
             transparentBuildings.Add(mesh);
         }
     }

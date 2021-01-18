@@ -190,6 +190,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: house_9_1
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: aed63250a30848a4aa5ffae5df7f0379, type: 3}
+      propertyPath: m_TagString
+      value: House
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: aed63250a30848a4aa5ffae5df7f0379, type: 3}
 --- !u!4 &2878340 stripped
@@ -264,6 +268,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: house_9_1 (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: aed63250a30848a4aa5ffae5df7f0379, type: 3}
+      propertyPath: m_TagString
+      value: House
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: aed63250a30848a4aa5ffae5df7f0379, type: 3}
 --- !u!4 &9203070 stripped
@@ -337,6 +345,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: ec254d0995125d1408870e34d9399c22, type: 3}
       propertyPath: m_Name
       value: house_5_1
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: ec254d0995125d1408870e34d9399c22, type: 3}
+      propertyPath: m_TagString
+      value: House
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ec254d0995125d1408870e34d9399c22, type: 3}
@@ -524,6 +536,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: house_19_1
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 05abdb7079007474d8dce9dfd6b777ad, type: 3}
+      propertyPath: m_TagString
+      value: House
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 05abdb7079007474d8dce9dfd6b777ad, type: 3}
 --- !u!4 &81842933 stripped
@@ -598,6 +614,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: house_11_1
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: ce698efe08b5a054da4a7d722812f5f5, type: 3}
+      propertyPath: m_TagString
+      value: House
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ce698efe08b5a054da4a7d722812f5f5, type: 3}
 --- !u!1001 &137391054
@@ -666,6 +686,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 912a0ca516b03ba45b7220062e1c21da, type: 3}
       propertyPath: m_Name
       value: house_13_1 (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 912a0ca516b03ba45b7220062e1c21da, type: 3}
+      propertyPath: m_TagString
+      value: House
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 912a0ca516b03ba45b7220062e1c21da, type: 3}
@@ -740,6 +764,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 05abdb7079007474d8dce9dfd6b777ad, type: 3}
       propertyPath: m_Name
       value: house_19_1 (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 05abdb7079007474d8dce9dfd6b777ad, type: 3}
+      propertyPath: m_TagString
+      value: House
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 05abdb7079007474d8dce9dfd6b777ad, type: 3}
@@ -824,6 +852,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: c69dfc306d8cf9f43b9be6ce94a98cfb, type: 3}
       propertyPath: m_Name
       value: house_16_1 (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: c69dfc306d8cf9f43b9be6ce94a98cfb, type: 3}
+      propertyPath: m_TagString
+      value: House
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c69dfc306d8cf9f43b9be6ce94a98cfb, type: 3}
@@ -916,6 +948,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: e0dd34d6d9203114abf8569851456e50, type: 3}
       propertyPath: m_Name
       value: house_1_1 (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: e0dd34d6d9203114abf8569851456e50, type: 3}
+      propertyPath: m_TagString
+      value: House
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e0dd34d6d9203114abf8569851456e50, type: 3}
@@ -1165,6 +1201,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: house_7_1 (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 1bbddd86c1bce824c93fbb3698ee599d, type: 3}
+      propertyPath: m_TagString
+      value: House
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1bbddd86c1bce824c93fbb3698ee599d, type: 3}
 --- !u!4 &429734046 stripped
@@ -1288,6 +1328,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: house_4_1
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 303bff41e0c6a2a43ac5ece94921fd95, type: 3}
+      propertyPath: m_TagString
+      value: House
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 303bff41e0c6a2a43ac5ece94921fd95, type: 3}
 --- !u!4 &479665861 stripped
@@ -1358,9 +1402,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 640269058624988598, guid: 852bcbebed8f01d428cef5362ccc5abf, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: c1c403fdb550b4947acf5f3c33a47b9e, type: 2}
     - target: {fileID: 919132149155446097, guid: 852bcbebed8f01d428cef5362ccc5abf, type: 3}
       propertyPath: m_Name
       value: chapel_obj
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 852bcbebed8f01d428cef5362ccc5abf, type: 3}
+      propertyPath: m_TagString
+      value: Church
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 852bcbebed8f01d428cef5362ccc5abf, type: 3}
@@ -1440,6 +1492,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 38bdad5e7ba637a4390dc8d3c01e0c3e, type: 3}
       propertyPath: m_Name
       value: house_18_1
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 38bdad5e7ba637a4390dc8d3c01e0c3e, type: 3}
+      propertyPath: m_TagString
+      value: House
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 38bdad5e7ba637a4390dc8d3c01e0c3e, type: 3}
@@ -1533,6 +1589,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: house_7_1 (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 1bbddd86c1bce824c93fbb3698ee599d, type: 3}
+      propertyPath: m_TagString
+      value: House
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1bbddd86c1bce824c93fbb3698ee599d, type: 3}
 --- !u!4 &557723149 stripped
@@ -1606,6 +1666,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 66911c8b26c003443a1530e85582be39, type: 3}
       propertyPath: m_Name
       value: house_14_1 (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 66911c8b26c003443a1530e85582be39, type: 3}
+      propertyPath: m_TagString
+      value: House
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 66911c8b26c003443a1530e85582be39, type: 3}
@@ -1699,6 +1763,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: house_4_1 (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 303bff41e0c6a2a43ac5ece94921fd95, type: 3}
+      propertyPath: m_TagString
+      value: House
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 303bff41e0c6a2a43ac5ece94921fd95, type: 3}
 --- !u!1001 &647113080
@@ -1767,6 +1835,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: f38bba38cf6495942944a329059d58cd, type: 3}
       propertyPath: m_Name
       value: house_8_1
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: f38bba38cf6495942944a329059d58cd, type: 3}
+      propertyPath: m_TagString
+      value: House
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f38bba38cf6495942944a329059d58cd, type: 3}
@@ -1899,6 +1971,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: house_3_1 (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 801daa239e2f7ab4d8fb19f8d569e746, type: 3}
+      propertyPath: m_TagString
+      value: House
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 801daa239e2f7ab4d8fb19f8d569e746, type: 3}
 --- !u!1001 &705151838
@@ -1967,6 +2043,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 912a0ca516b03ba45b7220062e1c21da, type: 3}
       propertyPath: m_Name
       value: house_13_1 (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 912a0ca516b03ba45b7220062e1c21da, type: 3}
+      propertyPath: m_TagString
+      value: House
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 912a0ca516b03ba45b7220062e1c21da, type: 3}
@@ -2145,6 +2225,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: house_7_1
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 1bbddd86c1bce824c93fbb3698ee599d, type: 3}
+      propertyPath: m_TagString
+      value: House
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1bbddd86c1bce824c93fbb3698ee599d, type: 3}
 --- !u!1001 &747896734
@@ -2213,6 +2297,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 419ed4438750c124486941d4e2a7d2d4, type: 3}
       propertyPath: m_Name
       value: house_17_1
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 419ed4438750c124486941d4e2a7d2d4, type: 3}
+      propertyPath: m_TagString
+      value: House
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 419ed4438750c124486941d4e2a7d2d4, type: 3}
@@ -2513,6 +2601,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: house_10_1
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 3efcb768a963e814ba1a472cbf7dd399, type: 3}
+      propertyPath: m_TagString
+      value: House
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3efcb768a963e814ba1a472cbf7dd399, type: 3}
 --- !u!1 &792618344 stripped
@@ -2725,6 +2817,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: house_6_1 (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 0d64df8f0bacb6c4ab0ca87e1640f46d, type: 3}
+      propertyPath: m_TagString
+      value: House
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0d64df8f0bacb6c4ab0ca87e1640f46d, type: 3}
 --- !u!4 &852326333 stripped
@@ -2798,6 +2894,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 1bbddd86c1bce824c93fbb3698ee599d, type: 3}
       propertyPath: m_Name
       value: house_7_1 (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 1bbddd86c1bce824c93fbb3698ee599d, type: 3}
+      propertyPath: m_TagString
+      value: House
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1bbddd86c1bce824c93fbb3698ee599d, type: 3}
@@ -2890,6 +2990,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 353ef0d015369dc4285b043daa8f6b52, type: 3}
       propertyPath: m_Name
       value: house_15_1
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 353ef0d015369dc4285b043daa8f6b52, type: 3}
+      propertyPath: m_TagString
+      value: House
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 353ef0d015369dc4285b043daa8f6b52, type: 3}
@@ -2990,8 +3094,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 1305361616}
-  transparent: {fileID: 2100000, guid: 875fb0487b864a64ea7230f8ede986d9, type: 2}
-  opaque: {fileID: 2100000, guid: d89b6385b93f33f4293234c67ee4352a, type: 2}
+  houseTransparent: {fileID: 2100000, guid: 875fb0487b864a64ea7230f8ede986d9, type: 2}
+  houseOpaque: {fileID: 2100000, guid: d89b6385b93f33f4293234c67ee4352a, type: 2}
+  churchTransparent: {fileID: 2100000, guid: 4a0d97e662ed33349b732eaaa99013df, type: 2}
+  churchOpaque: {fileID: 2100000, guid: c1c403fdb550b4947acf5f3c33a47b9e, type: 2}
 --- !u!4 &968099788 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 801daa239e2f7ab4d8fb19f8d569e746, type: 3}
@@ -3130,6 +3236,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 912a0ca516b03ba45b7220062e1c21da, type: 3}
       propertyPath: m_Name
       value: house_13_1 (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 912a0ca516b03ba45b7220062e1c21da, type: 3}
+      propertyPath: m_TagString
+      value: House
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 912a0ca516b03ba45b7220062e1c21da, type: 3}
@@ -3334,6 +3444,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: house_20_1
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 09553941001e1cc48839922947475026, type: 3}
+      propertyPath: m_TagString
+      value: House
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 09553941001e1cc48839922947475026, type: 3}
 --- !u!1 &1187801004
@@ -3495,6 +3609,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 0d64df8f0bacb6c4ab0ca87e1640f46d, type: 3}
       propertyPath: m_Name
       value: house_6_1
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 0d64df8f0bacb6c4ab0ca87e1640f46d, type: 3}
+      propertyPath: m_TagString
+      value: House
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0d64df8f0bacb6c4ab0ca87e1640f46d, type: 3}
@@ -3681,6 +3799,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: c69dfc306d8cf9f43b9be6ce94a98cfb, type: 3}
       propertyPath: m_Name
       value: house_16_1 (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: c69dfc306d8cf9f43b9be6ce94a98cfb, type: 3}
+      propertyPath: m_TagString
+      value: House
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c69dfc306d8cf9f43b9be6ce94a98cfb, type: 3}
@@ -4034,6 +4156,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: house_2_1
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: f6152e70de3b27e468dcd6ef543e20e6, type: 3}
+      propertyPath: m_TagString
+      value: House
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f6152e70de3b27e468dcd6ef543e20e6, type: 3}
 --- !u!1001 &1393231456
@@ -4102,6 +4228,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 303bff41e0c6a2a43ac5ece94921fd95, type: 3}
       propertyPath: m_Name
       value: house_4_1 (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 303bff41e0c6a2a43ac5ece94921fd95, type: 3}
+      propertyPath: m_TagString
+      value: House
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 303bff41e0c6a2a43ac5ece94921fd95, type: 3}
@@ -4263,6 +4393,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: house_14_1
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 66911c8b26c003443a1530e85582be39, type: 3}
+      propertyPath: m_TagString
+      value: House
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 66911c8b26c003443a1530e85582be39, type: 3}
 --- !u!4 &1491064640 stripped
@@ -4341,6 +4475,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: ce698efe08b5a054da4a7d722812f5f5, type: 3}
       propertyPath: m_Name
       value: house_11_1 (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: ce698efe08b5a054da4a7d722812f5f5, type: 3}
+      propertyPath: m_TagString
+      value: House
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ce698efe08b5a054da4a7d722812f5f5, type: 3}
@@ -4582,6 +4720,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 0d64df8f0bacb6c4ab0ca87e1640f46d, type: 3}
       propertyPath: m_Name
       value: house_6_1 (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 0d64df8f0bacb6c4ab0ca87e1640f46d, type: 3}
+      propertyPath: m_TagString
+      value: House
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0d64df8f0bacb6c4ab0ca87e1640f46d, type: 3}
@@ -4896,6 +5038,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: house_13_1
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 912a0ca516b03ba45b7220062e1c21da, type: 3}
+      propertyPath: m_TagString
+      value: House
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 912a0ca516b03ba45b7220062e1c21da, type: 3}
 --- !u!4 &1847648752 stripped
@@ -5006,6 +5152,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: house_20_1 (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 09553941001e1cc48839922947475026, type: 3}
+      propertyPath: m_TagString
+      value: House
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 09553941001e1cc48839922947475026, type: 3}
 --- !u!1001 &1884621291
@@ -5074,6 +5224,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: aed63250a30848a4aa5ffae5df7f0379, type: 3}
       propertyPath: m_Name
       value: house_9_1 (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: aed63250a30848a4aa5ffae5df7f0379, type: 3}
+      propertyPath: m_TagString
+      value: House
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: aed63250a30848a4aa5ffae5df7f0379, type: 3}
@@ -5634,6 +5788,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: house_3_1
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 801daa239e2f7ab4d8fb19f8d569e746, type: 3}
+      propertyPath: m_TagString
+      value: House
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 801daa239e2f7ab4d8fb19f8d569e746, type: 3}
 --- !u!1 &2049987635 stripped
@@ -5652,8 +5810,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 21.92971, y: 95.43686, z: 53.568653}
-  m_Center: {x: 262.3327, y: 33.670406, z: 721.0264}
+  m_Size: {x: 21.92974, y: 51.769848, z: 53.568645}
+  m_Center: {x: 262.33286, y: 11.836868, z: 721.0272}
 --- !u!65 &2049987637
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5665,8 +5823,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 19.790813, y: 89.13643, z: 56.693146}
-  m_Center: {x: 48.10999, y: 30.520195, z: 638.76117}
+  m_Size: {x: 19.790815, y: 54.192837, z: 56.69314}
+  m_Center: {x: 48.110214, y: 13.048373, z: 638.7615}
 --- !u!65 &2049987638
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5678,8 +5836,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 21.92971, y: 95.43686, z: 53.568653}
-  m_Center: {x: -257.33273, y: 33.670406, z: 625.0264}
+  m_Size: {x: 21.929756, y: 60.402622, z: 53.568645}
+  m_Center: {x: -257.33258, y: 16.15325, z: 625.0268}
 --- !u!65 &2049987639
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5691,8 +5849,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 32.583954, y: 76.58622, z: 49.225365}
-  m_Center: {x: -198.28267, y: 36.79535, z: 882.6325}
+  m_Size: {x: 32.583965, y: 42.245605, z: 49.22536}
+  m_Center: {x: -198.2825, y: 19.625038, z: 882.63306}
 --- !u!65 &2049987640
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5704,8 +5862,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 26.212349, y: 89.13643, z: 54.007088}
-  m_Center: {x: -28.568554, y: 30.520195, z: 805.02203}
+  m_Size: {x: 26.212366, y: 53.617233, z: 54.007084}
+  m_Center: {x: -28.568506, y: 12.760581, z: 805.0223}
 --- !u!65 &2049987641
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5812,6 +5970,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: house_1_1
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: e0dd34d6d9203114abf8569851456e50, type: 3}
+      propertyPath: m_TagString
+      value: House
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e0dd34d6d9203114abf8569851456e50, type: 3}
 --- !u!4 &2061357727 stripped
@@ -5885,6 +6047,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 09553941001e1cc48839922947475026, type: 3}
       propertyPath: m_Name
       value: house_20_1 (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 09553941001e1cc48839922947475026, type: 3}
+      propertyPath: m_TagString
+      value: House
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 09553941001e1cc48839922947475026, type: 3}
@@ -5978,6 +6144,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: house_12_1
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: a10f69dd7fc702c45a02fe3a43862eaa, type: 3}
+      propertyPath: m_TagString
+      value: House
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a10f69dd7fc702c45a02fe3a43862eaa, type: 3}
 --- !u!1001 &2133786436
@@ -6046,6 +6216,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: c69dfc306d8cf9f43b9be6ce94a98cfb, type: 3}
       propertyPath: m_Name
       value: house_16_1
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: c69dfc306d8cf9f43b9be6ce94a98cfb, type: 3}
+      propertyPath: m_TagString
+      value: House
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c69dfc306d8cf9f43b9be6ce94a98cfb, type: 3}
