@@ -57,7 +57,6 @@ public class HunterController : MonoBehaviour {
         Inputs();
         Move();
         ChangeState();
-        Debug.Log(anim.GetFloat("MoveType"));
     }
 
     // Attach weapons to character movements
@@ -139,14 +138,14 @@ public class HunterController : MonoBehaviour {
         }
     }
 
-    // Set param MoveType gradually to make smooth transitions between states (idle, walk and run)
+    // Set param State gradually to make smooth transitions between states (idle, walk and run)
     private void ChangeState() {
-        //anim.SetFloat("MoveType", nextState);
-        if (anim.GetFloat("MoveType") < nextState) {
-            anim.SetFloat("MoveType", anim.GetFloat("MoveType") + 0.05f);
+        //anim.SetFloat("State", nextState);
+        if (anim.GetFloat("State") < nextState) {
+            anim.SetFloat("State", anim.GetFloat("State") + 0.1f);
         }
-        if (anim.GetFloat("MoveType") > nextState) {
-            anim.SetFloat("MoveType", anim.GetFloat("MoveType") - 0.05f);
+        if (anim.GetFloat("State") > nextState) {
+            anim.SetFloat("State", anim.GetFloat("State") - 0.1f);
         }
     }
 
