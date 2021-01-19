@@ -32,6 +32,8 @@ public class HunterController : MonoBehaviour {
     float horizontalViewInput;
     float runInput;
 
+    public bool meleeAttacking = false;
+
     // Control not holding attack button
     bool holdAttackButton = false;
 
@@ -209,6 +211,10 @@ public class HunterController : MonoBehaviour {
     // Callback from animations to notify it is finished
     private void EndAnimation(string animParamName) {
         anim.SetBool(animParamName, false);
+    }
+
+    private void SetMeleeAttacking(int state) {
+        meleeAttacking = (state > 0);
     }
 
 
