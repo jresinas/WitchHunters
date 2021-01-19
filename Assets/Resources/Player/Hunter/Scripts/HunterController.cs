@@ -21,7 +21,7 @@ public class HunterController : MonoBehaviour {
     public GameObject bolt;
 
     float walkSpeed = 5f;
-    float runSpeed = 11f;
+    float runSpeed = 10f;
 
     float life = 100f;
     float stamina = 100f;

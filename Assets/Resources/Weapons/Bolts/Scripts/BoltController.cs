@@ -19,4 +19,12 @@ public class BoltController : MonoBehaviour
         //rb.MovePosition(rb.position + Vector3.forward * speed * Time.deltaTime);
         transform.Translate(Vector3.forward * speed * Time.deltaTime);
     }
+
+    void OnTriggerEnter(Collider collider) {
+        if (collider.gameObject.tag == "Enemy") {
+            EnemyController ec = collider.gameObject.GetComponent<EnemyController>();
+            ec.Damage(1);
+            Destroy(gameObject);
+        }
+    }
 }

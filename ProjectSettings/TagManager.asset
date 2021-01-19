@@ -6,6 +6,7 @@ TagManager:
   tags:
   - House
   - Church
+  - Enemy
   layers:
   - Default
   - TransparentFX
