@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class ZombieController : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class ZombieController : MonoBehaviour
     private Rigidbody rb;
     private Animator anim;
     private EnemyController ec;
+    private NavMeshAgent agent;
 
     // Start is called before the first frame update
     void Start()
@@ -19,16 +21,32 @@ public class ZombieController : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         anim = GetComponent<Animator>();
         ec = GetComponent<EnemyController>();
+        agent = GetComponent<NavMeshAgent>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        //FollowPlayer();
+        AutoNavigation();
+        
+    }
+
+    private void AutoNavigation() {
+        agent.destination = target.transform.position;
+        if (agent.remainingDistance > agent.stoppingDistance && !ec.dead && !ec.busy) {
+            agent.isStopped = false;
+            anim.SetBool("Walk", true);
+            agent.speed = speed/3.5f;
+        } else {
+            agent.isStopped = true;
+        }
+    }
+
+    private void FollowPlayer() {
         if (!ec.dead && !ec.busy) {
             transform.LookAt(target.transform.position);
-            //if (Physics.Raycast)
             anim.SetBool("Walk", true);
-
             Move();
         }
     }
