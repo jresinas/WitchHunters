@@ -5,7 +5,8 @@ using UnityEngine.AI;
 
 public class ZombieController : MonoBehaviour
 {
-    private GameObject target;
+    private GameObject church;
+    private GameObject player;
     private float speedStep = 3.7f;
     private float speedStop = 0.8f;
     private float speed;
@@ -17,7 +18,8 @@ public class ZombieController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        target = GameObject.FindWithTag("Player");
+        church = GameObject.Find("ChurchDoor"); //GameObject.FindWithTag("Church");
+        player = GameObject.FindWithTag("Player");
         rb = GetComponent<Rigidbody>();
         anim = GetComponent<Animator>();
         ec = GetComponent<EnemyController>();
@@ -27,33 +29,38 @@ public class ZombieController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //FollowPlayer();
-        AutoNavigation();
-        
-    }
-
-    private void AutoNavigation() {
-        agent.destination = target.transform.position;
+        FindTarget();
         if (agent.remainingDistance > agent.stoppingDistance && !ec.dead && !ec.busy) {
-            agent.isStopped = false;
-            anim.SetBool("Walk", true);
-            agent.speed = speed/3.5f;
+            Move();
         } else {
             agent.isStopped = true;
         }
     }
 
-    private void FollowPlayer() {
-        if (!ec.dead && !ec.busy) {
-            transform.LookAt(target.transform.position);
-            anim.SetBool("Walk", true);
-            Move();
+    private void FindTarget() {
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, player.transform.position - transform.position, out hit)) {
+            if (hit.collider.gameObject == player) {
+                agent.SetDestination(player.transform.position);
+            } else {
+                agent.SetDestination(church.transform.position);
+            }
         }
     }
 
     private void Move() {
-        rb.MovePosition(transform.position + transform.forward * speed * Time.deltaTime);
+        agent.isStopped = false;
+        anim.SetBool("Walk", true);
+        agent.speed = speed / 3.5f;
     }
+
+    //private void FollowPlayer() {
+    //    if (!ec.dead && !ec.busy) {
+    //        transform.LookAt(target.transform.position);
+    //        anim.SetBool("Walk", true);
+    //        rb.MovePosition(transform.position + transform.forward * speed * Time.deltaTime);
+    //    }
+    //}
 
     private void Step() {
         speed = speedStep;
