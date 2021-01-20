@@ -20,8 +20,8 @@ public class HunterController : MonoBehaviour {
     // Bolts throws from crossbow
     public GameObject bolt;
 
-    float walkSpeed = 5f;
-    float runSpeed = 10f;
+    float walkSpeed = 4f;
+    float runSpeed = 9f;
 
     float life = 100f;
     float stamina = 100f;
