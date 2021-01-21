@@ -5,6 +5,11 @@ using UnityEngine.AI;
 
 public class ZombieController : MonoBehaviour
 {
+    // Time for refresh pathfinding
+    private float SEARCH_TIME = 1f;
+    // Number of SEARCH_TIME cycles that enemy continues searching player since stop seeing him
+    private int CYCLES_SEARCHING = 10;
+
     private GameObject church;
     private GameObject player;
     private float speedStep = 3.7f;
@@ -14,6 +19,7 @@ public class ZombieController : MonoBehaviour
     private Animator anim;
     private EnemyController ec;
     private NavMeshAgent agent;
+    private int cyclesSearching;
 
     // Start is called before the first frame update
     void Start()
@@ -24,28 +30,41 @@ public class ZombieController : MonoBehaviour
         anim = GetComponent<Animator>();
         ec = GetComponent<EnemyController>();
         agent = GetComponent<NavMeshAgent>();
+        agent.SetDestination(player.transform.position);
+
+        StartCoroutine(FindTarget());
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        FindTarget();
         if (agent.remainingDistance > agent.stoppingDistance && !ec.dead && !ec.busy) {
             Move();
         } else {
             agent.isStopped = true;
+            anim.SetBool("Walk", false);
         }
     }
 
-    private void FindTarget() {
+    private IEnumerator FindTarget() {
         RaycastHit hit;
         if (Physics.Raycast(transform.position, player.transform.position - transform.position, out hit)) {
             if (hit.collider.gameObject == player) {
                 agent.SetDestination(player.transform.position);
+                cyclesSearching = CYCLES_SEARCHING;
             } else {
-                agent.SetDestination(church.transform.position);
+                if (cyclesSearching > 0) {
+                    cyclesSearching--;
+                } else {
+                    agent.SetDestination(church.transform.position);
+                }
             }
         }
+
+        yield return new WaitForSeconds(SEARCH_TIME);
+        StartCoroutine(FindTarget());
+
     }
 
     private void Move() {

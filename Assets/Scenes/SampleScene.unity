@@ -10101,6 +10101,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2071140103, guid: 75093b4249dc73248a8928f7f1c0a00e, type: 3}
+      propertyPath: m_Radius
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 2071140103, guid: 75093b4249dc73248a8928f7f1c0a00e, type: 3}
+      propertyPath: m_StoppingDistance
+      value: 1.5
+      objectReference: {fileID: 0}
     - target: {fileID: 5988349152095907665, guid: 75093b4249dc73248a8928f7f1c0a00e, type: 3}
       propertyPath: m_RootOrder
       value: 7
@@ -18190,6 +18198,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2071140103, guid: 75093b4249dc73248a8928f7f1c0a00e, type: 3}
+      propertyPath: m_Radius
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 2071140103, guid: 75093b4249dc73248a8928f7f1c0a00e, type: 3}
+      propertyPath: m_StoppingDistance
+      value: 1.5
+      objectReference: {fileID: 0}
     - target: {fileID: 5988349152095907665, guid: 75093b4249dc73248a8928f7f1c0a00e, type: 3}
       propertyPath: m_RootOrder
       value: 8
