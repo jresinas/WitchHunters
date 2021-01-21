@@ -32,6 +32,8 @@ public class ZombieController : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         agent.SetDestination(player.transform.position);
 
+        anim.SetFloat("SpeedMultiplier", Random.Range(0.8f, 1.4f));
+
         StartCoroutine(FindTarget());
 
     }
@@ -39,11 +41,17 @@ public class ZombieController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (agent.remainingDistance > agent.stoppingDistance && !ec.dead && !ec.busy) {
-            Move();
+        if (!ec.dead && !ec.busy) {
+            if (agent.remainingDistance > agent.stoppingDistance) {
+                Move();
+            } else {
+                anim.SetBool("Walk", false);
+                transform.LookAt(agent.destination);
+                ec.busy = true;
+                anim.SetBool("Attack", true);
+            }
         } else {
             agent.isStopped = true;
-            anim.SetBool("Walk", false);
         }
     }
 
