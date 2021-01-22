@@ -5,6 +5,8 @@ using UnityEngine;
 public class MeleeWeaponController : MonoBehaviour
 {
     private HunterController hc;
+    private float damage = 2f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -19,8 +21,8 @@ public class MeleeWeaponController : MonoBehaviour
 
     void OnTriggerEnter(Collider collider) {
         if (collider.gameObject.tag == "Enemy" && hc.meleeAttacking) {
-            EnemyController ec = collider.gameObject.GetComponent<EnemyController>();
-            ec.Damage(2);
+            EnemyController enemy = collider.gameObject.GetComponent<EnemyController>();
+            enemy.DamageReceived(damage);
         }
     }
 }

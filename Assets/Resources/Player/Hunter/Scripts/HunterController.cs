@@ -23,7 +23,7 @@ public class HunterController : MonoBehaviour {
     float walkSpeed = 4f;
     float runSpeed = 9f;
 
-    float life = 100f;
+    float life = 3f;
     float stamina = 100f;
 
     float verticalInput;
@@ -154,7 +154,8 @@ public class HunterController : MonoBehaviour {
     // Returns if hands are busy (it is not possible to make new actions with hands)
     private bool HandsBusy() {
         return anim.GetBool("ChangeWeapon") ||
-            anim.GetBool("Attack");
+            anim.GetBool("Attack") ||
+            anim.GetBool("Hit");
     }
 
     // Attack controller
@@ -217,6 +218,18 @@ public class HunterController : MonoBehaviour {
         meleeAttacking = (state > 0);
     }
 
+    public void DamageReceived(float amount) {
+        Debug.Log("Impactado");
+        anim.SetBool("Hit", true);
+        life -= amount;
+        if (life <= 0) {
+            Dead();
+        }
+    }
+
+    private void Dead() {
+        Debug.Log("Dead");
+    }
 
     
 

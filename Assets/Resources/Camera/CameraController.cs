@@ -61,7 +61,7 @@ public class CameraController : MonoBehaviour
 
     private void SetAllChildMeshTransparent(Collider obj) {
         Renderer[] childs = obj.GetComponentsInChildren<Renderer>();
-        Debug.Log(obj + " " +childs.Length);
+
         foreach (Renderer mesh in childs) {
             switch (mesh.transform.parent.tag) {
                 case ("House"):

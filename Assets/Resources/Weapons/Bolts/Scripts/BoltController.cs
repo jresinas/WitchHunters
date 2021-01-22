@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class BoltController : MonoBehaviour
 {
-    //Rigidbody rb;
+    float damage = 1f;
     float speed = 40f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -22,8 +23,8 @@ public class BoltController : MonoBehaviour
 
     void OnTriggerEnter(Collider collider) {
         if (collider.gameObject.tag == "Enemy") {
-            EnemyController ec = collider.gameObject.GetComponent<EnemyController>();
-            ec.Damage(1);
+            EnemyController enemy = collider.gameObject.GetComponent<EnemyController>();
+            enemy.DamageReceived(damage);
             Destroy(gameObject);
         }
     }

@@ -3,97 +3,86 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class ZombieController : MonoBehaviour
-{
-    // Time for refresh pathfinding
-    private float SEARCH_TIME = 1f;
+public class ZombieController : MonoBehaviour, IEnemy {
     // Number of SEARCH_TIME cycles that enemy continues searching player since stop seeing him
     private int CYCLES_SEARCHING = 10;
+    // Minimum speed multiplicator for move animation
+    private float MIN_SPEED_MULT = 0.8f;
+    // Maximum speed multiplicator for move animation
+    private float MAX_SPEED_MULT = 1.4f;
 
-    private GameObject church;
-    private GameObject player;
+    // Zombie life
+    private float _life = 5;
+    // Zombie speed (when make an step and when stop)
+    private float _speed;
     private float speedStep = 3.7f;
     private float speedStop = 0.8f;
-    private float speed;
-    private Rigidbody rb;
-    private Animator anim;
+    // Zombie melee damage
+    private float _meleeDamage = 1;
+
     private EnemyController ec;
-    private NavMeshAgent agent;
+    // Auxiliar variable to count cylces spend searching player
     private int cyclesSearching;
 
+    public float life {
+        get => _life;
+        set => _life = value;
+    }
+    public float speed {
+        get => _speed;
+    }
+    public float meleeDamage {
+        get => _meleeDamage;
+    }
+    
+
     // Start is called before the first frame update
-    void Start()
-    {
-        church = GameObject.Find("ChurchDoor"); //GameObject.FindWithTag("Church");
-        player = GameObject.FindWithTag("Player");
-        rb = GetComponent<Rigidbody>();
-        anim = GetComponent<Animator>();
+    void Start() {
         ec = GetComponent<EnemyController>();
-        agent = GetComponent<NavMeshAgent>();
-        agent.SetDestination(player.transform.position);
-
-        anim.SetFloat("SpeedMultiplier", Random.Range(0.8f, 1.4f));
-
-        StartCoroutine(FindTarget());
-
+        ec.anim.SetFloat("SpeedMultiplier", Random.Range(MIN_SPEED_MULT, MAX_SPEED_MULT));
     }
 
     // Update is called once per frame
-    void Update()
-    {
-        if (!ec.dead && !ec.busy) {
-            if (agent.remainingDistance > agent.stoppingDistance) {
-                Move();
-            } else {
-                anim.SetBool("Walk", false);
-                transform.LookAt(agent.destination);
-                ec.busy = true;
-                anim.SetBool("Attack", true);
-            }
-        } else {
-            agent.isStopped = true;
-        }
-    }
+    void Update() { }
 
-    private IEnumerator FindTarget() {
+    // Return Vector3 of current target (for nav mesh)
+    public Vector3 GetTarget(GameObject player, GameObject church) {
         RaycastHit hit;
         if (Physics.Raycast(transform.position, player.transform.position - transform.position, out hit)) {
             if (hit.collider.gameObject == player) {
-                agent.SetDestination(player.transform.position);
                 cyclesSearching = CYCLES_SEARCHING;
+                return player.transform.position;
             } else {
                 if (cyclesSearching > 0) {
                     cyclesSearching--;
                 } else {
-                    agent.SetDestination(church.transform.position);
+                    return church.transform.position;
                 }
             }
         }
 
-        yield return new WaitForSeconds(SEARCH_TIME);
-        StartCoroutine(FindTarget());
-
+        return Vector3.zero;
     }
 
-    private void Move() {
-        agent.isStopped = false;
-        anim.SetBool("Walk", true);
-        agent.speed = speed / 3.5f;
+    // Actions to do when is moving to the current target
+    public void IsMoving() {
+        ec.Move();
     }
 
-    //private void FollowPlayer() {
-    //    if (!ec.dead && !ec.busy) {
-    //        transform.LookAt(target.transform.position);
-    //        anim.SetBool("Walk", true);
-    //        rb.MovePosition(transform.position + transform.forward * speed * Time.deltaTime);
-    //    }
-    //}
+    // Actions to do when is near the target
+    public void IsArrived() {
+        ec.anim.SetBool("Walk", false);
+        transform.LookAt(ec.target);
+        ec.anim.SetBool("Attack", true);
+    }
 
+    // Callback from animation move when zombie makes a step
     private void Step() {
-        speed = speedStep;
+        _speed = speedStep;
     }
 
+    // Callback from animation move when zombie stops
     private void Stop() {
-        speed = speedStop;
+        _speed = speedStop;
     }
 }
