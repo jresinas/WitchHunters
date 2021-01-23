@@ -69,10 +69,11 @@ public class EnemyController : MonoBehaviour {
             } else {
                 self.IsArrived();
             }
+        } else if (dead) {
+            
         } else if (!Busy()) {
             agent.isStopped = true;
         } else {
-            // Is dead
             agent.isStopped = true;
         }
     }
@@ -96,13 +97,16 @@ public class EnemyController : MonoBehaviour {
         self.life -= amount;
         if (self.life <= 0) {
             Dead();
+            //dead = true;
         }
     }
 
     // Enemy die
     private void Dead() {
         anim.SetBool("Die", true);
+        StopAllCoroutines();
         Destroy(collider);
+        Destroy(agent);
         dead = true;
     }
 

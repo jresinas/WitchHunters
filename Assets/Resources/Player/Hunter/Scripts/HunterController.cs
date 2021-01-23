@@ -116,6 +116,7 @@ public class HunterController : MonoBehaviour {
 
         // Rotate character to view vector direction
         transform.LookAt(transform.position + view);
+        //transform.LookAt(transform.position + view - new Vector3(0,0,-0.5f));
 
         // Set MoveRotation animation parameter in function of move and view vectors
         // MoveRotation controls foot blend animations (WalkBlend:WalkBack/WalkLeft/WalkForward/WalkRight and RunBlend:RunBack/RunLeft/RunForward/RunRight)
@@ -131,7 +132,7 @@ public class HunterController : MonoBehaviour {
                 rb.MovePosition(rb.position + move * walkSpeed * Time.deltaTime);
             } else {
                 // Run
-                nextState = 2f;
+                nextState = 2.5f;
                 rb.MovePosition(rb.position + move * runSpeed * Time.deltaTime);
             }
         } else {
@@ -143,10 +144,10 @@ public class HunterController : MonoBehaviour {
     // Set param State gradually to make smooth transitions between states (idle, walk and run)
     private void ChangeState() {
         //anim.SetFloat("State", nextState);
-        if (anim.GetFloat("State") < nextState) {
+        if (anim.GetFloat("State") + 0.1f <= nextState) {
             anim.SetFloat("State", anim.GetFloat("State") + 0.1f);
         }
-        if (anim.GetFloat("State") > nextState) {
+        if (anim.GetFloat("State") - 0.1f >= nextState) {
             anim.SetFloat("State", anim.GetFloat("State") - 0.1f);
         }
     }
@@ -164,8 +165,8 @@ public class HunterController : MonoBehaviour {
     }
 
     // Callback from fire crossbow animation to fire a bolt
-    private void FireBolt() { 
-        Vector3 offset = transform.forward*1.5f + transform.up*1.5f + transform.right*0.3f;
+    private void FireBolt() {
+        Vector3 offset = transform.forward*1.5f + transform.up * 1.2f;  //transform.forward * 1.5f + transform.up * 1.5f + transform.right *0.3f;
         Instantiate(bolt, transform.position+offset, transform.rotation);
     }
 
@@ -219,8 +220,11 @@ public class HunterController : MonoBehaviour {
     }
 
     public void DamageReceived(float amount) {
-        Debug.Log("Impactado");
         anim.SetBool("Hit", true);
+        anim.SetBool("ChangeWeapon", false);
+        anim.SetBool("Attack", false);
+        meleeAttacking = false;
+
         life -= amount;
         if (life <= 0) {
             Dead();
@@ -230,7 +234,5 @@ public class HunterController : MonoBehaviour {
     private void Dead() {
         Debug.Log("Dead");
     }
-
-    
 
 }
