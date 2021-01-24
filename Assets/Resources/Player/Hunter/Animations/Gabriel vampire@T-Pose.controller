@@ -1700,31 +1700,37 @@ AnimatorController:
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: MoveRotation
     m_Type: 1
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: ChangeWeapon
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
-  - m_Name: State
+    m_Controller: {fileID: 0}
+  - m_Name: StateFoot
     m_Type: 1
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: Hit
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
+  - m_Name: StateArm
+    m_Type: 1
+    m_DefaultFloat: 0
+    m_DefaultInt: 0
+    m_DefaultBool: 0
+    m_Controller: {fileID: 0}
   m_AnimatorLayers:
   - serializedVersion: 5
     m_Name: Foots
@@ -2032,7 +2038,7 @@ BlendTree:
     m_CycleOffset: 0
     m_DirectBlendParameter: WalkAnimationSpeed
     m_Mirror: 0
-  m_BlendParameter: State
+  m_BlendParameter: StateFoot
   m_BlendParameterY: WalkAnimationSpeed
   m_MinThreshold: 0
   m_MaxThreshold: 2
@@ -2176,7 +2182,7 @@ BlendTree:
     m_CycleOffset: 0
     m_DirectBlendParameter: WalkAnimationSpeed
     m_Mirror: 0
-  m_BlendParameter: State
+  m_BlendParameter: StateArm
   m_BlendParameterY: WalkAnimationSpeed
   m_MinThreshold: 0
   m_MaxThreshold: 2
@@ -2392,7 +2398,7 @@ BlendTree:
     m_CycleOffset: 0
     m_DirectBlendParameter: WalkAnimationSpeed
     m_Mirror: 0
-  m_BlendParameter: State
+  m_BlendParameter: StateFoot
   m_BlendParameterY: WalkAnimationSpeed
   m_MinThreshold: 0
   m_MaxThreshold: 2
@@ -2736,7 +2742,7 @@ BlendTree:
     m_CycleOffset: 0
     m_DirectBlendParameter: WalkAnimationSpeed
     m_Mirror: 0
-  m_BlendParameter: State
+  m_BlendParameter: StateArm
   m_BlendParameterY: WalkAnimationSpeed
   m_MinThreshold: 0
   m_MaxThreshold: 2
@@ -3485,7 +3491,7 @@ BlendTree:
     m_CycleOffset: 0
     m_DirectBlendParameter: WalkAnimationSpeed
     m_Mirror: 0
-  m_BlendParameter: State
+  m_BlendParameter: StateFoot
   m_BlendParameterY: WalkAnimationSpeed
   m_MinThreshold: 0
   m_MaxThreshold: 2
@@ -3598,7 +3604,7 @@ BlendTree:
     m_CycleOffset: 0
     m_DirectBlendParameter: WalkAnimationSpeed
     m_Mirror: 0
-  m_BlendParameter: State
+  m_BlendParameter: StateFoot
   m_BlendParameterY: WalkAnimationSpeed
   m_MinThreshold: 0
   m_MaxThreshold: 2
@@ -3709,7 +3715,7 @@ BlendTree:
     m_CycleOffset: 0
     m_DirectBlendParameter: WalkAnimationSpeed
     m_Mirror: 0
-  m_BlendParameter: State
+  m_BlendParameter: StateArm
   m_BlendParameterY: WalkAnimationSpeed
   m_MinThreshold: 0
   m_MaxThreshold: 2
