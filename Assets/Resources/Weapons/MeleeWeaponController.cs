@@ -5,7 +5,7 @@ using UnityEngine;
 public class MeleeWeaponController : MonoBehaviour
 {
     private HunterController hc;
-    private float damage = 2f;
+    private float damage = 3f;
 
     // Start is called before the first frame update
     void Start()
