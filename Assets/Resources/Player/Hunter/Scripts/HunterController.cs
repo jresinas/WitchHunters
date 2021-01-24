@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class HunterController : MonoBehaviour {
+    private float BOLT_RELOAD_TIME = 1f;
+
     Rigidbody rb;
     Animator anim;
     // Empty object in the character back to keep unused weapons
@@ -25,6 +27,7 @@ public class HunterController : MonoBehaviour {
 
     float life = 3f;
     float stamina = 100f;
+    float boltLoaded = 0f;
 
     float verticalInput;
     float horizontalInput;
@@ -51,10 +54,12 @@ public class HunterController : MonoBehaviour {
         rb = GetComponent<Rigidbody>();
         anim = GetComponent<Animator>();
         ChangeWeapon();
+        boltLoaded = BOLT_RELOAD_TIME;
     }
 
     // Update is called once per frame
     void Update() {
+        Debug.Log(boltLoaded);
         WeaponsPosition();
         Inputs();
         Move();
@@ -68,6 +73,15 @@ public class HunterController : MonoBehaviour {
         axe.transform.position = rightHand.transform.position;
         axe.transform.rotation = rightHand.transform.rotation;
         axeKeep.transform.position = bag.transform.position;
+    }
+
+    private IEnumerator BoltReload() {
+        boltLoaded++;
+
+        yield return new WaitForSeconds(1);
+        if (boltLoaded < BOLT_RELOAD_TIME) {
+            StartCoroutine(BoltReload());
+        }
     }
 
     // Inputs controller
@@ -165,9 +179,17 @@ public class HunterController : MonoBehaviour {
     }
 
     // Callback from fire crossbow animation to fire a bolt
-    private void FireBolt() {
-        Vector3 offset = transform.forward*1.8f + transform.up * 1.2f;  //transform.forward * 1.5f + transform.up * 1.5f + transform.right *0.3f;
-        Instantiate(bolt, transform.position+offset, transform.rotation);
+    private void FireBolt(AnimationEvent evt) {
+
+        //Debug.Log(evt.animatorClipInfo.weight);
+        if (boltLoaded == BOLT_RELOAD_TIME) {
+            boltLoaded = 0;
+            StartCoroutine(BoltReload());
+            //if (evt.animatorClipInfo.weight > 0.5) {
+            //Debug.Log("Entro");
+            Vector3 offset = transform.forward * 1.8f + transform.up * 1.2f;  //transform.forward * 1.5f + transform.up * 1.5f + transform.right *0.3f;
+            Instantiate(bolt, transform.position + offset, transform.rotation);
+        }
     }
 
     // Select next weapon
