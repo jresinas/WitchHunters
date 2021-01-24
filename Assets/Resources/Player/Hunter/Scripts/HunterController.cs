@@ -76,9 +76,9 @@ public class HunterController : MonoBehaviour {
     }
 
     private IEnumerator BoltReload() {
-        boltLoaded++;
 
         yield return new WaitForSeconds(1);
+        boltLoaded++;
         if (boltLoaded < BOLT_RELOAD_TIME) {
             StartCoroutine(BoltReload());
         }
