@@ -107,7 +107,7 @@ public class HunterController : MonoBehaviour {
     private void Move() {
         // Get move and view vectors
         Vector3 move = new Vector3(horizontalInput, 0f, verticalInput).normalized;
-        Vector3 view = new Vector3(horizontalViewInput, 0f, verticalViewInput);
+        Vector3 view = new Vector3(horizontalViewInput, 0f, verticalViewInput).normalized;
 
         // If no view vector, character look at movement direction
         if (view == Vector3.zero) {
@@ -166,8 +166,13 @@ public class HunterController : MonoBehaviour {
 
     // Callback from fire crossbow animation to fire a bolt
     private void FireBolt() {
-        Vector3 offset = transform.forward*1.8f + transform.up * 1.2f;  //transform.forward * 1.5f + transform.up * 1.5f + transform.right *0.3f;
-        Instantiate(bolt, transform.position+offset, transform.rotation);
+        // Set bolt offset position
+        Vector3 offset = transform.forward*1.8f + transform.up * 1.2f;
+        GameObject boltInst = Instantiate(bolt, transform.position+offset, transform.rotation);
+        // Set bolt offset movement
+        BoltController bc = boltInst.GetComponent<BoltController>();
+        bc.hunterMovement = (nextState == 1)? walkSpeed : ((nextState == 2)? runSpeed : 0);
+        bc.hunterMovementRotation = new Vector3(horizontalInput, 0f, verticalInput).normalized;
     }
 
     // Select next weapon
