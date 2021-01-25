@@ -35,6 +35,7 @@ public class HunterController : MonoBehaviour {
     float horizontalViewInput;
     float runInput;
 
+    public bool dead = false;
     public bool meleeAttacking = false;
 
     // Control not holding attack button
@@ -59,10 +60,12 @@ public class HunterController : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        WeaponsPosition();
-        Inputs();
-        Move();
-        ChangeState();
+        if (!dead) {
+            WeaponsPosition();
+            Inputs();
+            Move();
+            ChangeState();
+        }
     }
 
     // Attach weapons to character movements
@@ -250,7 +253,10 @@ public class HunterController : MonoBehaviour {
     }
 
     private void Dead() {
-        Debug.Log("Dead");
+        anim.SetBool("Die", true);
+        StopAllCoroutines();
+        Destroy(GetComponent<Collider>());
+        dead = true;
     }
 
 }

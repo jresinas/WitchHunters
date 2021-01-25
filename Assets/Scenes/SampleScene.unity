@@ -13845,15 +13845,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 89e86d8ddc1d19545a6aac220d7d49e4, type: 3}
       propertyPath: m_LocalScale.x
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 89e86d8ddc1d19545a6aac220d7d49e4, type: 3}
       propertyPath: m_LocalScale.y
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 89e86d8ddc1d19545a6aac220d7d49e4, type: 3}
       propertyPath: m_LocalScale.z
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 89e86d8ddc1d19545a6aac220d7d49e4, type: 3}
       propertyPath: m_LocalPosition.x
@@ -13901,7 +13901,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 89e86d8ddc1d19545a6aac220d7d49e4, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1151388028547126963, guid: 89e86d8ddc1d19545a6aac220d7d49e4, type: 3}
       propertyPath: m_LocalPosition.x
@@ -19418,7 +19418,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 12, y: 3, z: 10}
+  m_Size: {x: 12, y: 5, z: 10}
   m_Center: {x: 0, y: 0, z: -10}
 --- !u!4 &1301408026 stripped
 Transform:
@@ -19449,6 +19449,7 @@ MonoBehaviour:
   axe: {fileID: 1175119634}
   axeKeep: {fileID: 1133544502}
   bolt: {fileID: 8885257966149742103, guid: 7adcefa449a40084a8e7a794c9f48072, type: 3}
+  dead: 0
   meleeAttacking: 0
 --- !u!54 &1305361620
 Rigidbody:
@@ -23808,7 +23809,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1696374707
 Transform:
   m_ObjectHideFlags: 0
