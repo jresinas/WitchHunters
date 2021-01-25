@@ -59,7 +59,6 @@ public class HunterController : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        Debug.Log(boltLoaded);
         WeaponsPosition();
         Inputs();
         Move();
@@ -180,14 +179,11 @@ public class HunterController : MonoBehaviour {
 
     // Callback from fire crossbow animation to fire a bolt
     private void FireBolt(AnimationEvent evt) {
-
-        //Debug.Log(evt.animatorClipInfo.weight);
-        if (boltLoaded == BOLT_RELOAD_TIME) {
+        // if (evt.animatorClipInfo.weight > 0.5) {
+        if (boltLoaded >= BOLT_RELOAD_TIME) {
             boltLoaded = 0;
             StartCoroutine(BoltReload());
-            //if (evt.animatorClipInfo.weight > 0.5) {
-            //Debug.Log("Entro");
-            Vector3 offset = transform.forward * 1.8f + transform.up * 1.2f;  //transform.forward * 1.5f + transform.up * 1.5f + transform.right *0.3f;
+            Vector3 offset = transform.forward * 1.8f + transform.up * 1.2f;
             Instantiate(bolt, transform.position + offset, transform.rotation);
         }
     }
