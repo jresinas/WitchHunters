@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class HunterController : MonoBehaviour {
     private float BOLT_RELOAD_TIME = 1f;
+    public float MAX_LIFE = 10f;
+    public float MAX_STAMINA = 10f;
 
     Rigidbody rb;
     Animator anim;
@@ -23,11 +25,11 @@ public class HunterController : MonoBehaviour {
     public GameObject bolt;
 
     float walkSpeed = 4f;
-    float runSpeed = 9f;
+    float runSpeed = 8f;
 
-    float life = 3f;
-    float stamina = 100f;
-    float boltLoaded = 0f;
+    public float life;
+    public float stamina;
+    float boltLoaded;
 
     float verticalInput;
     float horizontalInput;
@@ -55,7 +57,11 @@ public class HunterController : MonoBehaviour {
         rb = GetComponent<Rigidbody>();
         anim = GetComponent<Animator>();
         ChangeWeapon();
+        Debug.Log(life+"-"+MAX_LIFE);
+        life =  MAX_LIFE;
+        stamina = MAX_STAMINA;
         boltLoaded = BOLT_RELOAD_TIME;
+        Debug.Log(life+"-"+MAX_LIFE);
     }
 
     // Update is called once per frame
@@ -77,8 +83,8 @@ public class HunterController : MonoBehaviour {
         axeKeep.transform.position = bag.transform.position;
     }
 
-    private IEnumerator BoltReload() {
 
+    private IEnumerator BoltReload() {
         yield return new WaitForSeconds(1);
         boltLoaded++;
         if (boltLoaded < BOLT_RELOAD_TIME) {
