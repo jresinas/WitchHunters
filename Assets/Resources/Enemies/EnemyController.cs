@@ -111,6 +111,7 @@ public class EnemyController : MonoBehaviour {
     // Enemy die
     private void Dead() {
         anim.SetBool("Die", true);
+        meleeAttacking = false;
         StopAllCoroutines();
         Destroy(collider);
         Destroy(agent);
