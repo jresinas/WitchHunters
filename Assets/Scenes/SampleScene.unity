@@ -19295,7 +19295,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e6dc03cbe50993499d666cf97ac218d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  camera: {fileID: 1192760639}
+  cam: {fileID: 1192760639}
   replacementShader: {fileID: 4800000, guid: 4758c0a8a661d264a8024870a161c301, type: 3}
 --- !u!20 &1192760639
 Camera:

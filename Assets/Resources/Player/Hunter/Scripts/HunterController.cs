@@ -6,7 +6,7 @@ public class HunterController : MonoBehaviour {
     private float BOLT_RELOAD_TIME = 1f;
     public float MAX_LIFE = 10f;
     public float MAX_STAMINA = 10f;
-    private float STAMINA_RECOVER = 0.2f;
+    private float STAMINA_RECOVER = 0.25f;
     private float STAMINA_RUN_SPEND = 1f;
 
     Rigidbody rb;

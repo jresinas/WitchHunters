@@ -10,7 +10,7 @@ public class FloatingTextController : MonoBehaviour
 
     void Start()
     {
-        //Destroy(gameObject, DESTROY_TIME);
+        Destroy(gameObject, DESTROY_TIME);
         rot = transform.rotation;
         TextMesh text = GetComponent<TextMesh>();
         text.anchor = textAnchorOptions[Random.Range(0, textAnchorOptions.Length-1)];

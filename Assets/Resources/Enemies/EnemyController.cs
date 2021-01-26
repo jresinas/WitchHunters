@@ -12,7 +12,7 @@ public class EnemyController : MonoBehaviour {
     // Script for specific behavior 
     private IEnemy self;
     public Animator anim;
-    private Collider collider;
+    private Collider col;
     private NavMeshAgent agent;
     private GameObject church;
     private GameObject player;
@@ -32,7 +32,7 @@ public class EnemyController : MonoBehaviour {
     {
         self = GetComponent<IEnemy>();
         anim = GetComponent<Animator>();
-        collider = GetComponent<Collider>();
+        col = GetComponent<Collider>();
         agent = GetComponent<NavMeshAgent>();
         church = GameObject.Find("ChurchDoor");
         player = GameObject.FindWithTag("Player");
@@ -113,7 +113,7 @@ public class EnemyController : MonoBehaviour {
         anim.SetBool("Die", true);
         meleeAttacking = false;
         StopAllCoroutines();
-        Destroy(collider);
+        Destroy(col);
         Destroy(agent);
         Destroy(minimap);
         dead = true;

@@ -4,19 +4,17 @@ using UnityEngine;
 
 public class MinimapCameraController : MonoBehaviour
 {
-    public Camera camera;
+    public Camera cam;
     public Shader replacementShader;
     // Start is called before the first frame update
-    void Start()
-    {
+    void Start() {
     }
 
     // Update is called once per frame
-    void Update()
-    {
+    void Update() {
     }
 
     public void Awake() {
-        camera.SetReplacementShader(replacementShader,null);
+        cam.SetReplacementShader(replacementShader,null);
     }
 }
