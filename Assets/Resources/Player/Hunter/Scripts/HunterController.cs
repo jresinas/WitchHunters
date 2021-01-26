@@ -6,7 +6,9 @@ public class HunterController : MonoBehaviour {
     private float BOLT_RELOAD_TIME = 1f;
     public float MAX_LIFE = 10f;
     public float MAX_STAMINA = 10f;
-    private float STAMINA_RECOVER = 0.25f;
+    private float STAMINA_DEFAULT_RECOVER = 0.25f;
+    private float STAMINA_IDLE_RECOVER = 0.1f;
+    private float STAMINA_ATTACK_SPEND = 0.25f;
     private float STAMINA_RUN_SPEND = 1f;
 
     Rigidbody rb;
@@ -73,7 +75,7 @@ public class HunterController : MonoBehaviour {
             Inputs();
             Move();
             ChangeState();
-            UpdateStamina(STAMINA_RECOVER);
+            UpdateStamina(STAMINA_DEFAULT_RECOVER);
         }
     }
 
@@ -174,6 +176,7 @@ public class HunterController : MonoBehaviour {
         } else {
             // Idle
             nextState = 0f;
+            UpdateStamina(STAMINA_IDLE_RECOVER);
         }
     }
 
@@ -197,6 +200,7 @@ public class HunterController : MonoBehaviour {
 
     // Attack controller
     private void Attack() {
+        UpdateStamina(-STAMINA_ATTACK_SPEND);
         anim.SetBool("Attack", true);
     }
 

@@ -5,7 +5,7 @@ using UnityEngine.AI;
 
 public class EnemyController : MonoBehaviour {
     // Time for refresh pathfinding
-    private float SEARCH_TIME = 1f;
+    private float SEARCH_TIME = 0.5f;
     // Navmesh speed coeficient conversor
     private float NAVMESH_SPEED_COEFICIENT = 3.5f;
 

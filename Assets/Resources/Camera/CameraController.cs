@@ -38,13 +38,15 @@ public class CameraController : MonoBehaviour
     private void RemoveTransparency() {
         for (int i = 0; i<transparentBuildings.Count; i++){
             Renderer build = transparentBuildings[i];
-            switch (build.transform.parent.tag) {
-                case ("House"):
-                    build.material = houseOpaque;
-                    break;
-                case ("Church"):
-                    build.material = churchOpaque;
-                    break;
+            if (build != null) {
+                switch (build.transform.parent.tag) {
+                    case ("House"):
+                        build.material = houseOpaque;
+                        break;
+                    case ("Church"):
+                        build.material = churchOpaque;
+                        break;
+                }
             }
             transparentBuildings.Remove(build);
         }
