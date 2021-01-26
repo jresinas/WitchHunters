@@ -19275,6 +19275,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1192760640}
   - component: {fileID: 1192760639}
+  - component: {fileID: 1192760638}
   m_Layer: 0
   m_Name: Minimap Camera
   m_TagString: Untagged
@@ -19282,6 +19283,20 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &1192760638
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1192760637}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e6dc03cbe50993499d666cf97ac218d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  camera: {fileID: 1192760639}
+  replacementShader: {fileID: 4800000, guid: 4758c0a8a661d264a8024870a161c301, type: 3}
 --- !u!20 &1192760639
 Camera:
   m_ObjectHideFlags: 0
