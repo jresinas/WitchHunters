@@ -14,7 +14,6 @@ public class HudController : MonoBehaviour
     void Start()
     {
         hc = player.GetComponent<HunterController>();
-        Debug.Log(hc.life);
     }
 
     // Update is called once per frame
