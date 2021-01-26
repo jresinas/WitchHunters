@@ -23,6 +23,7 @@ public class HunterController : MonoBehaviour {
     public GameObject axeKeep;
     // Bolts throws from crossbow
     public GameObject bolt;
+    public GameObject floatingText;
 
     float walkSpeed = 4f;
     float runSpeed = 8f;
@@ -251,6 +252,10 @@ public class HunterController : MonoBehaviour {
         anim.SetBool("ChangeWeapon", false);
         anim.SetBool("Attack", false);
         meleeAttacking = false;
+
+        GameObject text = Instantiate(floatingText, transform.position, Quaternion.identity, transform);
+        //GameObject text = Instantiate(floatingText, transform.position, Quaternion.identity);
+        text.GetComponent<TextMesh>().text = amount.ToString();
 
         life -= amount;
         if (life <= 0) {

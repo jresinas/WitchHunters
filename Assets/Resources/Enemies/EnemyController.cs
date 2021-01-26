@@ -20,6 +20,7 @@ public class EnemyController : MonoBehaviour {
     public GameObject weapon;
     // Enemy body part which weapon is attached
     public GameObject weaponGrip;
+    public GameObject floatingText;
 
     public Vector3 target;
     public bool dead = false;
@@ -94,6 +95,11 @@ public class EnemyController : MonoBehaviour {
     // Enemy receive damage
     public void DamageReceived(float amount) {
         anim.SetBool("Hit", true);
+
+        GameObject text = Instantiate(floatingText, transform.position, Quaternion.identity, transform);
+        //GameObject text = Instantiate(floatingText, transform.position, Quaternion.identity);
+        text.GetComponent<TextMesh>().text = amount.ToString();
+
         self.life -= amount;
         if (self.life <= 0) {
             Dead();

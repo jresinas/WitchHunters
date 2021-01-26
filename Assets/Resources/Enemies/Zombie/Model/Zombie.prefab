@@ -319,6 +319,7 @@ MonoBehaviour:
   anim: {fileID: 0}
   weapon: {fileID: 4506683}
   weaponGrip: {fileID: 2495323810655361013}
+  floatingText: {fileID: 8145443952721767104, guid: 5ff74552c6f42da4ba0407a1034b6bb3, type: 3}
   target: {x: 0, y: 0, z: 0}
   dead: 0
   meleeAttacking: 0

@@ -20795,6 +20795,7 @@ MonoBehaviour:
   axe: {fileID: 1175119634}
   axeKeep: {fileID: 1133544502}
   bolt: {fileID: 8885257966149742103, guid: 7adcefa449a40084a8e7a794c9f48072, type: 3}
+  floatingText: {fileID: 8145443952721767104, guid: 5ff74552c6f42da4ba0407a1034b6bb3, type: 3}
   life: 0
   stamina: 0
   dead: 0
