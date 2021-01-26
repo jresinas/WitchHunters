@@ -24,6 +24,7 @@ public class HunterController : MonoBehaviour {
     // Bolts throws from crossbow
     public GameObject bolt;
     public GameObject floatingText;
+    public GameObject minimap;
 
     float walkSpeed = 4f;
     float runSpeed = 8f;
@@ -267,6 +268,7 @@ public class HunterController : MonoBehaviour {
         anim.SetBool("Die", true);
         StopAllCoroutines();
         Destroy(GetComponent<Collider>());
+        Destroy(minimap);
         dead = true;
     }
 

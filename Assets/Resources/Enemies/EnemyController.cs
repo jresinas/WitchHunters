@@ -21,6 +21,7 @@ public class EnemyController : MonoBehaviour {
     // Enemy body part which weapon is attached
     public GameObject weaponGrip;
     public GameObject floatingText;
+    public GameObject minimap;
 
     public Vector3 target;
     public bool dead = false;
@@ -113,6 +114,7 @@ public class EnemyController : MonoBehaviour {
         StopAllCoroutines();
         Destroy(collider);
         Destroy(agent);
+        Destroy(minimap);
         dead = true;
     }
 
