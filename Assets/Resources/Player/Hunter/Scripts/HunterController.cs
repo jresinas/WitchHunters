@@ -6,6 +6,8 @@ public class HunterController : MonoBehaviour {
     private float BOLT_RELOAD_TIME = 1f;
     public float MAX_LIFE = 10f;
     public float MAX_STAMINA = 10f;
+    private float STAMINA_RECOVER = 0.2f;
+    private float STAMINA_RUN_SPEND = 1f;
 
     Rigidbody rb;
     Animator anim;
@@ -73,6 +75,18 @@ public class HunterController : MonoBehaviour {
             Inputs();
             Move();
             ChangeState();
+            UpdateStamina(STAMINA_RECOVER);
+        }
+    }
+
+    private void UpdateStamina(float value) {
+        Debug.Log(value);
+        stamina += value * Time.deltaTime;
+        if (stamina > MAX_STAMINA) {
+            stamina = MAX_STAMINA;
+        }
+        if (stamina < 0) {
+            stamina = 0;
         }
     }
 
@@ -150,7 +164,7 @@ public class HunterController : MonoBehaviour {
         anim.SetFloat("MoveRotation", sign * angle / 90);
 
         if (verticalInput != 0 || horizontalInput != 0) {
-            if (runInput <= 0.5) {
+            if (runInput <= 0.5 || stamina < STAMINA_RUN_SPEND * Time.deltaTime) {
                 // Walk
                 nextState = 1f;
                 rb.MovePosition(rb.position + move * walkSpeed * Time.deltaTime);
@@ -158,6 +172,7 @@ public class HunterController : MonoBehaviour {
                 // Run
                 nextState = 2f;
                 rb.MovePosition(rb.position + move * runSpeed * Time.deltaTime);
+                UpdateStamina(-STAMINA_RUN_SPEND);
             }
         } else {
             // Idle
