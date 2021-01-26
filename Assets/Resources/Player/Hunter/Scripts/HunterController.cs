@@ -61,11 +61,9 @@ public class HunterController : MonoBehaviour {
         rb = GetComponent<Rigidbody>();
         anim = GetComponent<Animator>();
         ChangeWeapon();
-        Debug.Log(life+"-"+MAX_LIFE);
         life =  MAX_LIFE;
         stamina = MAX_STAMINA;
         boltLoaded = BOLT_RELOAD_TIME;
-        Debug.Log(life+"-"+MAX_LIFE);
     }
 
     // Update is called once per frame
@@ -80,7 +78,6 @@ public class HunterController : MonoBehaviour {
     }
 
     private void UpdateStamina(float value) {
-        Debug.Log(value);
         stamina += value * Time.deltaTime;
         if (stamina > MAX_STAMINA) {
             stamina = MAX_STAMINA;
@@ -164,7 +161,7 @@ public class HunterController : MonoBehaviour {
         anim.SetFloat("MoveRotation", sign * angle / 90);
 
         if (verticalInput != 0 || horizontalInput != 0) {
-            if (runInput <= 0.5 || stamina < STAMINA_RUN_SPEND * Time.deltaTime) {
+            if (runInput <= 0.5 || (nextState == 2 && stamina <= 0.1) || (nextState != 2 && stamina < STAMINA_RUN_SPEND/4)) {
                 // Walk
                 nextState = 1f;
                 rb.MovePosition(rb.position + move * walkSpeed * Time.deltaTime);
