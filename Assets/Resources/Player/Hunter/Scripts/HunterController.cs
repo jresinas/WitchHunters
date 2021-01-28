@@ -10,6 +10,7 @@ public class HunterController : MonoBehaviour {
     private float STAMINA_IDLE_RECOVER = 0.1f;
     private float STAMINA_ATTACK_SPEND = 0.25f;
     private float STAMINA_RUN_SPEND = 1f;
+    private float STAMINA_MAKE_NOISE_SPEND = 1f;
 
     Rigidbody rb;
     Animator anim;
@@ -78,12 +79,12 @@ public class HunterController : MonoBehaviour {
                 Move();
             }
             ChangeState();
-            UpdateStamina(STAMINA_DEFAULT_RECOVER);
+            UpdateStamina(STAMINA_DEFAULT_RECOVER, true);
         }
     }
 
-    private void UpdateStamina(float value) {
-        stamina += value * Time.deltaTime;
+    private void UpdateStamina(float value, bool time) {
+        stamina += time? value * Time.deltaTime : value;
         if (stamina > MAX_STAMINA) {
             stamina = MAX_STAMINA;
         }
@@ -132,7 +133,6 @@ public class HunterController : MonoBehaviour {
 
             // Attack
             float attackInput = Input.GetAxis("Attack");
-
             if (attackInput == 1 && !holdAttackButton) {
                 Attack();
                 holdAttackButton = true;
@@ -142,7 +142,7 @@ public class HunterController : MonoBehaviour {
             }
 
             // Make noise
-            if (Input.GetButtonDown("MakeNoise")) {
+            if (Input.GetButtonDown("MakeNoise") && stamina >= STAMINA_MAKE_NOISE_SPEND) {
                 MakeNoise();
             }
         }
@@ -179,12 +179,12 @@ public class HunterController : MonoBehaviour {
                 // Run
                 nextState = 2f;
                 rb.MovePosition(rb.position + move * runSpeed * Time.deltaTime);
-                UpdateStamina(-STAMINA_RUN_SPEND);
+                UpdateStamina(-STAMINA_RUN_SPEND, true);
             }
         } else {
             // Idle
             nextState = 0f;
-            UpdateStamina(STAMINA_IDLE_RECOVER);
+            UpdateStamina(STAMINA_IDLE_RECOVER, true);
         }
     }
 
@@ -206,14 +206,15 @@ public class HunterController : MonoBehaviour {
 
     // Returns if hands are busy (it is not possible to make new actions with hands)
     private bool HandsBusy() {
-        return anim.GetBool("ChangeWeapon") ||
+        return Busy() ||
+            anim.GetBool("ChangeWeapon") ||
             anim.GetBool("Attack") ||
             anim.GetBool("Hit");
     }
 
     // Attack controller
     private void Attack() {
-        UpdateStamina(-STAMINA_ATTACK_SPEND);
+        UpdateStamina(-STAMINA_ATTACK_SPEND, false);
         anim.SetBool("Attack", true);
     }
 
@@ -230,6 +231,7 @@ public class HunterController : MonoBehaviour {
 
     private void MakeNoise() {
         anim.SetBool("MakeNoise", true);
+        UpdateStamina(-STAMINA_MAKE_NOISE_SPEND, false);
         Instantiate(shockWave, transform.position, Quaternion.identity);
         Collider[] enemies = Physics.OverlapSphere(transform.position, 20f);
         foreach (Collider enemy in enemies) {
