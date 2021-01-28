@@ -225,15 +225,17 @@ public class HunterController : MonoBehaviour {
             boltLoaded = 0;
             StartCoroutine(BoltReload());
             Vector3 offset = transform.forward * 1.8f + transform.up * 1.2f;
-            Instantiate(bolt, transform.position + offset, transform.rotation);
+            GameObject b = Instantiate(bolt, transform.position + offset, transform.rotation);
+            Destroy(b, 5f);
         }
     }
 
     private void MakeNoise() {
         anim.SetBool("MakeNoise", true);
         UpdateStamina(-STAMINA_MAKE_NOISE_SPEND, false);
-        Instantiate(shockWave, transform.position, Quaternion.identity);
-        Collider[] enemies = Physics.OverlapSphere(transform.position, 20f);
+        GameObject wave = Instantiate(shockWave, transform.position, Quaternion.identity);
+        Destroy(wave, 5f);
+        Collider[] enemies = Physics.OverlapSphere(transform.position, 15f);
         foreach (Collider enemy in enemies) {
             if (enemy!=null && enemy.gameObject.tag == "Enemy") {
                 EnemyController ec = enemy.GetComponent<EnemyController>();
