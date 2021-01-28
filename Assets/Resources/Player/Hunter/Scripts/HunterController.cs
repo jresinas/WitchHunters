@@ -29,6 +29,7 @@ public class HunterController : MonoBehaviour {
     public GameObject bolt;
     public GameObject floatingText;
     public GameObject minimap;
+    public GameObject shockWave;
 
     float walkSpeed = 4f;
     float runSpeed = 8f;
@@ -69,11 +70,13 @@ public class HunterController : MonoBehaviour {
     }
 
     // Update is called once per frame
-    void Update() {
+    void FixedUpdate() {
         if (!dead) {
             WeaponsPosition();
             Inputs();
-            Move();
+            if (!Busy()) {
+                Move();
+            }
             ChangeState();
             UpdateStamina(STAMINA_DEFAULT_RECOVER);
         }
@@ -137,6 +140,11 @@ public class HunterController : MonoBehaviour {
             if (attackInput == 0) {
                 holdAttackButton = false;
             }
+
+            // Make noise
+            if (Input.GetButtonDown("MakeNoise")) {
+                MakeNoise();
+            }
         }
     }
 
@@ -192,6 +200,11 @@ public class HunterController : MonoBehaviour {
     }
 
     // Returns if hands are busy (it is not possible to make new actions with hands)
+    private bool Busy() {
+        return anim.GetBool("MakeNoise");
+    }
+
+    // Returns if hands are busy (it is not possible to make new actions with hands)
     private bool HandsBusy() {
         return anim.GetBool("ChangeWeapon") ||
             anim.GetBool("Attack") ||
@@ -212,6 +225,18 @@ public class HunterController : MonoBehaviour {
             StartCoroutine(BoltReload());
             Vector3 offset = transform.forward * 1.8f + transform.up * 1.2f;
             Instantiate(bolt, transform.position + offset, transform.rotation);
+        }
+    }
+
+    private void MakeNoise() {
+        anim.SetBool("MakeNoise", true);
+        Instantiate(shockWave, transform.position, Quaternion.identity);
+        Collider[] enemies = Physics.OverlapSphere(transform.position, 20f);
+        foreach (Collider enemy in enemies) {
+            if (enemy!=null && enemy.gameObject.tag == "Enemy") {
+                EnemyController ec = enemy.GetComponent<EnemyController>();
+                ec.SetTarget(transform.position, 999);
+            }
         }
     }
 

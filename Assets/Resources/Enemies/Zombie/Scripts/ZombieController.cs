@@ -5,7 +5,8 @@ using UnityEngine.AI;
 
 public class ZombieController : MonoBehaviour, IEnemy {
     // Number of SEARCH_TIME cycles that enemy continues searching player since stop seeing him
-    private int CYCLES_SEARCHING = 10;
+    public int CYCLES_SEARCHING { get => 10; }
+
     // Minimum speed multiplicator for move animation
     private float MIN_SPEED_MULT = 0.8f;
     // Maximum speed multiplicator for move animation
@@ -46,23 +47,23 @@ public class ZombieController : MonoBehaviour, IEnemy {
     void Update() { }
 
     // Return Vector3 of current target (for nav mesh)
-    public Vector3 GetTarget(GameObject player, GameObject church) {
-        RaycastHit hit;
-        if (Physics.Raycast(transform.position, player.transform.position - transform.position, out hit)) {
-            if (hit.collider.gameObject == player) {
-                cyclesSearching = CYCLES_SEARCHING;
-                return player.transform.position;
-            } else {
-                if (cyclesSearching > 0) {
-                    cyclesSearching--;
-                } else {
-                    return church.transform.position;
-                }
-            }
-        }
+    //public Vector3 GetTarget(GameObject player, GameObject church) {
+    //    RaycastHit hit;
+    //    if (Physics.Raycast(transform.position, player.transform.position - transform.position, out hit)) {
+    //        if (hit.collider.gameObject == player) {
+    //            cyclesSearching = CYCLES_SEARCHING;
+    //            return player.transform.position;
+    //        } else {
+    //            if (cyclesSearching > 0) {
+    //                cyclesSearching--;
+    //            } else {
+    //                return church.transform.position;
+    //            }
+    //        }
+    //    }
 
-        return Vector3.zero;
-    }
+    //    return Vector3.zero;
+    //}
 
     // Actions to do when is moving to the current target
     public void IsMoving() {
@@ -70,9 +71,9 @@ public class ZombieController : MonoBehaviour, IEnemy {
     }
 
     // Actions to do when is near the target
-    public void IsArrived() {
+    public void IsArrived(Vector3 target) {
         ec.anim.SetBool("Walk", false);
-        transform.LookAt(ec.target);
+        transform.LookAt(target);
         ec.anim.SetBool("Attack", true);
     }
 

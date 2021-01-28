@@ -9,6 +9,8 @@ public class EnemyController : MonoBehaviour {
     // Navmesh speed coeficient conversor
     private float NAVMESH_SPEED_COEFICIENT = 3.5f;
 
+    private int cyclesSearching = 0;
+
     // Script for specific behavior 
     private IEnemy self;
     public Animator anim;
@@ -37,7 +39,7 @@ public class EnemyController : MonoBehaviour {
         church = GameObject.Find("ChurchDoor");
         player = GameObject.FindWithTag("Player");
 
-        StartCoroutine(FindTarget());
+        StartCoroutine(FindPath());
     }
 
     // Update is called once per frame
@@ -47,14 +49,40 @@ public class EnemyController : MonoBehaviour {
     }
 
     // Assign target to NavMeshAgent
-    public IEnumerator FindTarget() {
-        target = self.GetTarget(player, church);
-        if (target != Vector3.zero) {
-            agent.SetDestination(target);
-        }
+    public IEnumerator FindPath() {
+        FindTarget();
 
         yield return new WaitForSeconds(SEARCH_TIME);
-        StartCoroutine(FindTarget());
+        StartCoroutine(FindPath());
+    }
+
+    private void FindTarget() {
+        if (InLineOfSight(player)) {
+            SetTarget(player.transform.position, self.CYCLES_SEARCHING);
+        } else {
+            if (cyclesSearching > 0 && agent.remainingDistance > agent.stoppingDistance) {
+                cyclesSearching--;
+            } else {
+                SetTarget(church.transform.position, 0);
+            }
+        }
+    }
+
+    private bool InLineOfSight(GameObject obj) {
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, obj.transform.position - transform.position, out hit)) {
+            if (hit.collider.gameObject == player) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void SetTarget(Vector3 target, int cycles) {
+        agent.SetDestination(target);
+        if (cycles >= 0) {
+            cyclesSearching = cycles;
+        }
     }
 
     // Attach weapons to character movements
@@ -68,8 +96,10 @@ public class EnemyController : MonoBehaviour {
         if (!dead && !Busy()) {
             if (agent.remainingDistance > agent.stoppingDistance) {
                 self.IsMoving();
-            } else {
-                self.IsArrived();
+            } else if (!agent.pathPending && agent.remainingDistance <= agent.stoppingDistance) {
+                if (agent.destination == player.transform.position || agent.destination == church.transform.position) {
+                    self.IsArrived(agent.destination);
+                }
             }
         } else if (dead) {
             
