@@ -71,16 +71,27 @@ public class HunterController : MonoBehaviour {
     }
 
     // Update is called once per frame
-    void FixedUpdate() {
+    void Update() {
         if (!dead) {
             WeaponsPosition();
             Inputs();
+            //if (!Busy()) {
+            //    Move();
+            //}
+            //ChangeState();
+            //UpdateStamina(STAMINA_DEFAULT_RECOVER, true);
+        }
+    }
+
+    private void FixedUpdate() {
+        if (!dead) {
             if (!Busy()) {
                 Move();
             }
             ChangeState();
             UpdateStamina(STAMINA_DEFAULT_RECOVER, true);
         }
+        
     }
 
     private void UpdateStamina(float value, bool time) {

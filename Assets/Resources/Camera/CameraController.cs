@@ -47,6 +47,15 @@ public class CameraController : MonoBehaviour
                         build.material = churchOpaque;
                         break;
                 }
+
+                switch (build.transform.tag) {
+                    case ("House"):
+                        build.material = houseOpaque;
+                        break;
+                    case ("Church"):
+                        build.material = churchOpaque;
+                        break;
+                }
             }
             transparentBuildings.Remove(build);
         }
@@ -57,6 +66,7 @@ public class CameraController : MonoBehaviour
         foreach (RaycastHit hit in hits) { 
             if (hit.collider.name != "Player") {
                 SetAllChildMeshTransparent(hit.collider);
+                SetMeshTransparent(hit.collider);
             }
         }
     }
@@ -77,5 +87,19 @@ public class CameraController : MonoBehaviour
         }
     }
 
+    private void SetMeshTransparent(Collider obj) {
+        Renderer mesh = obj.GetComponent<Renderer>();
+        if (mesh != null) {
+            switch (mesh.transform.tag) {
+                case ("House"):
+                    mesh.material = houseTransparent;
+                    break;
+                case ("Church"):
+                    mesh.material = churchTransparent;
+                    break;
+            }
+            transparentBuildings.Add(mesh);
+        }
+    }
 
 }
