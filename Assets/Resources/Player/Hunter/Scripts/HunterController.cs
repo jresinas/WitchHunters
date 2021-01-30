@@ -29,6 +29,7 @@ public class HunterController : MonoBehaviour {
     // Bolts throws from crossbow
     public GameObject bolt;
     public GameObject floatingText;
+    public GameObject blood;
     public GameObject minimap;
     public GameObject shockWave;
 
@@ -311,6 +312,7 @@ public class HunterController : MonoBehaviour {
         meleeAttacking = false;
 
         GameObject text = Instantiate(floatingText, transform.position, Quaternion.identity, transform);
+        Instantiate(blood, transform.position+ new Vector3(0f, 1f, 0f), Quaternion.identity, transform);
         //GameObject text = Instantiate(floatingText, transform.position, Quaternion.identity);
         text.GetComponent<TextMesh>().text = amount.ToString();
 
