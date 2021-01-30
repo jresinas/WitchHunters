@@ -101,9 +101,10 @@ public class EnemyController : MonoBehaviour {
             if (agent.remainingDistance > agent.stoppingDistance) {
                 self.IsMoving();
             } else if (!agent.pathPending && agent.remainingDistance <= agent.stoppingDistance) {
-                //if (agent.destination == player.transform.position || agent.destination == church.transform.position) {
-                    self.IsArrived(agent.destination);
-                //}
+                if (Vector3.Distance(player.transform.position, transform.position) <= agent.stoppingDistance || 
+                    Vector3.Distance(church.transform.position, transform.position) <= agent.stoppingDistance) {
+                self.IsArrived(agent.destination);
+                }
             }
         } else {
             agent.isStopped = true;
