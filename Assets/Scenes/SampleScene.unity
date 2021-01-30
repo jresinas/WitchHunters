@@ -8503,8 +8503,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 919132147757660716}
-  lifeBar: {fileID: 447666915}
-  staminaBar: {fileID: 97755306}
+  lifeOrb: {fileID: 447666915}
+  staminaOrb: {fileID: 97755306}
 --- !u!1 &1270158754
 GameObject:
   m_ObjectHideFlags: 0

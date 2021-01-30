@@ -6,8 +6,8 @@ using UnityEngine.UI;
 public class HudController : MonoBehaviour
 {
     public GameObject player;
-    public Image lifeBar;
-    public Image staminaBar;
+    public Image lifeOrb;
+    public Image staminaOrb;
     private HunterController hc;
     float y = 0;
     // Start is called before the first frame update
@@ -19,11 +19,13 @@ public class HudController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        lifeBar.fillAmount = hc.life/hc.MAX_LIFE;
-        staminaBar.fillAmount = hc.stamina/hc.MAX_STAMINA;
+        // Update orbs fill
+        lifeOrb.fillAmount = hc.life/hc.MAX_LIFE;
+        staminaOrb.fillAmount = hc.stamina/hc.MAX_STAMINA;
 
+        // Animate orbs
         y -= 0.5f*Time.deltaTime;
-        lifeBar.GetComponentInChildren<RawImage>().uvRect = new Rect(0f,y,1f,1f);
-        staminaBar.GetComponentInChildren<RawImage>().uvRect = new Rect(0f,y+0.5f,1f,1f);
+        lifeOrb.GetComponentInChildren<RawImage>().uvRect = new Rect(0f,y,1f,1f);
+        staminaOrb.GetComponentInChildren<RawImage>().uvRect = new Rect(0f,y+0.5f,1f,1f);
     }
 }
