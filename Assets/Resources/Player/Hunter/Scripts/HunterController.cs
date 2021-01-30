@@ -11,6 +11,7 @@ public class HunterController : MonoBehaviour {
     private float STAMINA_ATTACK_SPEND = 0.25f;
     private float STAMINA_RUN_SPEND = 1f;
     private float STAMINA_MAKE_NOISE_SPEND = 1f;
+    private float STAMINA_PUT_TRAP_SPEND = 0f;
 
     Rigidbody rb;
     Animator anim;
@@ -157,6 +158,10 @@ public class HunterController : MonoBehaviour {
             if (Input.GetButtonDown("MakeNoise") && stamina >= STAMINA_MAKE_NOISE_SPEND) {
                 MakeNoise();
             }
+
+            if (Input.GetButtonDown("PutTrap") && stamina >= STAMINA_PUT_TRAP_SPEND) {
+                PutTrap();
+            }
         }
     }
 
@@ -213,7 +218,8 @@ public class HunterController : MonoBehaviour {
 
     // Returns if hands are busy (it is not possible to make new actions with hands)
     private bool Busy() {
-        return anim.GetBool("MakeNoise");
+        return anim.GetBool("PutTrap") ||
+            anim.GetBool("MakeNoise");
     }
 
     // Returns if hands are busy (it is not possible to make new actions with hands)
@@ -254,6 +260,12 @@ public class HunterController : MonoBehaviour {
                 ec.SetTarget(transform.position, 999);
             }
         }
+    }
+
+    private void PutTrap() {
+        anim.SetBool("PutTrap", true);
+        UpdateStamina(-STAMINA_PUT_TRAP_SPEND, false);
+
     }
 
     // Select next weapon
