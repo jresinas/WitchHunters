@@ -45,7 +45,11 @@ public class EnemyController : MonoBehaviour {
     // Update is called once per frame
     void Update() {
         WeaponPosition();
-        Decision();
+        if (!dead) {
+            Decision();
+        } else {
+            meleeAttacking = false;
+        }
     }
 
     // Assign target to NavMeshAgent
@@ -93,18 +97,14 @@ public class EnemyController : MonoBehaviour {
 
     // Main flow for enemy action decision
     private void Decision() {
-        if (!dead && !Busy()) {
+        if (!Busy()) {
             if (agent.remainingDistance > agent.stoppingDistance) {
                 self.IsMoving();
             } else if (!agent.pathPending && agent.remainingDistance <= agent.stoppingDistance) {
-                if (agent.destination == player.transform.position || agent.destination == church.transform.position) {
+                //if (agent.destination == player.transform.position || agent.destination == church.transform.position) {
                     self.IsArrived(agent.destination);
-                }
+                //}
             }
-        } else if (dead) {
-            
-        } else if (!Busy()) {
-            agent.isStopped = true;
         } else {
             agent.isStopped = true;
         }
@@ -141,7 +141,6 @@ public class EnemyController : MonoBehaviour {
     // Enemy die
     private void Dead() {
         anim.SetBool("Die", true);
-        meleeAttacking = false;
         StopAllCoroutines();
         Destroy(col);
         Destroy(agent);
