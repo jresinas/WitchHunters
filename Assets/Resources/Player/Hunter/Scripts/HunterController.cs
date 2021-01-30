@@ -29,7 +29,7 @@ public class HunterController : MonoBehaviour {
     public GameObject axeKeep;
     // Bolts throws from crossbow
     public GameObject bolt;
-    public GameObject floatingText;
+    //public GameObject floatingText;
     public GameObject blood;
     public GameObject minimap;
     public GameObject shockWave;
@@ -323,10 +323,9 @@ public class HunterController : MonoBehaviour {
         anim.SetBool("Attack", false);
         meleeAttacking = false;
 
-        GameObject text = Instantiate(floatingText, transform.position, Quaternion.identity, transform);
         Instantiate(blood, transform.position+ new Vector3(0f, 1f, 0f), Quaternion.identity, transform);
-        //GameObject text = Instantiate(floatingText, transform.position, Quaternion.identity);
-        text.GetComponent<TextMesh>().text = amount.ToString();
+        //GameObject text = Instantiate(floatingText, transform.position, Quaternion.identity, transform);
+        //text.GetComponent<TextMesh>().text = amount.ToString();
 
         life -= amount;
         if (life <= 0) {
