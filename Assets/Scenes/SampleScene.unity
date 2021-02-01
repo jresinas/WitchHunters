@@ -8420,7 +8420,6 @@ MonoBehaviour:
   axe: {fileID: 1175119634}
   axeKeep: {fileID: 1133544502}
   bolt: {fileID: 2772052082867862200, guid: d6e3b4b69d1da8b438073b5c40828e1c, type: 3}
-  floatingText: {fileID: 8145443952721767104, guid: 5ff74552c6f42da4ba0407a1034b6bb3, type: 3}
   blood: {fileID: 4995154015362810120, guid: 032ae94f25f2e25428cfaa0ac452b143, type: 3}
   minimap: {fileID: 2027111069}
   shockWave: {fileID: 294697886553976688, guid: 568480987d833dc40b8d6dd7e3ee798b, type: 3}
@@ -13684,7 +13683,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: -2, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1001 &1012879988625833952
