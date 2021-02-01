@@ -33,6 +33,7 @@ public class HunterController : MonoBehaviour {
     public GameObject blood;
     public GameObject minimap;
     public GameObject shockWave;
+    public GameObject bearTrap;
 
     float walkSpeed = 4f;
     float runSpeed = 8f;
@@ -49,6 +50,7 @@ public class HunterController : MonoBehaviour {
 
     public bool dead = false;
     public bool meleeAttacking = false;
+    private int settingTrap = 0;
 
     // Control not holding attack button
     bool holdAttackButton = false;
@@ -160,7 +162,7 @@ public class HunterController : MonoBehaviour {
             }
 
             if (Input.GetButtonDown("PutTrap") && stamina >= STAMINA_PUT_TRAP_SPEND) {
-                PutTrap();
+                PutTrap(1);
             }
         }
     }
@@ -262,10 +264,27 @@ public class HunterController : MonoBehaviour {
         }
     }
 
-    private void PutTrap() {
+    private void PutTrap(int trapId) {
+        settingTrap = trapId;
         anim.SetBool("PutTrap", true);
         UpdateStamina(-STAMINA_PUT_TRAP_SPEND, false);
+    }
 
+    private void SetTrap() {
+        Vector3 offset = transform.forward;
+        GameObject trap = null;
+        if (settingTrap != 0) {
+            switch (settingTrap) {
+                case 1:
+                    trap = bearTrap;
+                    break;
+            }
+
+            if (trap != null) {
+                Instantiate(trap, transform.position + offset, Quaternion.identity);
+            }
+            settingTrap = 0;
+        }
     }
 
     // Select next weapon

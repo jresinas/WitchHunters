@@ -30,6 +30,8 @@ public class EnemyController : MonoBehaviour {
     public bool dead = false;
     public bool meleeAttacking = false;
 
+    private bool footBusy = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -99,7 +101,7 @@ public class EnemyController : MonoBehaviour {
     // Main flow for enemy action decision
     private void Decision() {
         if (!Busy()) {
-            if (agent.remainingDistance > agent.stoppingDistance) {
+            if (agent.remainingDistance > agent.stoppingDistance && !FootBusy()) {
                 self.IsMoving();
             } else if (!agent.pathPending && agent.remainingDistance <= agent.stoppingDistance) {
                 if (Vector3.Distance(player.transform.position, transform.position) <= agent.stoppingDistance || 
@@ -123,6 +125,13 @@ public class EnemyController : MonoBehaviour {
     public void AttackImpact(Collider collider) {
         HunterController player = collider.GetComponent<HunterController>();
         player.DamageReceived(self.meleeDamage);
+    }
+
+    public void Trapped(Vector3 position) {
+        anim.SetBool("Trap", true);
+        DamageReceived(2);
+        //footBusy = true;
+        transform.position = position;
     }
 
     // Enemy receive damage
@@ -154,6 +163,10 @@ public class EnemyController : MonoBehaviour {
         return anim.GetBool("Attack") ||
             anim.GetBool("Hit") ||
             anim.GetBool("Die");
+    }
+
+    public bool FootBusy() {
+        return anim.GetBool("Trap");
     }
 
     // Callback from animations to notify it is finished

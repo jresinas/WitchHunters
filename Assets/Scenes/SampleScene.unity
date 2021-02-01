@@ -8423,6 +8423,7 @@ MonoBehaviour:
   blood: {fileID: 4995154015362810120, guid: 032ae94f25f2e25428cfaa0ac452b143, type: 3}
   minimap: {fileID: 2027111069}
   shockWave: {fileID: 294697886553976688, guid: 568480987d833dc40b8d6dd7e3ee798b, type: 3}
+  bearTrap: {fileID: 6865823310842377528, guid: b22f183fcbfe23f45a609ab2a04c6887, type: 3}
   life: 0
   stamina: 0
   dead: 0
@@ -13683,7 +13684,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -2, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1001 &1012879988625833952
