@@ -9,6 +9,7 @@ public class HudController : MonoBehaviour
     public Image lifeOrb;
     public Image staminaOrb;
     private HunterController hc;
+    public Text[] trapsNumber;
     float y = 0;
     // Start is called before the first frame update
     void Start()
@@ -27,5 +28,10 @@ public class HudController : MonoBehaviour
         y -= 0.5f*Time.deltaTime;
         lifeOrb.GetComponentInChildren<RawImage>().uvRect = new Rect(0f,y,1f,1f);
         staminaOrb.GetComponentInChildren<RawImage>().uvRect = new Rect(0f,y+0.5f,1f,1f);
+
+        // Update traps number
+        for (int i = 0; i< trapsNumber.Length; i++) {
+            trapsNumber[i].text = hc.trapsNumber[i].ToString();
+        }
     }
 }

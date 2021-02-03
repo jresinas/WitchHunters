@@ -34,7 +34,7 @@ public class HunterController : MonoBehaviour {
     public GameObject blood;
     public GameObject minimap;
     public GameObject shockWave;
-    public GameObject bearTrap;
+    //public GameObject bearTrap;
 
     float walkSpeed = 4f;
     float runSpeed = 8f;
@@ -51,7 +51,7 @@ public class HunterController : MonoBehaviour {
 
     public bool dead = false;
     public bool meleeAttacking = false;
-    private int settingTrap = 0;
+    private int settingTrap = -1;
     private IObject objectToPick = null;
     // Control not holding attack button
     bool holdAttackButton = false;
@@ -59,7 +59,9 @@ public class HunterController : MonoBehaviour {
     // List of equiped weapons
     string[] weapons = { "Crossbow", "Melee2H" };
 
-    public List<string> traps = new List<string>{ "BearTrap", "BearTrap" };
+    public string[] trapsName = { "BearTrap", "Barrel" };
+    public int[] trapsNumber = { 2, 0 };
+    public GameObject[] trapsPrefab = { };
 
     // Current weapon
     int weapon = 1;
@@ -166,7 +168,7 @@ public class HunterController : MonoBehaviour {
             }
 
             if (Input.GetButtonDown("PutTrap") && stamina >= STAMINA_PUT_TRAP_SPEND) {
-                PutTrap(1);
+                PutTrap(0);
             }
 
             if (Input.GetButtonDown("PickObject")) {
@@ -274,26 +276,24 @@ public class HunterController : MonoBehaviour {
     }
 
     private void PutTrap(int trapId) {
-        settingTrap = trapId;
-        anim.SetBool("PutTrap", true);
-        UpdateStamina(-STAMINA_PUT_TRAP_SPEND, false);
-        traps.Remove("BearTrap");
+        if (trapsNumber[trapId] > 0) {
+            settingTrap = trapId;
+            anim.SetBool("PutTrap", true);
+            UpdateStamina(-STAMINA_PUT_TRAP_SPEND, false);
+            trapsNumber[trapId]--;
+        }
     }
 
     private void PutTrapCallback() {
         Vector3 offset = transform.forward;
         GameObject trap = null;
-        if (settingTrap != 0) {
-            switch (settingTrap) {
-                case 1:
-                    trap = bearTrap;
-                    break;
-            }
+        if (settingTrap >= 0) {
+            trap = trapsPrefab[settingTrap];
 
             if (trap != null) {
                 Instantiate(trap, transform.position + offset, Quaternion.identity);
             }
-            settingTrap = 0;
+            settingTrap = -1;
         }
     }
 
@@ -385,7 +385,7 @@ public class HunterController : MonoBehaviour {
         meleeAttacking = false;
         anim.SetBool("MakeNoise", false);
         anim.SetBool("PutTrap", false);
-        settingTrap = 0;
+        settingTrap = -1;
         anim.SetBool("PickObject", false);
         objectToPick = null;
     }
