@@ -10,11 +10,14 @@ public class HudController : MonoBehaviour
     public Image staminaOrb;
     private HunterController hc;
     public Text[] trapsNumber;
+    public Image selectedTrap;
+    private RectTransform selectedTrapFrame;
     float y = 0;
     // Start is called before the first frame update
     void Start()
     {
         hc = player.GetComponent<HunterController>();
+        selectedTrapFrame = selectedTrap.GetComponent<RectTransform>();
     }
 
     // Update is called once per frame
@@ -33,5 +36,8 @@ public class HudController : MonoBehaviour
         for (int i = 0; i< trapsNumber.Length; i++) {
             trapsNumber[i].text = hc.trapsNumber[i].ToString();
         }
+
+        // Update selected trap
+        selectedTrap.rectTransform.anchoredPosition = new Vector3(600f + 100f * hc.selectedTrap, selectedTrap.rectTransform.anchoredPosition.y);
     }
 }

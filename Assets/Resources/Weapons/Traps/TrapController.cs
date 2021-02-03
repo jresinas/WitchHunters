@@ -7,6 +7,7 @@ public class TrapController : MonoBehaviour, IObject
     Collider col;
     Animator anim;
     bool ready = true;
+    GameObject enemyTrapped;
     // Start is called before the first frame update
     void Start()
     {
@@ -26,12 +27,13 @@ public class TrapController : MonoBehaviour, IObject
             anim.SetBool("Active", true);
             EnemyController ec = collider.GetComponent<EnemyController>();
             ec.Trapped(transform.position);
+            enemyTrapped = collider.gameObject;
         }
     }
 
 
     public bool Pickable() {
-        return true;
+        return enemyTrapped == null || enemyTrapped.GetComponent<EnemyController>().dead;
     }
 
     public void PickObject(HunterController hc) {

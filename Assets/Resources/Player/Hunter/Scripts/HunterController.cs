@@ -51,10 +51,11 @@ public class HunterController : MonoBehaviour {
 
     public bool dead = false;
     public bool meleeAttacking = false;
-    private int settingTrap = -1;
+    public int selectedTrap = 0;
     private IObject objectToPick = null;
     // Control not holding attack button
     bool holdAttackButton = false;
+    bool holdSelectObjectButton = false;
 
     // List of equiped weapons
     string[] weapons = { "Crossbow", "Melee2H" };
@@ -168,12 +169,21 @@ public class HunterController : MonoBehaviour {
             }
 
             if (Input.GetButtonDown("PutTrap") && stamina >= STAMINA_PUT_TRAP_SPEND) {
-                PutTrap(0);
+                PutTrap();
             }
 
             if (Input.GetButtonDown("PickObject")) {
                 PickObject();
             }
+        }
+
+        float selectObject = Input.GetAxis("SelectObject");
+        if (Mathf.Abs(selectObject) == 1 && !holdSelectObjectButton) {
+            holdSelectObjectButton = true;
+            ChangeSelectedObject((int)selectObject);
+        }
+        if (selectObject == 0) {
+            holdSelectObjectButton = false;
         }
     }
 
@@ -275,25 +285,23 @@ public class HunterController : MonoBehaviour {
         }
     }
 
-    private void PutTrap(int trapId) {
-        if (trapsNumber[trapId] > 0) {
-            settingTrap = trapId;
+    private void PutTrap() {
+        if (trapsNumber[selectedTrap] > 0) {
             anim.SetBool("PutTrap", true);
             UpdateStamina(-STAMINA_PUT_TRAP_SPEND, false);
-            trapsNumber[trapId]--;
+            trapsNumber[selectedTrap]--;
         }
     }
 
     private void PutTrapCallback() {
         Vector3 offset = transform.forward;
         GameObject trap = null;
-        if (settingTrap >= 0) {
-            trap = trapsPrefab[settingTrap];
+        if (selectedTrap >= 0) {
+            trap = trapsPrefab[selectedTrap];
 
             if (trap != null) {
                 Instantiate(trap, transform.position + offset, Quaternion.identity);
             }
-            settingTrap = -1;
         }
     }
 
@@ -315,6 +323,20 @@ public class HunterController : MonoBehaviour {
             objectToPick = null;
         }
     }
+
+    private void ChangeSelectedObject(int num) {
+        if (!anim.GetBool("PutTrap")) {
+            selectedTrap = selectedTrap + num;
+            if (selectedTrap < 0) {
+                selectedTrap = trapsNumber.Length-1;
+            }
+            if (selectedTrap >= trapsNumber.Length) {
+                selectedTrap = 0;
+            }
+            Debug.Log(selectedTrap);
+        }
+    }
+
 
     // Select next weapon
     private void SetNextWeapon(int next) {
@@ -385,7 +407,6 @@ public class HunterController : MonoBehaviour {
         meleeAttacking = false;
         anim.SetBool("MakeNoise", false);
         anim.SetBool("PutTrap", false);
-        settingTrap = -1;
         anim.SetBool("PickObject", false);
         objectToPick = null;
     }
