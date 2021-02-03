@@ -30,8 +30,6 @@ public class EnemyController : MonoBehaviour {
     public bool dead = false;
     public bool meleeAttacking = false;
 
-    private bool footBusy = false;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -130,7 +128,6 @@ public class EnemyController : MonoBehaviour {
     public void Trapped(Vector3 position) {
         anim.SetBool("Trap", true);
         DamageReceived(2);
-        //footBusy = true;
         transform.position = position;
     }
 
