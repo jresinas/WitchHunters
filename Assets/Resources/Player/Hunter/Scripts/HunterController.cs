@@ -12,6 +12,7 @@ public class HunterController : MonoBehaviour {
     private float STAMINA_RUN_SPEND = 1f;
     private float STAMINA_MAKE_NOISE_SPEND = 1f;
     private float STAMINA_PUT_TRAP_SPEND = 0f;
+    private float PICK_DISTANCE = 1.5f;
 
     Rigidbody rb;
     Animator anim;
@@ -51,12 +52,15 @@ public class HunterController : MonoBehaviour {
     public bool dead = false;
     public bool meleeAttacking = false;
     private int settingTrap = 0;
-
+    private IObject objectToPick = null;
     // Control not holding attack button
     bool holdAttackButton = false;
 
     // List of equiped weapons
     string[] weapons = { "Crossbow", "Melee2H" };
+
+    public List<string> traps = new List<string>{ "BearTrap", "BearTrap" };
+
     // Current weapon
     int weapon = 1;
     // Next weapon to select
@@ -164,6 +168,10 @@ public class HunterController : MonoBehaviour {
             if (Input.GetButtonDown("PutTrap") && stamina >= STAMINA_PUT_TRAP_SPEND) {
                 PutTrap(1);
             }
+
+            if (Input.GetButtonDown("PickObject")) {
+                PickObject();
+            }
         }
     }
 
@@ -221,6 +229,7 @@ public class HunterController : MonoBehaviour {
     // Returns if hands are busy (it is not possible to make new actions with hands)
     private bool Busy() {
         return anim.GetBool("PutTrap") ||
+            anim.GetBool("PickObject") ||
             anim.GetBool("MakeNoise");
     }
 
@@ -268,9 +277,10 @@ public class HunterController : MonoBehaviour {
         settingTrap = trapId;
         anim.SetBool("PutTrap", true);
         UpdateStamina(-STAMINA_PUT_TRAP_SPEND, false);
+        traps.Remove("BearTrap");
     }
 
-    private void SetTrap() {
+    private void PutTrapCallback() {
         Vector3 offset = transform.forward;
         GameObject trap = null;
         if (settingTrap != 0) {
@@ -284,6 +294,25 @@ public class HunterController : MonoBehaviour {
                 Instantiate(trap, transform.position + offset, Quaternion.identity);
             }
             settingTrap = 0;
+        }
+    }
+
+    private void PickObject() {
+        GameObject obj = GetNearestObject();
+        if (obj != null) {
+            IObject o = obj.GetComponent<IObject>();
+            if (o != null) {
+                transform.LookAt(obj.transform);
+                objectToPick = o;
+                anim.SetBool("PickObject", true);
+            }
+        }
+    }
+
+    private void PickObjectCallback() {
+        if (objectToPick != null) {
+            objectToPick.PickObject(this);
+            objectToPick = null;
         }
     }
 
@@ -338,9 +367,7 @@ public class HunterController : MonoBehaviour {
 
     public void DamageReceived(float amount) {
         anim.SetBool("Hit", true);
-        anim.SetBool("ChangeWeapon", false);
-        anim.SetBool("Attack", false);
-        meleeAttacking = false;
+        FinishAllActions();
 
         Instantiate(blood, transform.position+ new Vector3(0f, 1f, 0f), Quaternion.identity, transform);
         //GameObject text = Instantiate(floatingText, transform.position, Quaternion.identity, transform);
@@ -352,6 +379,17 @@ public class HunterController : MonoBehaviour {
         }
     }
 
+    private void FinishAllActions() {
+        anim.SetBool("ChangeWeapon", false);
+        anim.SetBool("Attack", false);
+        meleeAttacking = false;
+        anim.SetBool("MakeNoise", false);
+        anim.SetBool("PutTrap", false);
+        settingTrap = 0;
+        anim.SetBool("PickObject", false);
+        objectToPick = null;
+    }
+
     private void Dead() {
         anim.SetBool("Die", true);
         StopAllCoroutines();
@@ -359,5 +397,39 @@ public class HunterController : MonoBehaviour {
         Destroy(minimap);
         dead = true;
     }
+    
+    private GameObject GetNearestObject() {
+        float nearest = PICK_DISTANCE;
+        GameObject nearestObj = null;
+        GameObject[] objs = GameObject.FindGameObjectsWithTag("Object");
+
+        foreach (GameObject obj in objs) {
+            IObject o = obj.GetComponent<IObject>();
+            if (o != null && o.Pickable()) {
+                float distance = Vector3.Distance(transform.position, obj.transform.position);
+                if (distance < nearest) {
+                    nearest = distance;
+                    nearestObj = obj;
+                }
+            }
+        }
+
+        return nearestObj;
+    }
+
+    //private GameObject[] GetObjects() {
+    //    GameObject[] objs = { };
+
+    //    objs = GameObject.FindGameObjectsWithTag("Object");
+
+    //    System.Array.Sort(objs, delegate (GameObject a, GameObject b)
+    //    {
+    //        return Vector3.Distance(a.transform.position, transform.position).CompareTo(Vector3.Distance(b.transform.position, gameObject.transform.position));
+    //    });
+
+    //    return objs;
+    //}
+
 
 }
+
