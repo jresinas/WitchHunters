@@ -12,7 +12,7 @@ public class HunterController : MonoBehaviour {
     private float STAMINA_RUN_SPEND = 1f;
     private float STAMINA_MAKE_NOISE_SPEND = 1f;
     private float STAMINA_PUT_TRAP_SPEND = 0f;
-    private float PICK_DISTANCE = 1.5f;
+    private float PICK_DISTANCE = 1.8f;
 
     Rigidbody rb;
     Animator anim;
@@ -289,7 +289,6 @@ public class HunterController : MonoBehaviour {
         if (trapsNumber[selectedTrap] > 0) {
             anim.SetBool("PutTrap", true);
             UpdateStamina(-STAMINA_PUT_TRAP_SPEND, false);
-            trapsNumber[selectedTrap]--;
         }
     }
 
@@ -301,6 +300,7 @@ public class HunterController : MonoBehaviour {
 
             if (trap != null) {
                 Instantiate(trap, transform.position + offset, Quaternion.identity);
+                trapsNumber[selectedTrap]--;
             }
         }
     }

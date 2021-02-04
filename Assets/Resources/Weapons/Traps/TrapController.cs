@@ -38,8 +38,10 @@ public class TrapController : MonoBehaviour, IObject
 
     public void PickObject(HunterController hc) {
         //hc.traps.Add("BearTrap");
-        hc.trapsNumber[0]++;
-        Destroy(gameObject);
+        if (Pickable()) {
+            hc.trapsNumber[0]++;
+            Destroy(gameObject);
+        }
     }
 
 
