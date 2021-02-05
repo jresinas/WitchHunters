@@ -23,6 +23,7 @@ public class MeleeWeaponController : MonoBehaviour
         if (collider.gameObject.tag == "Enemy" && hc.meleeAttacking) {
             EnemyController enemy = collider.gameObject.GetComponent<EnemyController>();
             enemy.DamageReceived(damage);
+            SoundManager.instance.Play("Melee2HImpact", hc.audioHands);
         }
     }
 }

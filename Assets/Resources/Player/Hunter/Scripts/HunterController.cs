@@ -8,7 +8,8 @@ public class HunterController : MonoBehaviour {
     public float MAX_STAMINA = 10f;
     private float STAMINA_DEFAULT_RECOVER = 0.25f;
     private float STAMINA_IDLE_RECOVER = 0.1f;
-    private float STAMINA_ATTACK_SPEND = 0.25f;
+    private float STAMINA_ATTACK_MELEE2H_SPEND = 0.5f;
+    private float STAMINA_ATTACK_CROSSBOW_SPEND = 0.1f;
     private float STAMINA_RUN_SPEND = 1f;
     private float STAMINA_MAKE_NOISE_SPEND = 1f;
     private float STAMINA_PUT_TRAP_SPEND = 0f;
@@ -16,6 +17,8 @@ public class HunterController : MonoBehaviour {
 
     Rigidbody rb;
     Animator anim;
+    public AudioSource audioFoots;
+    public AudioSource audioHands;
     // Empty object in the character back to keep unused weapons
     public GameObject bag;
     // Character right hand
@@ -105,8 +108,8 @@ public class HunterController : MonoBehaviour {
         
     }
 
-    private void UpdateStamina(float value, bool time) {
-        stamina += time? value * Time.deltaTime : value;
+    private void UpdateStamina(float value, bool continuous) {
+        stamina += continuous ? value * Time.deltaTime : value;
         if (stamina > MAX_STAMINA) {
             stamina = MAX_STAMINA;
         }
@@ -255,8 +258,20 @@ public class HunterController : MonoBehaviour {
 
     // Attack controller
     private void Attack() {
-        UpdateStamina(-STAMINA_ATTACK_SPEND, false);
-        anim.SetBool("Attack", true);
+        switch (weapons[weapon]) {
+            case ("Melee2H"):
+                anim.SetBool("Attack", true);
+                SoundManager.instance.Play("Melee2HAttack", audioHands, 0.3f);
+                UpdateStamina(-STAMINA_ATTACK_MELEE2H_SPEND, false);
+                break;
+            case ("Crossbow"):
+                if (boltLoaded >= BOLT_RELOAD_TIME) {
+                    anim.SetBool("Attack", true);
+                    SoundManager.instance.Play("CrossbowAttack", audioHands);
+                    UpdateStamina(-STAMINA_ATTACK_CROSSBOW_SPEND, false);
+                }
+                break;
+        }
     }
 
     // Callback from fire crossbow animation to fire a bolt
@@ -265,7 +280,7 @@ public class HunterController : MonoBehaviour {
         if (boltLoaded >= BOLT_RELOAD_TIME) {
             boltLoaded = 0;
             StartCoroutine(BoltReload());
-            Vector3 offset = transform.forward * 1.8f + transform.up * 1.2f;
+            Vector3 offset = transform.forward * (1.2f +nextState*0.25f) + transform.up * 1.2f + transform.right*0.1f;
             GameObject b = Instantiate(bolt, transform.position + offset, transform.rotation);
             Destroy(b, 5f);
         }
@@ -333,7 +348,7 @@ public class HunterController : MonoBehaviour {
             if (selectedTrap >= trapsNumber.Length) {
                 selectedTrap = 0;
             }
-            Debug.Log(selectedTrap);
+            SoundManager.instance.Play("SelectObject", audioHands);
         }
     }
 
@@ -365,10 +380,12 @@ public class HunterController : MonoBehaviour {
             case ("Crossbow"):
                 crossbow.SetActive(true);
                 crossbowKeep.SetActive(false);
+                SoundManager.instance.Play("EquipCrossbow", audioHands);
                 break;
             case ("Melee2H"):
                 axe.SetActive(true);
                 axeKeep.SetActive(false);
+                SoundManager.instance.Play("EquipMelee2H", audioHands);
                 break;
         }
 
@@ -436,6 +453,12 @@ public class HunterController : MonoBehaviour {
         }
 
         return nearestObj;
+    }
+
+    private void Step(AnimationEvent evt) {
+        if (evt.animatorClipInfo.weight > 0.4) {
+            SoundManager.instance.Play("Step", audioFoots);
+        }
     }
 
     //private GameObject[] GetObjects() {

@@ -6,6 +6,7 @@ public class TrapController : MonoBehaviour, IObject
 {
     Collider col;
     Animator anim;
+    AudioSource audioSource;
     bool ready = true;
     GameObject enemyTrapped;
     // Start is called before the first frame update
@@ -13,6 +14,7 @@ public class TrapController : MonoBehaviour, IObject
     {
         col = GetComponent<Collider>();
         anim = GetComponent<Animator>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -23,6 +25,7 @@ public class TrapController : MonoBehaviour, IObject
 
     void OnTriggerEnter(Collider collider) {
         if (ready && collider.gameObject.tag == "Enemy") {
+            SoundManager.instance.Play("BearTrap", audioSource);
             ready = false;
             anim.SetBool("Active", true);
             EnemyController ec = collider.GetComponent<EnemyController>();

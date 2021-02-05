@@ -22,6 +22,7 @@ public class ZombieController : MonoBehaviour, IEnemy {
     private float _meleeDamage = 1;
 
     private EnemyController ec;
+    private AudioSource audioSource;
     // Auxiliar variable to count cylces spend searching player
     private int cyclesSearching;
 
@@ -40,30 +41,33 @@ public class ZombieController : MonoBehaviour, IEnemy {
     // Start is called before the first frame update
     void Start() {
         ec = GetComponent<EnemyController>();
+        audioSource = GetComponent<AudioSource>();
         ec.anim.SetFloat("SpeedMultiplier", Random.Range(MIN_SPEED_MULT, MAX_SPEED_MULT));
     }
 
-    // Update is called once per frame
-    void Update() { }
+    void FixedUpdate() {
+        //if (Random.Range(0f, 1f) > 0.9f) {
+        //    Debug.Log("Roar");
+        //    SoundManager.instance.Play("ZombieSearch");
+        //}
+    }
 
-    // Return Vector3 of current target (for nav mesh)
-    //public Vector3 GetTarget(GameObject player, GameObject church) {
-    //    RaycastHit hit;
-    //    if (Physics.Raycast(transform.position, player.transform.position - transform.position, out hit)) {
-    //        if (hit.collider.gameObject == player) {
-    //            cyclesSearching = CYCLES_SEARCHING;
-    //            return player.transform.position;
-    //        } else {
-    //            if (cyclesSearching > 0) {
-    //                cyclesSearching--;
-    //            } else {
-    //                return church.transform.position;
-    //            }
-    //        }
-    //    }
 
-    //    return Vector3.zero;
-    //}
+    public void IsSeeingPlayer(GameObject player) {
+        if (Random.Range(0f, 1f) > 0.95f) {
+            SoundManager.instance.Play("ZombieSearch", audioSource);
+        }
+    }
+
+    public void IsSearchingPlayer(int cyclesRemaining) {
+
+    }
+
+    public void IsGoingToChurch() {
+        if (Random.Range(0f, 1f) > 0.95f) {
+            SoundManager.instance.Play("ZombieSearch", audioSource);
+        }
+    }
 
     // Actions to do when is moving to the current target
     public void IsMoving() {
@@ -75,6 +79,11 @@ public class ZombieController : MonoBehaviour, IEnemy {
         ec.anim.SetBool("Walk", false);
         transform.LookAt(target);
         ec.anim.SetBool("Attack", true);
+        SoundManager.instance.Play("ZombieAttack", audioSource);
+    }
+
+    public void IsDamaged(float amount) {
+        SoundManager.instance.Play("ZombieDamaged", audioSource);
     }
 
     // Callback from animation move when zombie makes a step

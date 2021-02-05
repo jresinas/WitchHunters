@@ -64,11 +64,14 @@ public class EnemyController : MonoBehaviour {
     private void FindTarget() {
         if (InLineOfSight(player)) {
             SetTarget(player.transform.position, self.CYCLES_SEARCHING);
+            self.IsSeeingPlayer(player);
         } else {
             if (cyclesSearching > 0 && agent.remainingDistance > agent.stoppingDistance) {
                 cyclesSearching--;
+                self.IsSearchingPlayer(cyclesSearching);
             } else {
                 SetTarget(church.transform.position, 0);
+                self.IsGoingToChurch();
             }
         }
     }
@@ -104,7 +107,7 @@ public class EnemyController : MonoBehaviour {
             } else if (!agent.pathPending && agent.remainingDistance <= agent.stoppingDistance) {
                 if (Vector3.Distance(player.transform.position, transform.position) <= agent.stoppingDistance || 
                     Vector3.Distance(church.transform.position, transform.position) <= agent.stoppingDistance) {
-                self.IsArrived(agent.destination);
+                    self.IsArrived(agent.destination);
                 }
             }
         } else {
@@ -133,6 +136,7 @@ public class EnemyController : MonoBehaviour {
 
     // Enemy receive damage
     public void DamageReceived(float amount) {
+        self.IsDamaged(amount);
         anim.SetBool("Hit", true);
 
         Instantiate(blood, transform.position+ new Vector3(0f, 1f, 0f), Quaternion.identity, transform);

@@ -75,15 +75,18 @@ public class CameraController : MonoBehaviour
         Renderer[] childs = obj.GetComponentsInChildren<Renderer>();
 
         foreach (Renderer mesh in childs) {
-            switch (mesh.transform.parent.tag) {
-                case ("House"):
-                    mesh.material = houseTransparent;
-                    break;
-                case ("Church"):
-                    mesh.material = churchTransparent;
-                    break;
+            if (mesh != null && mesh.transform.parent != null) {
+                switch (mesh.transform.parent.tag) {
+                    case ("House"):
+                        mesh.material = houseTransparent;
+                        transparentBuildings.Add(mesh);
+                        break;
+                    case ("Church"):
+                        mesh.material = churchTransparent;
+                        transparentBuildings.Add(mesh);
+                        break;
+                }
             }
-            transparentBuildings.Add(mesh);
         }
     }
 
@@ -93,12 +96,13 @@ public class CameraController : MonoBehaviour
             switch (mesh.transform.tag) {
                 case ("House"):
                     mesh.material = houseTransparent;
+                    transparentBuildings.Add(mesh);
                     break;
                 case ("Church"):
                     mesh.material = churchTransparent;
+                    transparentBuildings.Add(mesh);
                     break;
             }
-            transparentBuildings.Add(mesh);
         }
     }
 
