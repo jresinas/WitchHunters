@@ -15,6 +15,8 @@ public class HudController : MonoBehaviour
     public MinimapCameraController minimapCamera;
     public GameObject minimapSmall;
     public GameObject minimapLarge;
+    public GameObject pausePanel;
+    public static bool pause = false;
     float y = 0;
     // Start is called before the first frame update
     void Start()
@@ -55,6 +57,14 @@ public class HudController : MonoBehaviour
                 minimapLarge.SetActive(false);
             }
 
+        }
+
+        // Pause Game
+        if (Input.GetButtonDown("Pause")) {
+            pause = !pause;
+            pausePanel.SetActive(pause);
+            Time.timeScale = pause? 0 : 1;
+            SoundManager.instance.Pause(pause);
         }
     }
 }

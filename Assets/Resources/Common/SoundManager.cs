@@ -15,8 +15,8 @@ public class SoundManager : MonoBehaviour {
     private Dictionary<string, AudioClip[]> audios = new Dictionary<string, AudioClip[]>();
 
     public AudioSource music;
-    //public AudioSource effect;
     public static SoundManager instance = null;
+    public AudioSource[] allAudioSources;
 
     //private void Awake() {
     //    // If there is not already an instance of SoundManager, set it to this.
@@ -40,7 +40,9 @@ public class SoundManager : MonoBehaviour {
         foreach (Sound s in audioList) {
             audios.Add(s.name, s.clip);
         }
-        
+
+        allAudioSources = FindObjectsOfType<AudioSource>();
+
         PlayMusic("Background");
     }
 
@@ -55,5 +57,18 @@ public class SoundManager : MonoBehaviour {
         music.clip = audios[name][0];
         music.Play();
     }
+
+    public void Pause(bool pause) {
+        foreach (AudioSource audioSource in allAudioSources) {
+            if (audioSource != music) {
+                if (pause) {
+                    audioSource.Pause();
+                } else {
+                    audioSource.UnPause();
+                }
+            }
+        }
+    }
+
 }
 

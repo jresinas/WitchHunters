@@ -86,7 +86,7 @@ public class HunterController : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        if (!dead) {
+        if (!dead && !HudController.pause) {
             WeaponsPosition();
             Inputs();
             //if (!Busy()) {
