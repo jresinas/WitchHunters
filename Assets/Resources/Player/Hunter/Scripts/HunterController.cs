@@ -31,8 +31,6 @@ public class HunterController : MonoBehaviour {
     public GameObject axe;
     // Axe keep in the character back bag
     public GameObject axeKeep;
-    // Bolts throws from crossbow
-    public GameObject bolt;
     //public GameObject floatingText;
     public GameObject blood;
     public GameObject minimap;
@@ -62,15 +60,16 @@ public class HunterController : MonoBehaviour {
 
     // List of equiped weapons
     string[] weapons = { "Crossbow", "Melee2H" };
+    public GameObject[] bolts;
 
     public string[] trapsName = { "BearTrap", "Barrel" };
     public int[] trapsNumber = { 2, 0 };
     public GameObject[] trapsPrefab = { };
 
     // Current weapon
-    int weapon = 1;
-    // Next weapon to select
-    int nextWeapon = 0;
+    int weapon = 0;
+    // Current bolt
+    int bolt = 0;
     // Next movement state (0:idle, 1:walk, 2:run)
     float nextState = 0f;
 
@@ -78,7 +77,8 @@ public class HunterController : MonoBehaviour {
     void Start() {
         rb = GetComponent<Rigidbody>();
         anim = GetComponent<Animator>();
-        ChangeWeapon();
+        //ChangeWeapon();
+        EquipWeapon(weapon);
         life =  MAX_LIFE;
         stamina = MAX_STAMINA;
         boltLoaded = BOLT_RELOAD_TIME;
@@ -147,13 +147,12 @@ public class HunterController : MonoBehaviour {
 
         if (!HandsBusy()) {
             // Change weapon
-            if (Input.GetButtonDown("Switch Weapon Left")) {
-                SetNextWeapon(-1);
-                anim.SetBool("ChangeWeapon", true);
+            if (Input.GetButtonDown("ChangeWeapon")) {
+                ChangeWeapon();
             }
-            if (Input.GetButtonDown("Switch Weapon Right")) {
-                SetNextWeapon(1);
-                anim.SetBool("ChangeWeapon", true);
+
+            if (Input.GetButtonDown("SwitchArrow")) {
+                ChangeBolt();
             }
 
             // Attack
@@ -281,7 +280,7 @@ public class HunterController : MonoBehaviour {
             boltLoaded = 0;
             StartCoroutine(BoltReload());
             Vector3 offset = transform.forward * (1.2f +nextState*0.25f) + transform.up * 1.2f + transform.right*0.1f;
-            GameObject b = Instantiate(bolt, transform.position + offset, transform.rotation);
+            GameObject b = Instantiate(bolts[bolt], transform.position + offset, transform.rotation);
             Destroy(b, 5f);
         }
     }
@@ -352,47 +351,57 @@ public class HunterController : MonoBehaviour {
         }
     }
 
+    private void ChangeWeapon() {
+        anim.SetBool("ChangeWeapon", true);
+    }
 
-    // Select next weapon
-    private void SetNextWeapon(int next) {
-        nextWeapon += next;
-        if (nextWeapon < 0) {
-            nextWeapon = weapons.Length - 1;
-        } else if (nextWeapon >= weapons.Length) {
-            nextWeapon = 0;
-        }
+    private void ChangeBolt() {
+        bolt = (bolt + 1) % bolts.Length;
     }
 
     // Callback from animations to keep current weapon and draw new weapon
-    private void ChangeWeapon() {
-        switch (weapons[weapon]) {
-            case ("Crossbow"):
-                crossbow.SetActive(false);
-                crossbowKeep.SetActive(true);
-                break;
-            case ("Melee2H"):
-                axe.SetActive(false);
-                axeKeep.SetActive(true);
-                break;
-        }
+    private void ChangeWeaponCallback() {
+        UnequipWeapon(weapon);
+        weapon = (weapon + 1) % weapons.Length;
+        EquipWeapon(weapon);
+    }
 
-        switch (weapons[nextWeapon]) {
-            case ("Crossbow"):
-                crossbow.SetActive(true);
-                crossbowKeep.SetActive(false);
-                SoundManager.instance.Play("EquipCrossbow", audioHands);
-                break;
-            case ("Melee2H"):
-                axe.SetActive(true);
-                axeKeep.SetActive(false);
-                SoundManager.instance.Play("EquipMelee2H", audioHands);
-                break;
-        }
+    private void UnequipWeapon(int w) {
+        GameObject inHand;
+        GameObject inBag;
+        GetWeapons(w, out inHand, out inBag);
 
         anim.SetLayerWeight(anim.GetLayerIndex(weapons[weapon]), 0f);
-        anim.SetLayerWeight(anim.GetLayerIndex(weapons[nextWeapon]), 1f);
+        inHand.SetActive(false);
+        inBag.SetActive(true);
+    }
 
-        weapon = nextWeapon;
+    private void EquipWeapon(int w) {
+        GameObject inHand;
+        GameObject inBag;
+        GetWeapons(w, out inHand, out inBag);
+
+        anim.SetLayerWeight(anim.GetLayerIndex(weapons[weapon]), 1f);
+        inHand.SetActive(true);
+        inBag.SetActive(false);
+        SoundManager.instance.Play("Equip" + weapons[weapon], audioHands);
+    }
+
+    private void GetWeapons(int w, out GameObject inHand, out GameObject inBag) {
+        switch (weapons[w]) {
+            case ("Crossbow"):
+                inHand = crossbow;
+                inBag = crossbowKeep;
+                break;
+            case ("Melee2H"):
+                inHand = axe;
+                inBag = axeKeep;
+                break;
+            default:
+                inHand = null;
+                inBag = null;
+                break;
+        }
     }
 
     // Callback from animations to notify it is finished

@@ -8929,7 +8929,6 @@ MonoBehaviour:
   crossbowKeep: {fileID: 1912226069}
   axe: {fileID: 1175119634}
   axeKeep: {fileID: 1133544502}
-  bolt: {fileID: 2131627529781546658, guid: a0aa5359459611542b6beded43c039d2, type: 3}
   blood: {fileID: 4995154015362810120, guid: 032ae94f25f2e25428cfaa0ac452b143, type: 3}
   minimap: {fileID: 2027111069}
   shockWave: {fileID: 294697886553976688, guid: 568480987d833dc40b8d6dd7e3ee798b, type: 3}
@@ -8938,6 +8937,10 @@ MonoBehaviour:
   dead: 0
   meleeAttacking: 0
   selectedTrap: 0
+  bolts:
+  - {fileID: 2772052082867862200, guid: d6e3b4b69d1da8b438073b5c40828e1c, type: 3}
+  - {fileID: 2131627529781546658, guid: a0aa5359459611542b6beded43c039d2, type: 3}
+  - {fileID: 452154651952630315, guid: 9f7045ac70c77d04db5f58709af7a1b4, type: 3}
   trapsName:
   - BearTrap
   - Barrel
@@ -11659,7 +11662,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 89e86d8ddc1d19545a6aac220d7d49e4, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1151388028547126963, guid: 89e86d8ddc1d19545a6aac220d7d49e4, type: 3}
       propertyPath: m_LocalPosition.x
