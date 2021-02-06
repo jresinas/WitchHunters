@@ -17,7 +17,7 @@ RenderSettings:
   m_Fog: 0
   m_FogColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   m_FogMode: 3
-  m_FogDensity: 0.01
+  m_FogDensity: 0
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
   m_AmbientSkyColor: {r: 0.212, g: 0.227, b: 0.259, a: 1}
@@ -8929,7 +8929,7 @@ MonoBehaviour:
   crossbowKeep: {fileID: 1912226069}
   axe: {fileID: 1175119634}
   axeKeep: {fileID: 1133544502}
-  bolt: {fileID: 2772052082867862200, guid: d6e3b4b69d1da8b438073b5c40828e1c, type: 3}
+  bolt: {fileID: 2131627529781546658, guid: a0aa5359459611542b6beded43c039d2, type: 3}
   blood: {fileID: 4995154015362810120, guid: 032ae94f25f2e25428cfaa0ac452b143, type: 3}
   minimap: {fileID: 2027111069}
   shockWave: {fileID: 294697886553976688, guid: 568480987d833dc40b8d6dd7e3ee798b, type: 3}
