@@ -43,7 +43,7 @@ public class HudController : MonoBehaviour
         }
 
         // Update selected trap
-        selectedTrap.rectTransform.anchoredPosition = new Vector3(600f + 100f * hc.selectedTrap, selectedTrap.rectTransform.anchoredPosition.y);
+        selectedTrap.rectTransform.anchoredPosition = new Vector3(110f * hc.selectedTrap, selectedTrap.rectTransform.anchoredPosition.y);
 
         // Switch minimap size
         if (Input.GetButtonDown("ResizeMinimap")) {
