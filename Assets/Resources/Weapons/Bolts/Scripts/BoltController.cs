@@ -6,6 +6,7 @@ public class BoltController : MonoBehaviour
 {
     float damage = 1f;
     float speed = 40f;
+    public GameObject explosion;
 
     // Start is called before the first frame update
     void Start()
@@ -26,6 +27,11 @@ public class BoltController : MonoBehaviour
             EnemyController enemy = collider.gameObject.GetComponent<EnemyController>();
             enemy.DamageReceived(damage);
 
+            DestroyBolt();
+        }
+        if (collider.gameObject.tag == "ExplosiveBox" && explosion != null) {
+            GameObject explosionEffect = Instantiate(explosion, transform.position, Quaternion.identity);
+            Destroy(explosionEffect, 5f);
             DestroyBolt();
         }
         if (collider.gameObject.tag == "House" || collider.gameObject.tag == "Church") {

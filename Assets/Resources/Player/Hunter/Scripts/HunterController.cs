@@ -62,8 +62,8 @@ public class HunterController : MonoBehaviour {
     string[] weapons = { "Crossbow", "Melee2H" };
     public GameObject[] bolts;
 
-    public string[] trapsName = { "BearTrap", "Barrel" };
-    public int[] trapsNumber = { 2, 0 };
+    public string[] trapsName = { "BearTrap", "ExplosiveBox", "Barrel" };
+    public int[] trapsNumber = { 2, 0, 0 };
     public GameObject[] trapsPrefab = { };
 
     // Current weapon
