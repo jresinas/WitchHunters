@@ -9,20 +9,24 @@ public class HudController : MonoBehaviour
     public Image lifeOrb;
     public Image staminaOrb;
     private HunterController hc;
-    public Text[] trapsNumber;
-    public Image selectedTrap;
-    private RectTransform selectedTrapFrame;
+    public GameObject[] objectSlots;
+    public Image selectedObject;
     public MinimapCameraController minimapCamera;
     public GameObject minimapSmall;
     public GameObject minimapLarge;
     public GameObject pausePanel;
     public static bool pause = false;
     float y = 0;
+    public static HudController instance = null;
+
+    private void Awake() {
+        instance = this;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
         hc = player.GetComponent<HunterController>();
-        selectedTrapFrame = selectedTrap.GetComponent<RectTransform>();
     }
 
     // Update is called once per frame
@@ -38,12 +42,12 @@ public class HudController : MonoBehaviour
         staminaOrb.GetComponentInChildren<RawImage>().uvRect = new Rect(0f,y+0.5f,1f,1f);
 
         // Update traps number
-        for (int i = 0; i< trapsNumber.Length; i++) {
-            trapsNumber[i].text = hc.trapsNumber[i].ToString();
+        for (int i = 0; i< hc.traps.Length; i++) {
+            objectSlots[i].GetComponentInChildren<Text>().text = hc.traps[i].amount.ToString();
         }
 
         // Update selected trap
-        selectedTrap.rectTransform.anchoredPosition = new Vector3(110f * hc.selectedTrap, selectedTrap.rectTransform.anchoredPosition.y);
+        selectedObject.rectTransform.anchoredPosition = new Vector3(110f * hc.selectedTrap, selectedObject.rectTransform.anchoredPosition.y);
 
         // Switch minimap size
         if (Input.GetButtonDown("ResizeMinimap")) {
@@ -66,5 +70,27 @@ public class HudController : MonoBehaviour
             Time.timeScale = pause? 0 : 1;
             SoundManager.instance.Pause(pause);
         }
+    }
+
+    public void RefreshObjectSlots() {
+        Image img = null;
+        Text txt = null;
+
+        foreach (GameObject slot in objectSlots) {
+            slot.SetActive(false);
+        }
+
+        for (int i = 0; i < hc.traps.Length; i++) {
+            img = objectSlots[i].GetComponent<Image>();
+            txt = objectSlots[i].GetComponentInChildren<Text>();
+
+            if (img != null && txt != null) {
+                img.sprite = hc.traps[i].icon;
+                txt.text = hc.traps[i].amount.ToString();
+                objectSlots[i].SetActive(true);
+            }
+        }
+
+        selectedObject.gameObject.SetActive(hc.traps.Length > 0);
     }
 }

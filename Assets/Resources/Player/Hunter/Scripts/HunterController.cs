@@ -62,9 +62,7 @@ public class HunterController : MonoBehaviour {
     string[] weapons = { "Crossbow", "Melee2H" };
     public GameObject[] bolts;
 
-    public string[] trapsName = { "BearTrap", "ExplosiveBox", "Barrel" };
-    public int[] trapsNumber = { 2, 0, 0 };
-    public GameObject[] trapsPrefab = { };
+    public Trap[] traps;
 
     // Current weapon
     int weapon = 0;
@@ -82,6 +80,8 @@ public class HunterController : MonoBehaviour {
         life =  MAX_LIFE;
         stamina = MAX_STAMINA;
         boltLoaded = BOLT_RELOAD_TIME;
+        traps = GameManager.instance.traps;
+        HudController.instance.RefreshObjectSlots();
     }
 
     // Update is called once per frame
@@ -300,7 +300,7 @@ public class HunterController : MonoBehaviour {
     }
 
     private void PutTrap() {
-        if (trapsNumber[selectedTrap] > 0) {
+        if (traps[selectedTrap].amount > 0) {
             anim.SetBool("PutTrap", true);
             UpdateStamina(-STAMINA_PUT_TRAP_SPEND, false);
         }
@@ -310,11 +310,11 @@ public class HunterController : MonoBehaviour {
         Vector3 offset = transform.forward;
         GameObject trap = null;
         if (selectedTrap >= 0) {
-            trap = trapsPrefab[selectedTrap];
+            trap = traps[selectedTrap].prefab;
 
             if (trap != null) {
                 Instantiate(trap, transform.position + offset, Quaternion.identity);
-                trapsNumber[selectedTrap]--;
+                traps[selectedTrap].amount--;
             }
         }
     }
@@ -342,9 +342,9 @@ public class HunterController : MonoBehaviour {
         if (!anim.GetBool("PutTrap")) {
             selectedTrap = selectedTrap + num;
             if (selectedTrap < 0) {
-                selectedTrap = trapsNumber.Length-1;
+                selectedTrap = traps.Length-1;
             }
-            if (selectedTrap >= trapsNumber.Length) {
+            if (selectedTrap >= traps.Length) {
                 selectedTrap = 0;
             }
             SoundManager.instance.Play("SelectObject", audioHands);

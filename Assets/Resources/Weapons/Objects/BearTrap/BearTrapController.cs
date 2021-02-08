@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class BearTrapController : MonoBehaviour, IObject
 {
+    private int TRAP_ID = 0;
+
     Collider col;
     Animator anim;
     AudioSource audioSource;
@@ -42,7 +44,7 @@ public class BearTrapController : MonoBehaviour, IObject
     public void PickObject(HunterController hc) {
         //hc.traps.Add("BearTrap");
         if (Pickable()) {
-            hc.trapsNumber[0]++;
+            hc.traps[TRAP_ID].amount++;
             Destroy(gameObject);
         }
     }
