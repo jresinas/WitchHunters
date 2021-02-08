@@ -91,9 +91,10 @@ GameObject:
   m_Component:
   - component: {fileID: 6485325422055234130}
   - component: {fileID: 6215608703996226011}
+  - component: {fileID: -7707471184490755150}
   m_Layer: 0
   m_Name: ExplosiveBox
-  m_TagString: ExplosiveBox
+  m_TagString: Trap
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -126,3 +127,15 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0.5, z: 0}
+--- !u!114 &-7707471184490755150
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6903426388373014657}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e39dac9347e8a1549b5eaa4e59729dd4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

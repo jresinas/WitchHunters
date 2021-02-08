@@ -8,7 +8,7 @@ public class HudController : MonoBehaviour
     public GameObject player;
     public Image lifeOrb;
     public Image staminaOrb;
-    private HunterController hc;
+    public HunterController hc;
     public GameObject[] objectSlots;
     public Image selectedObject;
     public MinimapCameraController minimapCamera;
@@ -26,7 +26,6 @@ public class HudController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        hc = player.GetComponent<HunterController>();
     }
 
     // Update is called once per frame
@@ -42,12 +41,14 @@ public class HudController : MonoBehaviour
         staminaOrb.GetComponentInChildren<RawImage>().uvRect = new Rect(0f,y+0.5f,1f,1f);
 
         // Update traps number
-        for (int i = 0; i< hc.traps.Length; i++) {
-            objectSlots[i].GetComponentInChildren<Text>().text = hc.traps[i].amount.ToString();
+        for (int i = 0; i< hc.objs.Length; i++) {
+            if (hc.objs[i] != null && objectSlots[i] != null) {
+                objectSlots[i].GetComponentInChildren<Text>().text = hc.objs[i].amount.ToString();
+            }
         }
 
         // Update selected trap
-        selectedObject.rectTransform.anchoredPosition = new Vector3(110f * hc.selectedTrap, selectedObject.rectTransform.anchoredPosition.y);
+        selectedObject.rectTransform.anchoredPosition = new Vector3(110f * hc.selectedObj, selectedObject.rectTransform.anchoredPosition.y);
 
         // Switch minimap size
         if (Input.GetButtonDown("ResizeMinimap")) {
@@ -80,17 +81,17 @@ public class HudController : MonoBehaviour
             slot.SetActive(false);
         }
 
-        for (int i = 0; i < hc.traps.Length; i++) {
+        for (int i = 0; i < hc.objs.Length; i++) {
             img = objectSlots[i].GetComponent<Image>();
             txt = objectSlots[i].GetComponentInChildren<Text>();
 
-            if (img != null && txt != null) {
-                img.sprite = hc.traps[i].icon;
-                txt.text = hc.traps[i].amount.ToString();
+            if (img != null && txt != null && hc.objs[i] != null && hc.objs[i].obj != null) {
+                img.sprite = hc.objs[i].obj.icon;
+                txt.text = hc.objs[i].amount.ToString();
                 objectSlots[i].SetActive(true);
             }
         }
 
-        selectedObject.gameObject.SetActive(hc.traps.Length > 0);
+        selectedObject.gameObject.SetActive(hc.objs.Length > 0);
     }
 }

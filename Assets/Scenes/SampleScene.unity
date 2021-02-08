@@ -8737,6 +8737,7 @@ MonoBehaviour:
   player: {fileID: 919132147757660716}
   lifeOrb: {fileID: 1678995523}
   staminaOrb: {fileID: 1311465264}
+  hc: {fileID: 1305361617}
   objectSlots:
   - {fileID: 848201846}
   - {fileID: 332882894}
@@ -8976,12 +8977,12 @@ MonoBehaviour:
   stamina: 0
   dead: 0
   meleeAttacking: 0
-  selectedTrap: 0
+  objs: []
+  selectedObj: 0
   bolts:
   - {fileID: 2772052082867862200, guid: d6e3b4b69d1da8b438073b5c40828e1c, type: 3}
   - {fileID: 2131627529781546658, guid: a0aa5359459611542b6beded43c039d2, type: 3}
   - {fileID: 452154651952630315, guid: 9f7045ac70c77d04db5f58709af7a1b4, type: 3}
-  traps: []
 --- !u!54 &1305361620
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -11035,22 +11036,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   traps:
   - name: BearTrap
-    prefab: {fileID: 6865823310842377528, guid: b22f183fcbfe23f45a609ab2a04c6887, type: 3}
     icon: {fileID: 21300000, guid: 303c5779ff066c84c9f983a8a270a287, type: 3}
-    amount: 2
+    prefab: {fileID: 6865823310842377528, guid: b22f183fcbfe23f45a609ab2a04c6887, type: 3}
   - name: ExplosiveBox
-    prefab: {fileID: 6903426388373014657, guid: 98b67ffcf8da6d840b1ea28cf68bba1f, type: 3}
     icon: {fileID: 21300000, guid: 4f46edc3c65199945b9db5ea0cddcdeb, type: 3}
-    amount: 2
+    prefab: {fileID: 6903426388373014657, guid: 98b67ffcf8da6d840b1ea28cf68bba1f, type: 3}
+  potions: []
   weapons:
   - name: Axe
-    prefab: {fileID: 1175119634}
+    handPrefab: {fileID: 0}
     keepPrefab: {fileID: 1133544502}
     damage: 0
     speed: 0
     type: 0
   - name: Crossbow
-    prefab: {fileID: 1696374706}
+    handPrefab: {fileID: 0}
     keepPrefab: {fileID: 1912226069}
     damage: 0
     speed: 0
@@ -11067,7 +11067,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 27
+  m_RootOrder: 28
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1376744791
 GameObject:
@@ -14581,6 +14581,50 @@ Transform:
   - {fileID: 249434822}
   m_Father: {fileID: 849921712}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2014351694
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2014351696}
+  - component: {fileID: 2014351695}
+  m_Layer: 0
+  m_Name: SceneManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2014351695
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2014351694}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2841bd5f91b1b9a449a66e3965c876d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hc: {fileID: 1305361617}
+--- !u!4 &2014351696
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2014351694}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 27
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2023118722
 GameObject:

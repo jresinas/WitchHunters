@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-interface IObject{
+interface ITrapController{
     bool Pickable();
-    void PickObject(HunterController hc);
+    void PickTrap(HunterController hc);
 }

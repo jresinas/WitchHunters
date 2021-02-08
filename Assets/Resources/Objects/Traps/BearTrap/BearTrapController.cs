@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BearTrapController : MonoBehaviour, IObject
+public class BearTrapController : MonoBehaviour, ITrapController
 {
     private int TRAP_ID = 0;
 
@@ -41,10 +41,10 @@ public class BearTrapController : MonoBehaviour, IObject
         return enemyTrapped == null || enemyTrapped.GetComponent<EnemyController>().dead;
     }
 
-    public void PickObject(HunterController hc) {
+    public void PickTrap(HunterController hc) {
         //hc.traps.Add("BearTrap");
         if (Pickable()) {
-            hc.traps[TRAP_ID].amount++;
+            hc.objs[TRAP_ID].amount++;
             Destroy(gameObject);
         }
     }

@@ -6,6 +6,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance = null;
     public Trap[] traps = { };
+    public Potion[] potions = { };
     public Weapon[] weapons = { };
 
     private void Awake() {

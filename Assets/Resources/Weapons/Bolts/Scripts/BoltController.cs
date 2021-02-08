@@ -29,11 +29,11 @@ public class BoltController : MonoBehaviour
 
             DestroyBolt();
         }
-        if (collider.gameObject.tag == "ExplosiveBox" && explosion != null) {
-            GameObject explosionEffect = Instantiate(explosion, transform.position, Quaternion.identity);
-            Destroy(explosionEffect, 5f);
-            DestroyBolt();
-        }
+        //if (collider.gameObject.tag == "Trap" && explosion != null) {
+        //    GameObject explosionEffect = Instantiate(explosion, transform.position, Quaternion.identity);
+        //    Destroy(explosionEffect, 5f);
+        //    DestroyBolt();
+        //}
         if (collider.gameObject.tag == "House" || collider.gameObject.tag == "Church") {
             DestroyBolt();
         }
