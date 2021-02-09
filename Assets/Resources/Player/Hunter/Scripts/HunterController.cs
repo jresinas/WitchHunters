@@ -13,6 +13,7 @@ public class HunterController : MonoBehaviour {
     private float STAMINA_RUN_SPEND = 1f;
     private float STAMINA_MAKE_NOISE_SPEND = 1f;
     private float PICK_DISTANCE = 1.8f;
+    private float MAKE_NOISE_RANGE = 15f;
 
     Rigidbody rb;
     Animator anim;
@@ -22,19 +23,9 @@ public class HunterController : MonoBehaviour {
     public GameObject bag;
     // Character right hand
     public GameObject rightHand;
-    // Crossbow in character hands
-    public GameObject crossbow;
-    // Crossbow keep in the character back bag
-    public GameObject crossbowKeep;
-    // Axe in character hands
-    public GameObject axe;
-    // Axe keep in the character back bag
-    public GameObject axeKeep;
-    //public GameObject floatingText;
     public GameObject blood;
     public GameObject minimap;
     public GameObject shockWave;
-    //public GameObject bearTrap;
 
     float walkSpeed = 4f;
     float runSpeed = 8f;
@@ -61,12 +52,15 @@ public class HunterController : MonoBehaviour {
     private ITrapController trapToPick = null;
 
     // List of equiped weapons
-    string[] weapons = { "Crossbow", "Melee2H" };
-    public GameObject[] bolts;
-
-
+    //string[] weapons = { "Crossbow", "Melee2H" };
+    public Weapon[] weapons;
     // Current weapon
-    int weapon = 0;
+    //int weapon = 0;
+    public int selectedWeapon = 0;
+
+    public GameObject[] bolts;
+    
+
     // Current bolt
     int bolt = 0;
     // Next movement state (0:idle, 1:walk, 2:run)
@@ -76,8 +70,7 @@ public class HunterController : MonoBehaviour {
     void Start() {
         rb = GetComponent<Rigidbody>();
         anim = GetComponent<Animator>();
-        //ChangeWeapon();
-        EquipWeapon(weapon);
+        //EquipWeapon(selectedWeapon);
         life =  MAX_LIFE;
         stamina = MAX_STAMINA;
         boltLoaded = BOLT_RELOAD_TIME;
@@ -114,11 +107,9 @@ public class HunterController : MonoBehaviour {
 
     // Attach weapons to character movements
     private void WeaponsPosition() {
-        crossbow.transform.position = rightHand.transform.position;
-        crossbowKeep.transform.position = bag.transform.position;
-        axe.transform.position = rightHand.transform.position;
-        axe.transform.rotation = rightHand.transform.rotation;
-        axeKeep.transform.position = bag.transform.position;
+        weapons[selectedWeapon].handObject.transform.position = rightHand.transform.position;
+        //weapons[selectedWeapon].handPrefab.transform.rotation = rightHand.transform.rotation;
+        weapons[selectedWeapon].bagObject.transform.position = bag.transform.position;
     }
 
 
@@ -251,13 +242,13 @@ public class HunterController : MonoBehaviour {
 
     // Attack controller
     private void Attack() {
-        switch (weapons[weapon]) {
-            case ("Melee2H"):
+        switch (weapons[selectedWeapon].type) {
+            case WeaponType.Melee:
                 anim.SetBool("Attack", true);
                 SoundManager.instance.Play("Melee2HAttack", audioHands, 0.3f);
                 UpdateStamina(-STAMINA_ATTACK_MELEE2H_SPEND);
                 break;
-            case ("Crossbow"):
+            case WeaponType.Range:
                 if (boltLoaded >= BOLT_RELOAD_TIME) {
                     anim.SetBool("Attack", true);
                     SoundManager.instance.Play("CrossbowAttack", audioHands);
@@ -284,7 +275,7 @@ public class HunterController : MonoBehaviour {
         UpdateStamina(-STAMINA_MAKE_NOISE_SPEND);
         GameObject wave = Instantiate(shockWave, transform.position, Quaternion.identity);
         Destroy(wave, 5f);
-        Collider[] enemies = Physics.OverlapSphere(transform.position, 15f);
+        Collider[] enemies = Physics.OverlapSphere(transform.position, MAKE_NOISE_RANGE);
         foreach (Collider enemy in enemies) {
             if (enemy!=null && enemy.gameObject.tag == "Enemy") {
                 EnemyController ec = enemy.GetComponent<EnemyController>();
@@ -368,48 +359,24 @@ public class HunterController : MonoBehaviour {
 
     // Callback from animations to keep current weapon and draw new weapon
     private void ChangeWeaponCallback() {
-        UnequipWeapon(weapon);
-        weapon = (weapon + 1) % weapons.Length;
-        EquipWeapon(weapon);
+        UnequipWeapon(selectedWeapon);
+        selectedWeapon = (selectedWeapon + 1) % weapons.Length;
+        EquipWeapon(selectedWeapon);
     }
 
-    private void UnequipWeapon(int w) {
-        GameObject inHand;
-        GameObject inBag;
-        GetWeapons(w, out inHand, out inBag);
-
-        anim.SetLayerWeight(anim.GetLayerIndex(weapons[weapon]), 0f);
-        inHand.SetActive(false);
-        inBag.SetActive(true);
+    public void UnequipWeapon(int w) {
+        anim.SetLayerWeight(anim.GetLayerIndex(weapons[selectedWeapon].type.ToString()), 0f);
+        weapons[selectedWeapon].handObject.SetActive(false);
+        weapons[selectedWeapon].bagObject.SetActive(true);
     }
 
-    private void EquipWeapon(int w) {
-        GameObject inHand;
-        GameObject inBag;
-        GetWeapons(w, out inHand, out inBag);
-
-        anim.SetLayerWeight(anim.GetLayerIndex(weapons[weapon]), 1f);
-        inHand.SetActive(true);
-        inBag.SetActive(false);
-        SoundManager.instance.Play("Equip" + weapons[weapon], audioHands);
+    public void EquipWeapon(int w) {
+        anim.SetLayerWeight(anim.GetLayerIndex(weapons[selectedWeapon].type.ToString()), 1f);
+        weapons[selectedWeapon].handObject.SetActive(true);
+        weapons[selectedWeapon].bagObject.SetActive(false);
+        SoundManager.instance.Play(weapons[selectedWeapon].equipSound, audioHands);
     }
 
-    private void GetWeapons(int w, out GameObject inHand, out GameObject inBag) {
-        switch (weapons[w]) {
-            case ("Crossbow"):
-                inHand = crossbow;
-                inBag = crossbowKeep;
-                break;
-            case ("Melee2H"):
-                inHand = axe;
-                inBag = axeKeep;
-                break;
-            default:
-                inHand = null;
-                inBag = null;
-                break;
-        }
-    }
 
     // Callback from animations to notify it is finished
     private void EndAnimation(string animParamName) {

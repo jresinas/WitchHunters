@@ -18,8 +18,13 @@ public class SceneController : MonoBehaviour
         for (int i = 0; i < GameManager.instance.traps.Length; i++) {
             hc.objs[i] = new PlayerObject(GameManager.instance.traps[i], 2); 
         }
+        hc.weapons = new Weapon[2];
+        for (int i = 0; i < GameManager.instance.weapons.Length; i++) {
+            hc.weapons[i] = GameManager.instance.weapons[i];
+        }
 
         HudController.instance.RefreshObjectSlots();
+        hc.EquipWeapon(0);
     }
 
     // Update is called once per frame
