@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class HunterController : MonoBehaviour {
-    private float BOLT_RELOAD_TIME = 1f;
+    public float BOLT_RELOAD_TIME = 1f;
     public float MAX_LIFE = 10f;
     public float MAX_STAMINA = 10f;
     private float STAMINA_DEFAULT_RECOVER = 0.35f;
@@ -17,42 +17,49 @@ public class HunterController : MonoBehaviour {
 
     Rigidbody rb;
     Animator anim;
+    // Audio source for foots noises
     public AudioSource audioFoots;
+    // Audio source for no-foots noises
     public AudioSource audioHands;
     // Empty object in the character back to keep unused weapons
     public GameObject bag;
     // Character right hand
     public GameObject rightHand;
-    public GameObject blood;
+    // Object which represent player in minimap
     public GameObject minimap;
+    // Blood particle effect
+    public GameObject blood;
+    // Make noise wave particle effect
     public GameObject shockWave;
 
-    float walkSpeed = 4f;
-    float runSpeed = 8f;
-
+    private float walkSpeed = 4f;
+    private float runSpeed = 8f;
     public float life;
     public float stamina;
-    float boltLoaded;
 
     public bool dead = false;
     public bool meleeAttacking = false;
-    
 
-    public PlayerObject[] objs;
-    public int selectedObj = 0;
-
-    private ITrapController trapToPick = null;
-
-    // List of equiped weapons
+    // List of available weapons
     public Weapon[] weapons;
-    // Current weapon
+    // Current equiped weapon
     public int selectedWeapon = 0;
 
-    public GameObject[] bolts;
-    
+    // List of inventory objects
+    public PlayerObject[] objs;
+    // Current inventory object selected
+    public int selectedObj = 0;
 
-    // Current bolt
+    // List of available bolts
+    public GameObject[] bolts;
+    // Current bolt selected
     int bolt = 0;
+    // Time elapsed since starting reload bolt (in seconds) 
+    public float boltReloadProgress;
+
+    // Trap selected to pick from the floor
+    private ITrapController trapToPick = null;
+
     // Next movement state (0:idle, 1:walk, 2:run)
     float nextState = 0f;
 
@@ -62,15 +69,15 @@ public class HunterController : MonoBehaviour {
     void Start() {
         rb = GetComponent<Rigidbody>();
         anim = GetComponent<Animator>();
-        //EquipWeapon(selectedWeapon);
         life =  MAX_LIFE;
         stamina = MAX_STAMINA;
-        boltLoaded = BOLT_RELOAD_TIME;
+        boltReloadProgress = BOLT_RELOAD_TIME;
     }
 
     // Update is called once per frame
     void Update() {
         WeaponsPosition();
+        BoltReload();
     }
 
     private void FixedUpdate() {
@@ -99,11 +106,9 @@ public class HunterController : MonoBehaviour {
     }
 
 
-    private IEnumerator BoltReload() {
-        yield return new WaitForSeconds(1);
-        boltLoaded++;
-        if (boltLoaded < BOLT_RELOAD_TIME) {
-            StartCoroutine(BoltReload());
+    private void BoltReload() {
+        if (boltReloadProgress < BOLT_RELOAD_TIME) {
+            boltReloadProgress += Time.deltaTime;
         }
     }
 
@@ -182,7 +187,7 @@ public class HunterController : MonoBehaviour {
                 UpdateStamina(-STAMINA_ATTACK_MELEE2H_SPEND);
                 break;
             case WeaponType.Range:
-                if (boltLoaded >= BOLT_RELOAD_TIME) {
+                if (boltReloadProgress >= BOLT_RELOAD_TIME) {
                     anim.SetBool("Attack", true);
                     SoundManager.instance.Play("CrossbowAttack", audioHands);
                     UpdateStamina(-STAMINA_ATTACK_CROSSBOW_SPEND);
@@ -194,9 +199,8 @@ public class HunterController : MonoBehaviour {
     // Callback from fire crossbow animation to fire a bolt
     private void FireBolt(AnimationEvent evt) {
         // if (evt.animatorClipInfo.weight > 0.5) {
-        if (boltLoaded >= BOLT_RELOAD_TIME) {
-            boltLoaded = 0;
-            StartCoroutine(BoltReload());
+        if (boltReloadProgress >= BOLT_RELOAD_TIME) {
+            boltReloadProgress = 0;
             Vector3 offset = transform.forward * (1.2f +nextState*0.25f) + transform.up * 1.2f + transform.right*0.1f;
             GameObject b = Instantiate(bolts[bolt], transform.position + offset, transform.rotation);
             Destroy(b, 5f);

@@ -18,6 +18,7 @@ public class HudController : MonoBehaviour
     public static bool pause = false;
     float y = 0;
     public static HudController instance = null;
+    public Image boltReloadImage;
 
     private void Awake() {
         instance = this;
@@ -71,6 +72,10 @@ public class HudController : MonoBehaviour
             Time.timeScale = pause? 0 : 1;
             SoundManager.instance.Pause(pause);
         }
+
+        // Reload bolt
+        boltReloadImage.transform.parent.gameObject.SetActive(hc.boltReloadProgress < hc.BOLT_RELOAD_TIME);
+        boltReloadImage.fillAmount = hc.boltReloadProgress / hc.BOLT_RELOAD_TIME;
     }
 
     public void RefreshObjectSlots() {
