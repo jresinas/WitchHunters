@@ -6,8 +6,8 @@ public class HunterController : MonoBehaviour {
     private float BOLT_RELOAD_TIME = 1f;
     public float MAX_LIFE = 10f;
     public float MAX_STAMINA = 10f;
-    private float STAMINA_DEFAULT_RECOVER = 0.25f;
-    private float STAMINA_IDLE_RECOVER = 0.1f;
+    private float STAMINA_DEFAULT_RECOVER = 0.35f;
+    private float STAMINA_WALK_SPEND = 0.1f;
     private float STAMINA_ATTACK_MELEE2H_SPEND = 0.5f;
     private float STAMINA_ATTACK_CROSSBOW_SPEND = 0.1f;
     private float STAMINA_RUN_SPEND = 1f;
@@ -34,17 +34,9 @@ public class HunterController : MonoBehaviour {
     public float stamina;
     float boltLoaded;
 
-    float verticalInput;
-    float horizontalInput;
-    float verticalViewInput;
-    float horizontalViewInput;
-    float runInput;
-
     public bool dead = false;
     public bool meleeAttacking = false;
-    // Control not holding attack button
-    bool holdAttackButton = false;
-    bool holdSelectObjectButton = false;
+    
 
     public PlayerObject[] objs;
     public int selectedObj = 0;
@@ -52,10 +44,8 @@ public class HunterController : MonoBehaviour {
     private ITrapController trapToPick = null;
 
     // List of equiped weapons
-    //string[] weapons = { "Crossbow", "Melee2H" };
     public Weapon[] weapons;
     // Current weapon
-    //int weapon = 0;
     public int selectedWeapon = 0;
 
     public GameObject[] bolts;
@@ -65,6 +55,8 @@ public class HunterController : MonoBehaviour {
     int bolt = 0;
     // Next movement state (0:idle, 1:walk, 2:run)
     float nextState = 0f;
+
+
 
     // Start is called before the first frame update
     void Start() {
@@ -78,17 +70,11 @@ public class HunterController : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        if (!dead && !HudController.pause) {
-            WeaponsPosition();
-            Inputs();
-        }
+        WeaponsPosition();
     }
 
     private void FixedUpdate() {
         if (!dead) {
-            if (!Busy()) {
-                Move();
-            }
             ChangeState();
             UpdateStamina(STAMINA_DEFAULT_RECOVER, true);
         }
@@ -121,65 +107,12 @@ public class HunterController : MonoBehaviour {
         }
     }
 
-    // Inputs controller
-    private void Inputs() {
-        // Movement and rotation
-        verticalInput = Input.GetAxis("Vertical");
-        horizontalInput = Input.GetAxis("Horizontal");
-        verticalViewInput = Input.GetAxis("VerticalView");
-        horizontalViewInput = Input.GetAxis("HorizontalView");
-        runInput = Input.GetAxis("Run");
-
-        if (!HandsBusy()) {
-            // Change weapon
-            if (Input.GetButtonDown("ChangeWeapon")) {
-                ChangeWeapon();
-            }
-
-            if (Input.GetButtonDown("SwitchArrow")) {
-                ChangeBolt();
-            }
-
-            // Attack
-            float attackInput = Input.GetAxis("Attack");
-            if (attackInput == 1 && !holdAttackButton) {
-                Attack();
-                holdAttackButton = true;
-            }
-            if (attackInput == 0) {
-                holdAttackButton = false;
-            }
-
-            // Make noise
-            if (Input.GetButtonDown("MakeNoise") && stamina >= STAMINA_MAKE_NOISE_SPEND) {
-                MakeNoise();
-            }
-
-            if (Input.GetButtonDown("UseObject")) {
-                UseObject();
-            }
-
-            if (Input.GetButtonDown("PickTrap")) {
-                PickTrap();
-            }
-        }
-
-        float selectObject = Input.GetAxis("SelectObject");
-        if (Mathf.Abs(selectObject) == 1 && !holdSelectObjectButton) {
-            holdSelectObjectButton = true;
-            ChangeSelectedObject((int)selectObject);
-        }
-        if (selectObject == 0) {
-            holdSelectObjectButton = false;
-        }
+    public void Idle() {
+        nextState = 0f;
     }
 
     // Movement and rotation controller
-    private void Move() {
-        // Get move and view vectors
-        Vector3 move = new Vector3(horizontalInput, 0f, verticalInput).normalized;
-        Vector3 view = new Vector3(horizontalViewInput, 0f, verticalViewInput);
-
+    public void Move(Vector3 move, Vector3 view, bool run) {
         // If no view vector, character look at movement direction
         if (view == Vector3.zero) {
             view = move;
@@ -196,11 +129,12 @@ public class HunterController : MonoBehaviour {
         float angle = Vector3.Angle(move, view);
         anim.SetFloat("MoveRotation", sign * angle / 90);
 
-        if (verticalInput != 0 || horizontalInput != 0) {
-            if (runInput <= 0.5 || (nextState == 2 && stamina <= 0.1) || (nextState != 2 && stamina < STAMINA_RUN_SPEND/4)) {
+        if (move != Vector3.zero) {
+            if (!run || (nextState == 2 && stamina <= 0.1) || (nextState != 2 && stamina < STAMINA_RUN_SPEND/4)) {
                 // Walk
                 nextState = 1f;
                 rb.MovePosition(rb.position + move * walkSpeed * Time.deltaTime);
+                UpdateStamina(STAMINA_WALK_SPEND, true);
             } else {
                 // Run
                 nextState = 2f;
@@ -209,8 +143,7 @@ public class HunterController : MonoBehaviour {
             }
         } else {
             // Idle
-            nextState = 0f;
-            UpdateStamina(STAMINA_IDLE_RECOVER, true);
+            Idle();
         }
     }
 
@@ -226,14 +159,14 @@ public class HunterController : MonoBehaviour {
     }
 
     // Returns if hands are busy (it is not possible to make new actions with hands)
-    private bool Busy() {
+    public bool Busy() {
         return anim.GetBool("PutTrap") ||
             anim.GetBool("PickTrap") ||
             anim.GetBool("MakeNoise");
     }
 
     // Returns if hands are busy (it is not possible to make new actions with hands)
-    private bool HandsBusy() {
+    public bool HandsBusy() {
         return Busy() ||
             anim.GetBool("ChangeWeapon") ||
             anim.GetBool("Attack") ||
@@ -241,7 +174,7 @@ public class HunterController : MonoBehaviour {
     }
 
     // Attack controller
-    private void Attack() {
+    public void Attack() {
         switch (weapons[selectedWeapon].type) {
             case WeaponType.Melee:
                 anim.SetBool("Attack", true);
@@ -270,21 +203,23 @@ public class HunterController : MonoBehaviour {
         }
     }
 
-    private void MakeNoise() {
-        anim.SetBool("MakeNoise", true);
-        UpdateStamina(-STAMINA_MAKE_NOISE_SPEND);
-        GameObject wave = Instantiate(shockWave, transform.position, Quaternion.identity);
-        Destroy(wave, 5f);
-        Collider[] enemies = Physics.OverlapSphere(transform.position, MAKE_NOISE_RANGE);
-        foreach (Collider enemy in enemies) {
-            if (enemy!=null && enemy.gameObject.tag == "Enemy") {
-                EnemyController ec = enemy.GetComponent<EnemyController>();
-                ec.SetTarget(transform.position, 999);
+    public void MakeNoise() {
+        if (stamina >= STAMINA_MAKE_NOISE_SPEND) {
+            anim.SetBool("MakeNoise", true);
+            UpdateStamina(-STAMINA_MAKE_NOISE_SPEND);
+            GameObject wave = Instantiate(shockWave, transform.position, Quaternion.identity);
+            Destroy(wave, 5f);
+            Collider[] enemies = Physics.OverlapSphere(transform.position, MAKE_NOISE_RANGE);
+            foreach (Collider enemy in enemies) {
+                if (enemy != null && enemy.gameObject.tag == "Enemy") {
+                    EnemyController ec = enemy.GetComponent<EnemyController>();
+                    ec.SetTarget(transform.position, 999);
+                }
             }
         }
     }
 
-    private void UseObject() {
+    public void UseObject() {
         if (objs[selectedObj] != null && objs[selectedObj].amount > 0) {
             if (objs[selectedObj].isTrap()) {
                 PutTrap();
@@ -317,7 +252,7 @@ public class HunterController : MonoBehaviour {
         }
     }
 
-    private void PickTrap() {
+    public void PickTrap() {
         GameObject trap = GetNearestTrap();
         if (trap != null) {
             ITrapController tc = trap.GetComponent<ITrapController>();
@@ -336,7 +271,7 @@ public class HunterController : MonoBehaviour {
         }
     }
 
-    private void ChangeSelectedObject(int num) {
+    public void ChangeSelectedObject(int num) {
         if (!anim.GetBool("PutTrap")) {
             selectedObj = selectedObj + num;
             if (selectedObj < 0) {
@@ -349,11 +284,11 @@ public class HunterController : MonoBehaviour {
         }
     }
 
-    private void ChangeWeapon() {
+    public void ChangeWeapon() {
         anim.SetBool("ChangeWeapon", true);
     }
 
-    private void ChangeBolt() {
+    public void ChangeBolt() {
         bolt = (bolt + 1) % bolts.Length;
     }
 
