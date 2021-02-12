@@ -14208,6 +14208,9 @@ MonoBehaviour:
     - {fileID: 8300000, guid: 6fdab7d2476f4d24ea67623c308cfa8f, type: 3}
     - {fileID: 8300000, guid: 89f09b09735f7d04baa111357d7077eb, type: 3}
     - {fileID: 8300000, guid: 67a64244136456d4fb7c133fb07b50b3, type: 3}
+  - name: Explosion
+    clip:
+    - {fileID: 8300000, guid: 1fd31868d68903d4f9e2c4a3b7ef98f3, type: 3}
   music: {fileID: 1879807529}
   allAudioSources: []
 --- !u!4 &1879807527

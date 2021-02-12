@@ -7,15 +7,12 @@ public class ExplosiveBoxController : MonoBehaviour, ITrapController
     private int TRAP_ID = 1;
 
     Collider col;
-    //Animator anim;
-    //AudioSource audioSource;
+    public GameObject explosion;
 
     // Start is called before the first frame update
     void Start()
     {
         col = GetComponent<Collider>();
-        //anim = GetComponent<Animator>();
-        //audioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -24,29 +21,22 @@ public class ExplosiveBoxController : MonoBehaviour, ITrapController
         
     }
 
-    //void OnTriggerEnter(Collider collider) {
-    //    if (ready && collider.gameObject.tag == "Enemy") {
-    //        SoundManager.instance.Play("BearTrap", audioSource);
-    //        ready = false;
-    //        anim.SetBool("Active", true);
-    //        EnemyController ec = collider.GetComponent<EnemyController>();
-    //        ec.Trapped(transform.position);
-    //        enemyTrapped = collider.gameObject;
-    //    }
-    //}
-
-
     public bool Pickable() {
         return true;
     }
 
     public void PickTrap(HunterController hc) {
-        //hc.traps.Add("BearTrap");
         if (Pickable()) {
             hc.objs[TRAP_ID].amount++;
             Destroy(gameObject);
         }
     }
 
+    public void Explosion() {
+        GameObject explosionEffect = Instantiate(explosion, transform.position, Quaternion.identity);
+        SoundManager.instance.PlayAndDestroy("Explosion", transform.position, 4f);
+        Destroy(explosionEffect, 5f);
+        Destroy(gameObject);
+    }
 
 }

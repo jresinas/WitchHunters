@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class BoltController : MonoBehaviour
 {
+    // 0: normal, 1: fire, 2: poison
+    public int boltType;
     float damage = 1f;
     float speed = 40f;
-    public GameObject explosion;
 
     // Start is called before the first frame update
     void Start()
@@ -29,11 +30,14 @@ public class BoltController : MonoBehaviour
 
             DestroyBolt();
         }
-        //if (collider.gameObject.tag == "Trap" && explosion != null) {
-        //    GameObject explosionEffect = Instantiate(explosion, transform.position, Quaternion.identity);
-        //    Destroy(explosionEffect, 5f);
-        //    DestroyBolt();
-        //}
+        if (collider.gameObject.tag == "Trap" && boltType == 1) {
+            ITrapController tc = collider.GetComponent<ITrapController>();
+            if (tc is ExplosiveBoxController) {
+                ExplosiveBoxController ecb = (ExplosiveBoxController)tc;
+                ecb.Explosion();
+                DestroyBolt();
+            }
+        }
         if (collider.gameObject.tag == "House" || collider.gameObject.tag == "Church") {
             DestroyBolt();
         }
