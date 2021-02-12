@@ -15,7 +15,6 @@ public class HudController : MonoBehaviour
     public GameObject minimapSmall;
     public GameObject minimapLarge;
     public GameObject pausePanel;
-    public static bool pause = false;
     float y = 0;
     public static HudController instance = null;
     public Image boltReloadImage;
@@ -49,29 +48,7 @@ public class HudController : MonoBehaviour
         }
 
         // Update selected trap
-        selectedObject.rectTransform.anchoredPosition = new Vector3(110f * hc.selectedObj, selectedObject.rectTransform.anchoredPosition.y);
-
-        // Switch minimap size
-        if (Input.GetButtonDown("ResizeMinimap")) {
-            if (minimapCamera.size == 0) {
-                minimapCamera.size = 1;
-                minimapSmall.SetActive(false);
-                minimapLarge.SetActive(true);
-            } else {
-                minimapCamera.size = 0;
-                minimapSmall.SetActive(true);
-                minimapLarge.SetActive(false);
-            }
-
-        }
-
-        // Pause Game
-        if (Input.GetButtonDown("Pause")) {
-            pause = !pause;
-            pausePanel.SetActive(pause);
-            Time.timeScale = pause? 0 : 1;
-            SoundManager.instance.Pause(pause);
-        }
+        selectedObject.rectTransform.anchoredPosition = new Vector3(110f * hc.selectedObj, selectedObject.rectTransform.anchoredPosition.y);      
 
         // Reload bolt
         boltReloadImage.transform.parent.gameObject.SetActive(hc.boltReloadProgress < hc.BOLT_RELOAD_TIME);
@@ -98,5 +75,22 @@ public class HudController : MonoBehaviour
         }
 
         selectedObject.gameObject.SetActive(hc.objs.Length > 0);
+    }
+
+
+    public void ResizeMinimap() {
+        if (minimapCamera.size == 0) {
+            minimapCamera.size = 1;
+            minimapSmall.SetActive(false);
+            minimapLarge.SetActive(true);
+        } else {
+            minimapCamera.size = 0;
+            minimapSmall.SetActive(true);
+            minimapLarge.SetActive(false);
+        }
+    }
+
+    public void Pause(bool pause) {
+        pausePanel.SetActive(pause);
     }
 }

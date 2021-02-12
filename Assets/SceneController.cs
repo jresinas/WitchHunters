@@ -6,6 +6,7 @@ public class SceneController : MonoBehaviour
 {
     public static SceneController instance = null;
     public HunterController hc;
+    private bool pause = false;
 
 
     private void Awake() {
@@ -30,5 +31,16 @@ public class SceneController : MonoBehaviour
     // Update is called once per frame
     void Update() {
         
+    }
+
+    public void SetPause() {
+        pause = !pause;
+        Time.timeScale = pause ? 0 : 1;
+        SoundManager.instance.Pause(pause);
+        HudController.instance.Pause(pause);
+    }
+
+    public bool IsPaused() {
+        return pause;
     }
 }

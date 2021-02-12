@@ -9,8 +9,13 @@ public class InputManager : MonoBehaviour{
     bool holdSelectObjectButton = false;
 
     void Update() {
-        if (!hc.dead && !HudController.pause) {
+        if (!hc.dead && !SceneController.instance.IsPaused()) {
             Inputs();
+        }
+
+        // Pause Game
+        if (Input.GetButtonDown("Pause")) {
+            SceneController.instance.SetPause();
         }
     }
 
@@ -76,5 +81,12 @@ public class InputManager : MonoBehaviour{
         if (selectObject == 0) {
             holdSelectObjectButton = false;
         }
+
+
+        // Switch minimap size
+        if (Input.GetButtonDown("ResizeMinimap")) {
+            HudController.instance.ResizeMinimap();
+        }
+      
     }
 }
