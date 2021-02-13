@@ -26,6 +26,8 @@ public class EnemyController : MonoBehaviour {
     public GameObject blood;
     public GameObject minimap;
 
+    public GameObject ragdoll;
+
     public Vector3 target;
     public bool dead = false;
     public bool meleeAttacking = false;
@@ -151,12 +153,27 @@ public class EnemyController : MonoBehaviour {
 
     // Enemy die
     private void Dead() {
+        
         anim.SetBool("Die", true);
         StopAllCoroutines();
         Destroy(col);
         Destroy(agent);
         Destroy(minimap);
         dead = true;
+        
+
+        /*
+        GameObject rd = Instantiate(ragdoll, transform.position, transform.rotation);
+        Rigidbody[] rbs = rd.GetComponentsInChildren<Rigidbody>();
+
+        foreach (Rigidbody rb in rbs) {
+            //rb.AddForce(-rb.transform.forward * 26f, ForceMode.Impulse);
+            rb.AddForceAtPosition(-rd.transform.forward * 15f, -rd.transform.forward * 15f, ForceMode.Impulse);
+            //rb.AddExplosionForce(50f, transform.position, 15f);
+        }
+        */
+
+        Destroy(gameObject);
     }
 
     // Rerturns if enemy is busy (can't make any action)
