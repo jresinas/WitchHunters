@@ -92,6 +92,7 @@ GameObject:
   - component: {fileID: 6485325422055234130}
   - component: {fileID: 6215608703996226011}
   - component: {fileID: -7707471184490755150}
+  - component: {fileID: 8225715963644250411}
   m_Layer: 0
   m_Name: ExplosiveBox
   m_TagString: Trap
@@ -140,3 +141,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   explosion: {fileID: 1534606928315548810, guid: 03374f3a0d08e55459b747abdf753098, type: 3}
+--- !u!208 &8225715963644250411
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6903426388373014657}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0.5, z: 0}
+  m_TimeToStationary: 0.5
