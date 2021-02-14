@@ -45,14 +45,6 @@ public class ZombieController : MonoBehaviour, IEnemy {
         ec.anim.SetFloat("SpeedMultiplier", Random.Range(MIN_SPEED_MULT, MAX_SPEED_MULT));
     }
 
-    void FixedUpdate() {
-        //if (Random.Range(0f, 1f) > 0.9f) {
-        //    Debug.Log("Roar");
-        //    SoundManager.instance.Play("ZombieSearch");
-        //}
-    }
-
-
     public void IsSeeingPlayer(GameObject player) {
         if (Random.Range(0f, 1f) > 0.95f) {
             SoundManager.instance.Play("ZombieSearch", audioSource);

@@ -29,7 +29,7 @@ public class EnemyController : MonoBehaviour {
     public GameObject ragdoll;
 
     public Vector3 target;
-    public bool dead = false;
+    //public bool dead = false;
     public bool meleeAttacking = false;
 
     // Start is called before the first frame update
@@ -48,11 +48,12 @@ public class EnemyController : MonoBehaviour {
     // Update is called once per frame
     void Update() {
         WeaponPosition();
-        if (!dead) {
-            Decision();
-        } else {
-            meleeAttacking = false;
-        }
+        //if (!dead) {
+        //    Decision();
+        //} else {
+        //    meleeAttacking = false;
+        //}
+        Decision();
     }
 
     // Assign target to NavMeshAgent
@@ -137,50 +138,44 @@ public class EnemyController : MonoBehaviour {
     }
 
     // Enemy receive damage
-    public void DamageReceived(float amount) {
-        self.IsDamaged(amount);
-        anim.SetBool("Hit", true);
-
-        Instantiate(blood, transform.position+ new Vector3(0f, 1f, 0f), Quaternion.identity, transform);
+    public void DamageReceived(float amount, Vector3? _origin = null) {
+        Vector3 origin = _origin!=null? (Vector3)_origin : transform.position;
+        Vector3 direction = (transform.position - origin).normalized;
         //GameObject text = Instantiate(floatingText, transform.position, Quaternion.identity, transform);
         //text.GetComponent<TextMesh>().text = amount.ToString();
 
         self.life -= amount;
         if (self.life <= 0) {
-            Dead();
+            Dead(direction, amount*10f);
+        } else {
+            Instantiate(blood, transform.position + new Vector3(0f, 1f, 0f), Quaternion.identity, transform);
+            self.IsDamaged(amount);
+            anim.SetBool("Hit", true);
         }
     }
 
     // Enemy die
-    private void Dead() {
-        
+    private void Dead(Vector3 direction, float force) {
+     /*
         anim.SetBool("Die", true);
         StopAllCoroutines();
         Destroy(col);
         Destroy(agent);
         Destroy(minimap);
         dead = true;
-        
-
-        /*
+     */
         GameObject rd = Instantiate(ragdoll, transform.position, transform.rotation);
-        Rigidbody[] rbs = rd.GetComponentsInChildren<Rigidbody>();
-
-        foreach (Rigidbody rb in rbs) {
-            //rb.AddForce(-rb.transform.forward * 26f, ForceMode.Impulse);
-            rb.AddForceAtPosition(-rd.transform.forward * 15f, -rd.transform.forward * 15f, ForceMode.Impulse);
-            //rb.AddExplosionForce(50f, transform.position, 15f);
-        }
-        */
-
+        RagDollController rdc = rd.GetComponent<RagDollController>();
+        rdc.Push(direction, force);
         Destroy(gameObject);
+        
     }
 
     // Rerturns if enemy is busy (can't make any action)
     public bool Busy() {
         return anim.GetBool("Attack") ||
-            anim.GetBool("Hit") ||
-            anim.GetBool("Die");
+            anim.GetBool("Hit");
+            //|| anim.GetBool("Die");
     }
 
     public bool FootBusy() {

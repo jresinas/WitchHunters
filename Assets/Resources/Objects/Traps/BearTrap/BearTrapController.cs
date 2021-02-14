@@ -38,7 +38,7 @@ public class BearTrapController : MonoBehaviour, ITrapController
 
 
     public bool Pickable() {
-        return enemyTrapped == null || enemyTrapped.GetComponent<EnemyController>().dead;
+        return enemyTrapped == null;
     }
 
     public void PickTrap(HunterController hc) {

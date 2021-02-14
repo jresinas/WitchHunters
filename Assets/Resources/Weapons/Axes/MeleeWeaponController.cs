@@ -22,7 +22,7 @@ public class MeleeWeaponController : MonoBehaviour
     void OnTriggerEnter(Collider collider) {
         if (collider.gameObject.tag == "Enemy" && hc.meleeAttacking) {
             EnemyController enemy = collider.gameObject.GetComponent<EnemyController>();
-            enemy.DamageReceived(damage);
+            enemy.DamageReceived(damage, transform.position);
             SoundManager.instance.Play("Melee2HImpact", hc.audioHands);
         }
     }

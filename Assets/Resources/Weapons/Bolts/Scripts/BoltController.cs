@@ -26,7 +26,7 @@ public class BoltController : MonoBehaviour
     void OnTriggerEnter(Collider collider) {
         if (collider.gameObject.tag == "Enemy") {
             EnemyController enemy = collider.gameObject.GetComponent<EnemyController>();
-            enemy.DamageReceived(damage);
+            enemy.DamageReceived(damage, transform.position);
 
             DestroyBolt();
         }
