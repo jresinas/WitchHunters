@@ -855,6 +855,7 @@ GameObject:
   - component: {fileID: 760456674122439954}
   - component: {fileID: 760456674122439955}
   - component: {fileID: 760456674122439956}
+  - component: {fileID: 6383366446035132897}
   m_Layer: 0
   m_Name: house_10_1
   m_TagString: House
@@ -1122,6 +1123,20 @@ MonoBehaviour:
   destroyCombinedChildren: 0
   folderPath: Resources/Environment/Village/Houses/Meshes
   meshFiltersToSkip: []
+--- !u!114 &6383366446035132897
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 453955921428865342}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 130b863823526f040bdb7e9a17b7268a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  opaqueMaterial: {fileID: 2100000, guid: d89b6385b93f33f4293234c67ee4352a, type: 2}
+  transparentMaterial: {fileID: 2100000, guid: 875fb0487b864a64ea7230f8ede986d9, type: 2}
 --- !u!1 &475353062602729823
 GameObject:
   m_ObjectHideFlags: 0
