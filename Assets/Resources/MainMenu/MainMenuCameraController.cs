@@ -4,15 +4,16 @@ using UnityEngine;
 
 public class MainMenuCameraController : MonoBehaviour {
     private float FINAL_Y = 25f;
-    private float BRAKE_Y = 80;
-    private float FALL_FORCE = 100f;
-    private float BRAKE_FORCE = 50f;
-    private float LOOP_NUMBER = 10f;
+    private float BRAKE_Y = 79f;
+    private float FALL_FORCE = 80f;
+    //private float BRAKE_FORCE = 64.6f;
+    private float LOOP_NUMBER = 0f;
     private float LOOP_START = 200f;
     private float LOOP_END = 100f;
 
     Rigidbody rb;
     Camera cam;
+    bool menu = true;
     bool fall = false;
 
     float loops = 0;
@@ -27,6 +28,7 @@ public class MainMenuCameraController : MonoBehaviour {
     void Update()
     {
         if (Input.GetButton("Submit")) {
+            menu = false;
             fall = true;
         }
     }
@@ -34,7 +36,6 @@ public class MainMenuCameraController : MonoBehaviour {
     private void FixedUpdate() {
         if (fall) {
             if (transform.position.y > BRAKE_Y) {
-                //rb.useGravity = true;
                 rb.AddForce(0f, -FALL_FORCE, 0f);
                 transform.localEulerAngles = UpdateAngle(transform.position.y - FINAL_Y);
                 cam.orthographicSize = UpdateSize(transform.position.y - FINAL_Y);
@@ -45,15 +46,21 @@ public class MainMenuCameraController : MonoBehaviour {
                 }
 
             } else if (transform.position.y <= BRAKE_Y && transform.position.y > FINAL_Y) {
-                rb.AddForce(0f, BRAKE_FORCE, 0f);
+                //rb.AddForce(0f, BRAKE_FORCE, 0f);
+                rb.AddForce(0f, -rb.velocity.y, 0f);
                 transform.localEulerAngles = UpdateAngle(transform.position.y - FINAL_Y);
                 cam.orthographicSize = UpdateSize(transform.position.y - FINAL_Y);
             } else if (transform.position.y <= FINAL_Y) {
-                rb.isKinematic = true;
-                transform.position = new Vector3(0f, FINAL_Y, 0f);
-                transform.localEulerAngles = new Vector3(30f, 0f, 0f);
-                cam.orthographicSize = 8;
+                fall = false;
             }
+        }
+
+        if (!menu && !fall) {
+            rb.velocity = Vector3.zero;
+            transform.position = new Vector3(0f, FINAL_Y, 0f);
+            transform.localEulerAngles = new Vector3(30f, 0f, 0f);
+            cam.orthographicSize = 8;
+            //GameManager.instance.LoadScene("Night");
         }
     }
 
