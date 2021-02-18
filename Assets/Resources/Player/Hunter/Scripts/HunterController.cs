@@ -41,7 +41,7 @@ public class HunterController : MonoBehaviour {
     public bool meleeAttacking = false;
 
     // List of available weapons
-    public Weapon[] weapons;
+    public PlayerWeapon[] weapons;
     // Current equiped weapon
     public int selectedWeapon = 0;
 
@@ -64,14 +64,17 @@ public class HunterController : MonoBehaviour {
     float nextState = 0f;
 
 
+    private void Awake() {
+        rb = GetComponent<Rigidbody>();
+        anim = GetComponent<Animator>();
+        life = MAX_LIFE;
+        stamina = MAX_STAMINA;
+        boltReloadProgress = BOLT_RELOAD_TIME;
+    }
 
     // Start is called before the first frame update
     void Start() {
-        rb = GetComponent<Rigidbody>();
-        anim = GetComponent<Animator>();
-        life =  MAX_LIFE;
-        stamina = MAX_STAMINA;
-        boltReloadProgress = BOLT_RELOAD_TIME;
+        
     }
 
     // Update is called once per frame
@@ -100,9 +103,10 @@ public class HunterController : MonoBehaviour {
 
     // Attach weapons to character movements
     private void WeaponsPosition() {
-        weapons[selectedWeapon].handObject.transform.position = rightHand.transform.position;
-        //weapons[selectedWeapon].handPrefab.transform.rotation = rightHand.transform.rotation;
-        weapons[selectedWeapon].bagObject.transform.position = bag.transform.position;
+        foreach (PlayerWeapon pw in weapons) {
+            pw.handObject.transform.position = rightHand.transform.position;
+            pw.bagObject.transform.position = bag.transform.position;
+        }
     }
 
 
@@ -180,7 +184,7 @@ public class HunterController : MonoBehaviour {
 
     // Attack controller
     public void Attack() {
-        switch (weapons[selectedWeapon].type) {
+        switch (weapons[selectedWeapon].weapon.type) {
             case WeaponType.Melee:
                 anim.SetBool("Attack", true);
                 SoundManager.instance.Play("Melee2HAttack", audioHands, 0.3f);
@@ -304,16 +308,16 @@ public class HunterController : MonoBehaviour {
     }
 
     public void UnequipWeapon(int w) {
-        anim.SetLayerWeight(anim.GetLayerIndex(weapons[selectedWeapon].type.ToString()), 0f);
-        weapons[selectedWeapon].handObject.SetActive(false);
-        weapons[selectedWeapon].bagObject.SetActive(true);
+        anim.SetLayerWeight(anim.GetLayerIndex(weapons[w].weapon.type.ToString()), 0f);
+        weapons[w].handObject.SetActive(false);
+        weapons[w].bagObject.SetActive(true);
     }
 
-    public void EquipWeapon(int w) {
-        anim.SetLayerWeight(anim.GetLayerIndex(weapons[selectedWeapon].type.ToString()), 1f);
-        weapons[selectedWeapon].handObject.SetActive(true);
-        weapons[selectedWeapon].bagObject.SetActive(false);
-        SoundManager.instance.Play(weapons[selectedWeapon].equipSound, audioHands);
+    public void EquipWeapon(int w, bool sound = true) {
+        anim.SetLayerWeight(anim.GetLayerIndex(weapons[w].weapon.type.ToString()), 1f);
+        weapons[w].handObject.SetActive(true);
+        weapons[w].bagObject.SetActive(false);
+        if (sound) SoundManager.instance.Play(weapons[w].weapon.equipSound, audioHands);
     }
 
 

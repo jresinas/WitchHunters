@@ -19,13 +19,22 @@ public class HudController : MonoBehaviour
     public static HudController instance = null;
     public Image boltReloadImage;
 
+    private CanvasGroup canvGroup = null;
+
     private void Awake() {
         instance = this;
+        canvGroup = GetComponent<CanvasGroup>();
     }
 
     // Start is called before the first frame update
     void Start()
     {
+    }
+
+    private void FixedUpdate() {
+        if (canvGroup.alpha < 1) {
+            canvGroup.alpha += 0.05f;
+        }
     }
 
     // Update is called once per frame

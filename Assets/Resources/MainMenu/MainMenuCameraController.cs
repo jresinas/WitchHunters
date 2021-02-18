@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class MainMenuCameraController : MonoBehaviour {
-    private float FINAL_Y = 25f;
-    private float BRAKE_Y = 79f;
+    private float FINAL_Y = 15f;
+    private float BRAKE_Y = 69f;
     private float FALL_FORCE = 80f;
     //private float BRAKE_FORCE = 64.6f;
     private float LOOP_NUMBER = 0f;
@@ -13,6 +13,7 @@ public class MainMenuCameraController : MonoBehaviour {
 
     Rigidbody rb;
     Camera cam;
+    public GameObject moonLight;
     bool menu = true;
     bool fall = false;
 
@@ -50,6 +51,7 @@ public class MainMenuCameraController : MonoBehaviour {
                 rb.AddForce(0f, -rb.velocity.y, 0f);
                 transform.localEulerAngles = UpdateAngle(transform.position.y - FINAL_Y);
                 cam.orthographicSize = UpdateSize(transform.position.y - FINAL_Y);
+                moonLight.SetActive(false);
             } else if (transform.position.y <= FINAL_Y) {
                 fall = false;
             }
@@ -60,7 +62,7 @@ public class MainMenuCameraController : MonoBehaviour {
             transform.position = new Vector3(0f, FINAL_Y, 0f);
             transform.localEulerAngles = new Vector3(30f, 0f, 0f);
             cam.orthographicSize = 8;
-            //GameManager.instance.LoadScene("Night");
+            GameManager.instance.LoadScene("Intro");
         }
     }
 
