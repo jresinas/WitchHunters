@@ -6991,7 +6991,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 531fc5d04813acd4da8c8b65b107d5ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 919132147757660716}
 --- !u!1 &991968038
 GameObject:
   m_ObjectHideFlags: 0
@@ -8800,6 +8799,7 @@ GameObject:
   - component: {fileID: 1254015687}
   - component: {fileID: 1254015686}
   - component: {fileID: 1254015690}
+  - component: {fileID: 1254015691}
   m_Layer: 5
   m_Name: Hud
   m_TagString: Untagged
@@ -8925,6 +8925,18 @@ MonoBehaviour:
   minimapLarge: {fileID: 1841630222}
   pausePanel: {fileID: 1133068136}
   boltReloadImage: {fileID: 1066601258}
+--- !u!225 &1254015691
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1254015685}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &1270158754
 GameObject:
   m_ObjectHideFlags: 0
@@ -9142,20 +9154,26 @@ MonoBehaviour:
   dead: 0
   meleeAttacking: 0
   weapons:
-  - name: 
+  - weapon:
+      name: 
+      handObject: {fileID: 0}
+      bagObject: {fileID: 0}
+      damage: 0
+      speed: 0
+      equipSound: 
+      type: 0
     handObject: {fileID: 0}
     bagObject: {fileID: 0}
-    damage: 0
-    speed: 0
-    equipSound: 
-    type: 0
-  - name: 
+  - weapon:
+      name: 
+      handObject: {fileID: 0}
+      bagObject: {fileID: 0}
+      damage: 0
+      speed: 0
+      equipSound: 
+      type: 0
     handObject: {fileID: 0}
     bagObject: {fileID: 0}
-    damage: 0
-    speed: 0
-    equipSound: 
-    type: 0
   selectedWeapon: 0
   objs: []
   selectedObj: 0
@@ -11234,6 +11252,8 @@ MonoBehaviour:
     speed: 1
     equipSound: EquipCrossbow
     type: 1
+  player: {fileID: 919132147757660716}
+  hc: {fileID: 1305361617}
 --- !u!4 &1365001767
 Transform:
   m_ObjectHideFlags: 0

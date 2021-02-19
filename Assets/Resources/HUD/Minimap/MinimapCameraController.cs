@@ -13,8 +13,15 @@ public class MinimapCameraController : MonoBehaviour
     public Shader replacementShader;
     public GameObject player;
     public int size = 0;
+
+    void Awake() {
+        cam.SetReplacementShader(replacementShader,null);
+        player = GameManager.instance.player;
+    }
+
     // Start is called before the first frame update
     void Start() {
+        //player = GameManager.instance.player;
     }
 
     // Update is called once per frame
@@ -29,7 +36,4 @@ public class MinimapCameraController : MonoBehaviour
         }
     }
 
-    public void Awake() {
-        cam.SetReplacementShader(replacementShader,null);
-    }
 }

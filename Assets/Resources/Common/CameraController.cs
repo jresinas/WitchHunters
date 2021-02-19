@@ -2,19 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CameraController : MonoBehaviour
-{
-    public GameObject player;
-    Vector3 offset;
+public class CameraController : MonoBehaviour{
+    private GameObject player;
+    Vector3 offset = new Vector3(0f, 15f, -25f);
 
     //RaycastHit hit;
     RaycastHit[] hits;
     List<Renderer> transparentBuildings = new List<Renderer>();
 
+    private void Awake() {
+        player = GameManager.instance.player;
+    }
+
     // Start is called before the first frame update
-    void Start()
-    {
-        offset = new Vector3(0f, 15f, -25f);
+    void Start() {
+        //player = GameManager.instance.player;
     }
 
     // Update is called once per frame

@@ -65,6 +65,7 @@ public class HunterController : MonoBehaviour {
 
 
     private void Awake() {
+        DontDestroyOnLoad(gameObject);
         rb = GetComponent<Rigidbody>();
         anim = GetComponent<Animator>();
         life = MAX_LIFE;
@@ -385,6 +386,22 @@ public class HunterController : MonoBehaviour {
         if (evt.animatorClipInfo.weight > 0.4) {
             SoundManager.instance.Play("Step", audioFoots);
         }
+    }
+
+    public void EnableInputs(bool enabled) {
+        InputManager input = GetComponent<InputManager>();
+        input.enabled = enabled;
+    }
+
+    public void EnableSound(bool sound) {
+        AudioSource[] audioSources = GetComponents<AudioSource>();
+        foreach (AudioSource audioSource in audioSources) {
+            audioSource.enabled = sound;
+        }
+    }
+
+    public void EnableListen(bool listen) {
+        GetComponent<AudioListener>().enabled = listen;
     }
 
 

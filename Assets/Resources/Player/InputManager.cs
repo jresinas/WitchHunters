@@ -9,13 +9,13 @@ public class InputManager : MonoBehaviour{
     bool holdSelectObjectButton = false;
 
     void Update() {
-        if (!hc.dead && !SceneController.instance.IsPaused()) {
+        if (!hc.dead && !GameManager.instance.IsPaused()) {
             Inputs();
         }
 
         // Pause Game
         if (Input.GetButtonDown("Pause")) {
-            SceneController.instance.SetPause();
+            GameManager.instance.SetPause();
         }
     }
 

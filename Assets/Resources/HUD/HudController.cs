@@ -24,11 +24,14 @@ public class HudController : MonoBehaviour
     private void Awake() {
         instance = this;
         canvGroup = GetComponent<CanvasGroup>();
+        player = GameManager.instance.player;
+        hc = GameManager.instance.hc;
     }
 
     // Start is called before the first frame update
-    void Start()
-    {
+    void Start() {
+        //player = GameManager.instance.player;
+        //hc = GameManager.instance.hc;
     }
 
     private void FixedUpdate() {
@@ -76,7 +79,7 @@ public class HudController : MonoBehaviour
             img = objectSlots[i].GetComponent<Image>();
             txt = objectSlots[i].GetComponentInChildren<Text>();
 
-            if (img != null && txt != null && hc.objs[i] != null && hc.objs[i].obj != null) {
+            if (img != null && txt != null && hc.objs[i] != null && hc.objs[i].obj != null && hc.objs[i].obj.name != null) {
                 img.sprite = hc.objs[i].obj.icon;
                 txt.text = hc.objs[i].amount.ToString();
                 objectSlots[i].SetActive(true);
