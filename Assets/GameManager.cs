@@ -12,13 +12,19 @@ public class GameManager : MonoBehaviour {
 
     public GameObject player;
     public HunterController hc;
+    public InputManager input;
+
+    public IScene scene;
 
     private bool pause = false;
+    // 0: input disabled. 1 normal inputs. 2 input limited (need to select option)
+    public int inputMode = 0;
 
     private void Awake() {
         instance = this;
         DontDestroyOnLoad(gameObject);
         hc = player.GetComponent<HunterController>();
+        input = player.GetComponent<InputManager>();
     }
 
     // Start is called before the first frame update
@@ -37,7 +43,9 @@ public class GameManager : MonoBehaviour {
     }
      
 
-   
+   public void MakeSelection() {
+        scene.MakeSelection();
+   }
 
     public void SetPause() {
         pause = !pause;

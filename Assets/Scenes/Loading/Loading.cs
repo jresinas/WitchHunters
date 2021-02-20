@@ -2,17 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MainMenu : MonoBehaviour {
+public class Loading : MonoBehaviour {
+    public string scene;
     public HunterController hc;
 
-    private void Awake() {
-        LoadPlayerInventory();
-        EquipWeapon(0);
-    }
     // Start is called before the first frame update
     void Start()
     {
-        
+        GameManager.instance.LoadScene(scene);
+        LoadPlayerInventory();
+        EquipWeapon(0);
     }
 
     // Update is called once per frame

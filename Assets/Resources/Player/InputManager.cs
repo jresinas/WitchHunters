@@ -10,7 +10,16 @@ public class InputManager : MonoBehaviour{
 
     void Update() {
         if (!hc.dead && !GameManager.instance.IsPaused()) {
-            Inputs();
+            switch (GameManager.instance.inputMode) {
+                case 0:
+                    break;
+                case 1:
+                    NormalInputs();
+                    break;
+                case 2:
+                    SpecialInputs();
+                    break;
+            }
         }
 
         // Pause Game
@@ -19,7 +28,7 @@ public class InputManager : MonoBehaviour{
         }
     }
 
-    private void Inputs() {
+    private void NormalInputs() {
         if (!hc.Busy()) {
             // Movement and rotation
             float verticalInput = Input.GetAxis("Vertical");
@@ -88,5 +97,11 @@ public class InputManager : MonoBehaviour{
             HudController.instance.ResizeMinimap();
         }
       
+    }
+
+    private void SpecialInputs() {
+        if (Input.GetButton("Submit")) {
+            GameManager.instance.MakeSelection();
+        }
     }
 }

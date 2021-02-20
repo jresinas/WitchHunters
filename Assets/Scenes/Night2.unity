@@ -11216,7 +11216,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1365001766
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11254,8 +11254,6 @@ MonoBehaviour:
     type: 1
   player: {fileID: 919132147757660716}
   hc: {fileID: 1305361617}
-  input: {fileID: 0}
-  inputMode: 0
 --- !u!4 &1365001767
 Transform:
   m_ObjectHideFlags: 0
@@ -13999,7 +13997,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1879807526
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14753,7 +14751,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2014351696}
   - component: {fileID: 2014351695}
-  - component: {fileID: 2014351697}
   m_Layer: 0
   m_Name: SceneManager
   m_TagString: Untagged
@@ -14768,7 +14765,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2014351694}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2841bd5f91b1b9a449a66e3965c876d6, type: 3}
   m_Name: 
@@ -14788,18 +14785,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 26
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2014351697
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2014351694}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 078ff60519b5c1646b924f70477f3287, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &2023118722
 GameObject:
   m_ObjectHideFlags: 0
@@ -15925,7 +15910,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &4103332872752142
 Transform:
   m_ObjectHideFlags: 0
@@ -21018,7 +21003,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!81 &919132147757660717
 AudioListener:
   m_ObjectHideFlags: 0

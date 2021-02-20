@@ -388,11 +388,6 @@ public class HunterController : MonoBehaviour {
         }
     }
 
-    public void EnableInputs(bool enabled) {
-        InputManager input = GetComponent<InputManager>();
-        input.enabled = enabled;
-    }
-
     public void EnableSound(bool sound) {
         AudioSource[] audioSources = GetComponents<AudioSource>();
         foreach (AudioSource audioSource in audioSources) {
