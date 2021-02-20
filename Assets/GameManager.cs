@@ -9,9 +9,11 @@ public class GameManager : MonoBehaviour {
     public Trap[] traps = { };
     public Potion[] potions = { };
     public Weapon[] weapons = { };
+    public Bolt[] bolts = { };
 
     public GameObject player;
     public HunterController hc;
+    public WeaponsController wc;
     public InputManager input;
 
     public IScene scene;
@@ -24,6 +26,7 @@ public class GameManager : MonoBehaviour {
         instance = this;
         DontDestroyOnLoad(gameObject);
         hc = player.GetComponent<HunterController>();
+        wc = player.GetComponent<WeaponsController>();
         input = player.GetComponent<InputManager>();
     }
 

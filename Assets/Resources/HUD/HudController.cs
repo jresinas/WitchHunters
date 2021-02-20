@@ -9,6 +9,7 @@ public class HudController : MonoBehaviour
     public Image lifeOrb;
     public Image staminaOrb;
     public HunterController hc;
+    public WeaponsController wc;
     public GameObject[] objectSlots;
     public Image selectedObject;
     public MinimapCameraController minimapCamera;
@@ -26,6 +27,7 @@ public class HudController : MonoBehaviour
         canvGroup = GetComponent<CanvasGroup>();
         player = GameManager.instance.player;
         hc = GameManager.instance.hc;
+        wc = GameManager.instance.wc;
     }
 
     // Start is called before the first frame update
@@ -63,8 +65,8 @@ public class HudController : MonoBehaviour
         selectedObject.rectTransform.anchoredPosition = new Vector3(110f * hc.selectedObj, selectedObject.rectTransform.anchoredPosition.y);      
 
         // Reload bolt
-        boltReloadImage.transform.parent.gameObject.SetActive(hc.boltReloadProgress < hc.BOLT_RELOAD_TIME);
-        boltReloadImage.fillAmount = hc.boltReloadProgress / hc.BOLT_RELOAD_TIME;
+        boltReloadImage.transform.parent.gameObject.SetActive(wc.boltReloadProgress < wc.BOLT_RELOAD_TIME);
+        boltReloadImage.fillAmount = wc.boltReloadProgress / wc.BOLT_RELOAD_TIME;
     }
 
     public void RefreshObjectSlots() {

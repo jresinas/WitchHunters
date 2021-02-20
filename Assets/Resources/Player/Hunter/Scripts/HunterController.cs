@@ -3,13 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class HunterController : MonoBehaviour {
-    public float BOLT_RELOAD_TIME = 1f;
     public float MAX_LIFE = 10f;
     public float MAX_STAMINA = 10f;
     private float STAMINA_DEFAULT_RECOVER = 0.35f;
     private float STAMINA_WALK_SPEND = 0.1f;
-    private float STAMINA_ATTACK_MELEE2H_SPEND = 0.5f;
-    private float STAMINA_ATTACK_CROSSBOW_SPEND = 0.1f;
+    
     private float STAMINA_RUN_SPEND = 1f;
     private float STAMINA_MAKE_NOISE_SPEND = 1f;
     private float PICK_DISTANCE = 1.8f;
@@ -21,10 +19,6 @@ public class HunterController : MonoBehaviour {
     public AudioSource audioFoots;
     // Audio source for no-foots noises
     public AudioSource audioHands;
-    // Empty object in the character back to keep unused weapons
-    public GameObject bag;
-    // Character right hand
-    public GameObject rightHand;
     // Object which represent player in minimap
     public GameObject minimap;
     // Blood particle effect
@@ -32,45 +26,41 @@ public class HunterController : MonoBehaviour {
     // Make noise wave particle effect
     public GameObject shockWave;
 
+
+    WeaponsController wc;
+
     private float walkSpeed = 4f;
     private float runSpeed = 8f;
     public float life;
     public float stamina;
 
     public bool dead = false;
-    public bool meleeAttacking = false;
 
-    // List of available weapons
-    public PlayerWeapon[] weapons;
-    // Current equiped weapon
-    public int selectedWeapon = 0;
+    
 
     // List of inventory objects
     public PlayerObject[] objs;
     // Current inventory object selected
     public int selectedObj = 0;
 
-    // List of available bolts
-    public GameObject[] bolts;
-    // Current bolt selected
-    int bolt = 0;
-    // Time elapsed since starting reload bolt (in seconds) 
-    public float boltReloadProgress;
+    
+    
+    
 
     // Trap selected to pick from the floor
     private ITrapController trapToPick = null;
 
     // Next movement state (0:idle, 1:walk, 2:run)
-    float nextState = 0f;
+    public float nextState = 0f;
 
 
     private void Awake() {
         DontDestroyOnLoad(gameObject);
+        wc = GetComponent<WeaponsController>();
         rb = GetComponent<Rigidbody>();
         anim = GetComponent<Animator>();
         life = MAX_LIFE;
         stamina = MAX_STAMINA;
-        boltReloadProgress = BOLT_RELOAD_TIME;
     }
 
     // Start is called before the first frame update
@@ -80,8 +70,7 @@ public class HunterController : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        WeaponsPosition();
-        BoltReload();
+        
     }
 
     private void FixedUpdate() {
@@ -92,7 +81,7 @@ public class HunterController : MonoBehaviour {
         
     }
 
-    private void UpdateStamina(float value, bool continuous = false) {
+    public void UpdateStamina(float value, bool continuous = false) {
         stamina += continuous ? value * Time.deltaTime : value;
         if (stamina > MAX_STAMINA) {
             stamina = MAX_STAMINA;
@@ -102,20 +91,7 @@ public class HunterController : MonoBehaviour {
         }
     }
 
-    // Attach weapons to character movements
-    private void WeaponsPosition() {
-        foreach (PlayerWeapon pw in weapons) {
-            pw.handObject.transform.position = rightHand.transform.position;
-            pw.bagObject.transform.position = bag.transform.position;
-        }
-    }
 
-
-    private void BoltReload() {
-        if (boltReloadProgress < BOLT_RELOAD_TIME) {
-            boltReloadProgress += Time.deltaTime;
-        }
-    }
 
     public void Idle() {
         nextState = 0f;
@@ -183,34 +159,7 @@ public class HunterController : MonoBehaviour {
             anim.GetBool("Hit");
     }
 
-    // Attack controller
-    public void Attack() {
-        switch (weapons[selectedWeapon].weapon.type) {
-            case WeaponType.Melee:
-                anim.SetBool("Attack", true);
-                SoundManager.instance.Play("Melee2HAttack", audioHands, 0.3f);
-                UpdateStamina(-STAMINA_ATTACK_MELEE2H_SPEND);
-                break;
-            case WeaponType.Range:
-                if (boltReloadProgress >= BOLT_RELOAD_TIME) {
-                    anim.SetBool("Attack", true);
-                    SoundManager.instance.Play("CrossbowAttack", audioHands);
-                    UpdateStamina(-STAMINA_ATTACK_CROSSBOW_SPEND);
-                }
-                break;
-        }
-    }
 
-    // Callback from fire crossbow animation to fire a bolt
-    private void FireBolt(AnimationEvent evt) {
-        // if (evt.animatorClipInfo.weight > 0.5) {
-        if (boltReloadProgress >= BOLT_RELOAD_TIME) {
-            boltReloadProgress = 0;
-            Vector3 offset = transform.forward * (1.2f +nextState*0.25f) + transform.up * 1.2f + transform.right*0.1f;
-            GameObject b = Instantiate(bolts[bolt], transform.position + offset, transform.rotation);
-            Destroy(b, 5f);
-        }
-    }
 
     public void MakeNoise() {
         if (stamina >= STAMINA_MAKE_NOISE_SPEND) {
@@ -293,42 +242,10 @@ public class HunterController : MonoBehaviour {
         }
     }
 
-    public void ChangeWeapon() {
-        anim.SetBool("ChangeWeapon", true);
-    }
-
-    public void ChangeBolt() {
-        bolt = (bolt + 1) % bolts.Length;
-    }
-
-    // Callback from animations to keep current weapon and draw new weapon
-    private void ChangeWeaponCallback() {
-        UnequipWeapon(selectedWeapon);
-        selectedWeapon = (selectedWeapon + 1) % weapons.Length;
-        EquipWeapon(selectedWeapon);
-    }
-
-    public void UnequipWeapon(int w) {
-        anim.SetLayerWeight(anim.GetLayerIndex(weapons[w].weapon.type.ToString()), 0f);
-        weapons[w].handObject.SetActive(false);
-        weapons[w].bagObject.SetActive(true);
-    }
-
-    public void EquipWeapon(int w, bool sound = true) {
-        anim.SetLayerWeight(anim.GetLayerIndex(weapons[w].weapon.type.ToString()), 1f);
-        weapons[w].handObject.SetActive(true);
-        weapons[w].bagObject.SetActive(false);
-        if (sound) SoundManager.instance.Play(weapons[w].weapon.equipSound, audioHands);
-    }
-
 
     // Callback from animations to notify it is finished
     private void EndAnimation(string animParamName) {
         anim.SetBool(animParamName, false);
-    }
-
-    private void SetMeleeAttacking(int state) {
-        meleeAttacking = (state > 0);
     }
 
     public void DamageReceived(float amount) {
@@ -346,9 +263,9 @@ public class HunterController : MonoBehaviour {
     }
 
     private void FinishAllActions() {
-        anim.SetBool("ChangeWeapon", false);
-        anim.SetBool("Attack", false);
-        meleeAttacking = false;
+        wc.StopChangeWeapon();
+        wc.StopAttack();
+        
         anim.SetBool("MakeNoise", false);
         anim.SetBool("PutTrap", false);
         anim.SetBool("PickTrap", false);

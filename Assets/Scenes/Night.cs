@@ -11,6 +11,7 @@ public class Night : MonoBehaviour {
         GameManager.instance.inputMode = 1;
         hc.EnableSound(true);
         hc.EnableListen(true);
+        RefreshPlayerInventory();
     }
 
     private void Start() {
@@ -21,5 +22,9 @@ public class Night : MonoBehaviour {
     void Update()
     {
         
+    }
+
+    private void RefreshPlayerInventory() {
+        HudController.instance.RefreshObjectSlots();
     }
 }

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class InputManager : MonoBehaviour{
     public HunterController hc;
+    public WeaponsController wc;
     // Control not holding attack button
     bool holdAttackButton = false;
     bool holdSelectObjectButton = false;
@@ -51,17 +52,17 @@ public class InputManager : MonoBehaviour{
         if (!hc.HandsBusy()) {
             // Change weapon
             if (Input.GetButtonDown("ChangeWeapon")) {
-                hc.ChangeWeapon();
+                wc.ChangeWeapon();
             }
 
             if (Input.GetButtonDown("SwitchArrow")) {
-                hc.ChangeBolt();
+                wc.ChangeBolt();
             }
 
             // Attack
             float attackInput = Input.GetAxis("Attack");
             if (attackInput == 1 && !holdAttackButton) {
-                hc.Attack();
+                wc.Attack();
                 holdAttackButton = true;
             }
             if (attackInput == 0) {

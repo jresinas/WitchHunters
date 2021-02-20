@@ -5,6 +5,7 @@ using UnityEngine;
 public class Loading : MonoBehaviour {
     public string scene;
     public HunterController hc;
+    public WeaponsController wc;
 
     // Start is called before the first frame update
     void Start()
@@ -26,21 +27,26 @@ public class Loading : MonoBehaviour {
             hc.objs[i] = new PlayerObject(GameManager.instance.traps[i], 2);
         }
 
-        hc.weapons = new PlayerWeapon[2];
+        wc.weapons = new PlayerWeapon[2];
         for (int i = 0; i < GameManager.instance.weapons.Length; i++) {
-            hc.weapons[i] = new PlayerWeapon(GameManager.instance.weapons[i],
-                                Instantiate(GameManager.instance.weapons[i].handObject, hc.rightHand.transform),
-                                Instantiate(GameManager.instance.weapons[i].bagObject, hc.bag.transform)
+            wc.weapons[i] = new PlayerWeapon(GameManager.instance.weapons[i],
+                                Instantiate(GameManager.instance.weapons[i].handObject, wc.rightHand.transform),
+                                Instantiate(GameManager.instance.weapons[i].bagObject, wc.bag.transform)
                             );
+        }
+
+        wc.bolts = new PlayerBolt[3];
+        for (int i = 0; i < GameManager.instance.bolts.Length; i++) {
+            wc.bolts[i] = new PlayerBolt(GameManager.instance.bolts[i], 10);
         }
 
     }
 
     private void EquipWeapon(int weaponIndex) {
-        for (int i = 0; i < hc.weapons.Length; i++) {
-            if (i != weaponIndex) hc.UnequipWeapon(i);
+        for (int i = 0; i < wc.weapons.Length; i++) {
+            if (i != weaponIndex) wc.UnequipWeapon(i);
         }
 
-        hc.EquipWeapon(weaponIndex, false);
+        wc.EquipWeapon(weaponIndex, false);
     }
 }
