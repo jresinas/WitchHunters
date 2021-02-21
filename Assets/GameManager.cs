@@ -28,25 +28,13 @@ public class GameManager : MonoBehaviour {
         DontDestroyOnLoad(gameObject);
     }
 
-    // Start is called before the first frame update
-    void Start() {
-
-    }
-
-    // Update is called once per frame
-    void Update() {
-        
-    }
-
-
     public void LoadScene(string scene) {
         SceneManager.LoadScene(scene);
     }
      
-
-   public void MakeSelection() {
+    public void MakeSelection() {
         scene.MakeSelection();
-   }
+    }
 
     public void SetPause() {
         pause = !pause;
@@ -58,5 +46,4 @@ public class GameManager : MonoBehaviour {
     public bool IsPaused() {
         return pause;
     }
-
 }

@@ -6,6 +6,7 @@ public class InputManager : MonoBehaviour{
     public PlayerController pc;
     public PlayerWeaponController wc;
     public PlayerObjectController oc;
+    public PlayerMoveController mc;
     // Control not holding attack button
     bool holdAttackButton = false;
     bool holdSelectObjectButton = false;
@@ -44,9 +45,9 @@ public class InputManager : MonoBehaviour{
             Vector3 view = new Vector3(horizontalViewInput, 0f, verticalViewInput);
 
             if (move != Vector3.zero || view != Vector3.zero) {
-                pc.Move(move, view, runInput > 0.5);
+                mc.Move(move, view, runInput > 0.5);
             } else {
-                pc.Idle();
+                mc.Idle();
             }
         }
 

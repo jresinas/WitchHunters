@@ -221,6 +221,7 @@ MonoBehaviour:
   pc: {fileID: 8578441018206897637}
   wc: {fileID: 8578441018206897633}
   oc: {fileID: 8578441018206897640}
+  mc: {fileID: 8578441018206897641}
 --- !u!1 &1305162315
 GameObject:
   m_ObjectHideFlags: 0
@@ -5319,7 +5320,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03010f7aa8d79c54fac098ebffa93d07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scene: Intro
+  scene: Night
   wc: {fileID: 8578441018206897633}
   oc: {fileID: 8578441018206897640}
 --- !u!1 &8578441016890277195
@@ -8473,6 +8474,7 @@ GameObject:
   - component: {fileID: 8578441018206897637}
   - component: {fileID: 8578441018206897633}
   - component: {fileID: 8578441018206897640}
+  - component: {fileID: 8578441018206897641}
   - component: {fileID: 8578441018206897636}
   - component: {fileID: 8578441018206897635}
   - component: {fileID: 8578441018206897634}
@@ -8735,7 +8737,6 @@ MonoBehaviour:
   life: 0
   stamina: 0
   dead: 0
-  nextState: 0
 --- !u!65 &8578441018206897638
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -8779,6 +8780,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objs: []
   selectedObj: 0
+--- !u!114 &8578441018206897641
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8578441018206897632}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50bc2a73de766d641a2294733db93dab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nextState: 0
 --- !u!1 &8578441018213444604
 GameObject:
   m_ObjectHideFlags: 0

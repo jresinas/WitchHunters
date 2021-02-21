@@ -6,15 +6,13 @@ public class PlayerController : MonoBehaviour {
     public float MAX_LIFE = 10f;
     public float MAX_STAMINA = 10f;
     private float STAMINA_DEFAULT_RECOVER = 0.35f;
-    private float STAMINA_WALK_SPEND = 0.1f; 
-    private float STAMINA_RUN_SPEND = 1f;
     private float STAMINA_MAKE_NOISE_SPEND = 1f;
     private float MAKE_NOISE_RANGE = 15f;
 
-    Rigidbody rb;
     Animator anim;
     PlayerWeaponController wc;
     PlayerObjectController oc;
+
     // Audio source for foots noises
     public AudioSource audioFoots;
     // Audio source for no-foots noises
@@ -26,25 +24,18 @@ public class PlayerController : MonoBehaviour {
     // Make noise wave particle effect
     [SerializeField] GameObject shockWave;
 
-    private float walkSpeed = 4f;
-    private float runSpeed = 8f;
     public float life;
     public float stamina;
 
     public bool dead = false;
 
-    // Next movement state (0:idle, 1:walk, 2:run)
-    public float nextState = 0f;
-
-
     void Awake() {
         DontDestroyOnLoad(gameObject);
 
-        rb = GetComponent<Rigidbody>();
         anim = GetComponent<Animator>();
         wc = GetComponent<PlayerWeaponController>();
         oc = GetComponent<PlayerObjectController>();
-        
+
         life = MAX_LIFE;
         stamina = MAX_STAMINA;
     }
@@ -56,14 +47,7 @@ public class PlayerController : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        
-    }
-
-    private void FixedUpdate() {
-        if (!dead) {
-            ChangeState();
-            UpdateStamina(STAMINA_DEFAULT_RECOVER, true);
-        }   
+        UpdateStamina(STAMINA_DEFAULT_RECOVER, true);
     }
 
     public void UpdateStamina(float value, bool continuous = false) {
@@ -73,57 +57,6 @@ public class PlayerController : MonoBehaviour {
         }
         if (stamina < 0) {
             stamina = 0;
-        }
-    }
-
-    public void Idle() {
-        nextState = 0f;
-    }
-
-    // Movement and rotation controller
-    public void Move(Vector3 move, Vector3 view, bool run) {
-        // If no view vector, character look at movement direction
-        if (view == Vector3.zero) {
-            view = move;
-        }
-
-        // Rotate character to view vector direction
-        transform.LookAt(transform.position + view);
-        //transform.LookAt(transform.position + view - new Vector3(0,0,-0.5f));
-
-        // Set MoveRotation animation parameter in function of move and view vectors
-        // MoveRotation controls foot blend animations (WalkBlend:WalkBack/WalkLeft/WalkForward/WalkRight and RunBlend:RunBack/RunLeft/RunForward/RunRight)
-        Vector3 aux = Vector3.Cross(move, view);
-        int sign = (aux.y < 0) ? 1 : -1;
-        float angle = Vector3.Angle(move, view);
-        anim.SetFloat("MoveRotation", sign * angle / 90);
-
-        if (move != Vector3.zero) {
-            if (!run || (nextState == 2 && stamina <= 0.1) || (nextState != 2 && stamina < STAMINA_RUN_SPEND/4)) {
-                // Walk
-                nextState = 1f;
-                rb.MovePosition(rb.position + move * walkSpeed * Time.deltaTime);
-                UpdateStamina(STAMINA_WALK_SPEND, true);
-            } else {
-                // Run
-                nextState = 2f;
-                rb.MovePosition(rb.position + move * runSpeed * Time.deltaTime);
-                UpdateStamina(-STAMINA_RUN_SPEND, true);
-            }
-        } else {
-            // Idle
-            Idle();
-        }
-    }
-
-    // Set param State gradually to make smooth transitions between states (idle, walk and run)
-    private void ChangeState() {
-        anim.SetFloat("StateArm", nextState);
-        if (anim.GetFloat("StateFoot") - 0.1f <= nextState) {
-            anim.SetFloat("StateFoot", anim.GetFloat("StateFoot") + 0.1f);
-        }
-        if (anim.GetFloat("StateFoot") + 0.1f >= nextState) {
-            anim.SetFloat("StateFoot", anim.GetFloat("StateFoot") - 0.1f);
         }
     }
 
@@ -157,8 +90,6 @@ public class PlayerController : MonoBehaviour {
             }
         }
     }
-
-
 
     // Callback from animations to notify it is finished
     private void EndAnimation(string animParamName) {
@@ -196,12 +127,6 @@ public class PlayerController : MonoBehaviour {
         dead = true;
     }
 
-    private void Step(AnimationEvent evt) {
-        if (evt.animatorClipInfo.weight > 0.4) {
-            SoundManager.instance.Play("Step", audioFoots);
-        }
-    }
-
     public void EnableSound(bool sound) {
         AudioSource[] audioSources = GetComponents<AudioSource>();
         foreach (AudioSource audioSource in audioSources) {
@@ -212,7 +137,4 @@ public class PlayerController : MonoBehaviour {
     public void EnableListen(bool listen) {
         GetComponent<AudioListener>().enabled = listen;
     }
-
-
 }
-

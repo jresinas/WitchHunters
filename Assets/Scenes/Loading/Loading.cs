@@ -8,17 +8,10 @@ public class Loading : MonoBehaviour {
     public PlayerObjectController oc;
 
     // Start is called before the first frame update
-    void Start()
-    {
+    void Start() {
         GameManager.instance.LoadScene(scene);
         LoadPlayerInventory();
         EquipWeapon(0);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     private void LoadPlayerInventory() {

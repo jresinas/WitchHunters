@@ -9,6 +9,7 @@ public class PlayerWeaponController : MonoBehaviour {
 
     Animator anim;
     PlayerController pc;
+    PlayerMoveController mc;
 
     // Empty object in the character back to keep unused weapons
     public GameObject bag;
@@ -28,8 +29,9 @@ public class PlayerWeaponController : MonoBehaviour {
     public float boltReloadProgress;
 
     private void Awake() {
-        pc = GetComponent<PlayerController>();
         anim = GetComponent<Animator>();
+        pc = GetComponent<PlayerController>();
+        mc = GetComponent<PlayerMoveController>();
         boltReloadProgress = BOLT_RELOAD_TIME;
     }
 
@@ -88,7 +90,7 @@ public class PlayerWeaponController : MonoBehaviour {
         // if (evt.animatorClipInfo.weight > 0.5) {
         if (boltReloadProgress >= BOLT_RELOAD_TIME && bolts[selectedBolt].amount > 0) {
             boltReloadProgress = 0;
-            Vector3 offset = transform.forward * (1.2f + pc.nextState * 0.25f) + transform.up * 1.2f + transform.right * 0.1f;
+            Vector3 offset = transform.forward * (1.2f + mc.nextState * 0.25f) + transform.up * 1.2f + transform.right * 0.1f;
             GameObject b = Instantiate(bolts[selectedBolt].bolt.prefab, transform.position + offset, transform.rotation);
             bolts[selectedBolt].amount--;
             Destroy(b, 5f);
