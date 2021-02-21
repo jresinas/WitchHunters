@@ -5,14 +5,14 @@ using UnityEngine;
 public class MeleeWeaponController : MonoBehaviour
 {
     private HunterController hc;
-    private WeaponsController wc;
+    private PlayerWeaponController wc;
     private float damage = 3f;
 
     // Start is called before the first frame update
     void Start()
     {
         hc = GetComponentInParent<HunterController>();
-        wc = GetComponentInParent<WeaponsController>();
+        wc = GetComponentInParent<PlayerWeaponController>();
     }
 
     // Update is called once per frame

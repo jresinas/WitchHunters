@@ -8,8 +8,9 @@ public class HudController : MonoBehaviour
     public GameObject player;
     public Image lifeOrb;
     public Image staminaOrb;
-    public HunterController hc;
-    public WeaponsController wc;
+    private HunterController hc;
+    private PlayerWeaponController wc;
+    private PlayerObjectController oc;
     public GameObject[] objectSlots;
     public Image selectedObject;
     public MinimapCameraController minimapCamera;
@@ -28,6 +29,7 @@ public class HudController : MonoBehaviour
         player = GameManager.instance.player;
         hc = GameManager.instance.hc;
         wc = GameManager.instance.wc;
+        oc = GameManager.instance.oc;
     }
 
     // Start is called before the first frame update
@@ -55,14 +57,14 @@ public class HudController : MonoBehaviour
         staminaOrb.GetComponentInChildren<RawImage>().uvRect = new Rect(0f,y+0.5f,1f,1f);
 
         // Update traps number
-        for (int i = 0; i< hc.objs.Length; i++) {
-            if (hc.objs[i] != null && objectSlots[i] != null) {
-                objectSlots[i].GetComponentInChildren<Text>().text = hc.objs[i].amount.ToString();
+        for (int i = 0; i< oc.objs.Length; i++) {
+            if (oc.objs[i] != null && objectSlots[i] != null) {
+                objectSlots[i].GetComponentInChildren<Text>().text = oc.objs[i].amount.ToString();
             }
         }
 
         // Update selected trap
-        selectedObject.rectTransform.anchoredPosition = new Vector3(110f * hc.selectedObj, selectedObject.rectTransform.anchoredPosition.y);      
+        selectedObject.rectTransform.anchoredPosition = new Vector3(110f * oc.selectedObj, selectedObject.rectTransform.anchoredPosition.y);      
 
         // Reload bolt
         boltReloadImage.transform.parent.gameObject.SetActive(wc.boltReloadProgress < wc.BOLT_RELOAD_TIME);
@@ -77,18 +79,18 @@ public class HudController : MonoBehaviour
             slot.SetActive(false);
         }
 
-        for (int i = 0; i < hc.objs.Length; i++) {
+        for (int i = 0; i < oc.objs.Length; i++) {
             img = objectSlots[i].GetComponent<Image>();
             txt = objectSlots[i].GetComponentInChildren<Text>();
 
-            if (img != null && txt != null && hc.objs[i] != null && hc.objs[i].obj != null && hc.objs[i].obj.name != null) {
-                img.sprite = hc.objs[i].obj.icon;
-                txt.text = hc.objs[i].amount.ToString();
+            if (img != null && txt != null && oc.objs[i] != null && oc.objs[i].obj != null && oc.objs[i].obj.name != null) {
+                img.sprite = oc.objs[i].obj.icon;
+                txt.text = oc.objs[i].amount.ToString();
                 objectSlots[i].SetActive(true);
             }
         }
 
-        selectedObject.gameObject.SetActive(hc.objs.Length > 0);
+        selectedObject.gameObject.SetActive(oc.objs.Length > 0);
     }
 
 

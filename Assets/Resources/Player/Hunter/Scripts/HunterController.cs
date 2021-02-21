@@ -6,15 +6,15 @@ public class HunterController : MonoBehaviour {
     public float MAX_LIFE = 10f;
     public float MAX_STAMINA = 10f;
     private float STAMINA_DEFAULT_RECOVER = 0.35f;
-    private float STAMINA_WALK_SPEND = 0.1f;
-    
+    private float STAMINA_WALK_SPEND = 0.1f; 
     private float STAMINA_RUN_SPEND = 1f;
     private float STAMINA_MAKE_NOISE_SPEND = 1f;
-    private float PICK_DISTANCE = 1.8f;
     private float MAKE_NOISE_RANGE = 15f;
 
     Rigidbody rb;
     Animator anim;
+    PlayerWeaponController wc;
+    PlayerObjectController oc;
     // Audio source for foots noises
     public AudioSource audioFoots;
     // Audio source for no-foots noises
@@ -22,12 +22,9 @@ public class HunterController : MonoBehaviour {
     // Object which represent player in minimap
     public GameObject minimap;
     // Blood particle effect
-    public GameObject blood;
+    [SerializeField] GameObject blood;
     // Make noise wave particle effect
-    public GameObject shockWave;
-
-
-    WeaponsController wc;
+    [SerializeField] GameObject shockWave;
 
     private float walkSpeed = 4f;
     private float runSpeed = 8f;
@@ -36,29 +33,18 @@ public class HunterController : MonoBehaviour {
 
     public bool dead = false;
 
-    
-
-    // List of inventory objects
-    public PlayerObject[] objs;
-    // Current inventory object selected
-    public int selectedObj = 0;
-
-    
-    
-    
-
-    // Trap selected to pick from the floor
-    private ITrapController trapToPick = null;
-
     // Next movement state (0:idle, 1:walk, 2:run)
     public float nextState = 0f;
 
 
-    private void Awake() {
+    void Awake() {
         DontDestroyOnLoad(gameObject);
-        wc = GetComponent<WeaponsController>();
+
         rb = GetComponent<Rigidbody>();
         anim = GetComponent<Animator>();
+        wc = GetComponent<PlayerWeaponController>();
+        oc = GetComponent<PlayerObjectController>();
+        
         life = MAX_LIFE;
         stamina = MAX_STAMINA;
     }
@@ -77,8 +63,7 @@ public class HunterController : MonoBehaviour {
         if (!dead) {
             ChangeState();
             UpdateStamina(STAMINA_DEFAULT_RECOVER, true);
-        }
-        
+        }   
     }
 
     public void UpdateStamina(float value, bool continuous = false) {
@@ -90,8 +75,6 @@ public class HunterController : MonoBehaviour {
             stamina = 0;
         }
     }
-
-
 
     public void Idle() {
         nextState = 0f;
@@ -159,8 +142,6 @@ public class HunterController : MonoBehaviour {
             anim.GetBool("Hit");
     }
 
-
-
     public void MakeNoise() {
         if (stamina >= STAMINA_MAKE_NOISE_SPEND) {
             anim.SetBool("MakeNoise", true);
@@ -171,76 +152,12 @@ public class HunterController : MonoBehaviour {
             foreach (Collider enemy in enemies) {
                 if (enemy != null && enemy.gameObject.tag == "Enemy") {
                     EnemyController ec = enemy.GetComponent<EnemyController>();
-                    ec.SetTarget(transform.position, 999);
+                    ec.Lure(transform.position);
                 }
             }
         }
     }
 
-    public void UseObject() {
-        if (objs[selectedObj] != null && objs[selectedObj].amount > 0) {
-            if (objs[selectedObj].isTrap()) {
-                PutTrap();
-            } else if (objs[selectedObj].isPotion()) {
-                DrinkPotion();
-            } else {
-                Debug.Log("Object type undefined");
-            }
-        }
-    }
-
-    private void PutTrap() {
-        anim.SetBool("PutTrap", true);
-    }
-
-    private void DrinkPotion() {
-
-    }
-
-    private void PutTrapCallback() {
-        Vector3 offset = transform.forward;
-
-        if (objs[selectedObj] != null && objs[selectedObj].isTrap() && objs[selectedObj].amount > 0) { 
-            GameObject trap = ((Trap)objs[selectedObj].obj).prefab;
-
-            if (trap != null) {
-                Instantiate(trap, transform.position + offset, Quaternion.identity);
-                objs[selectedObj].amount--;
-            }
-        }
-    }
-
-    public void PickTrap() {
-        GameObject trap = GetNearestTrap();
-        if (trap != null) {
-            ITrapController tc = trap.GetComponent<ITrapController>();
-            if (tc != null) {
-                transform.LookAt(trap.transform);
-                trapToPick = tc;
-                anim.SetBool("PickTrap", true);
-            }
-        }
-    }
-
-    private void PickTrapCallback() {
-        if (trapToPick != null) {
-            trapToPick.PickTrap(this);
-            trapToPick = null;
-        }
-    }
-
-    public void ChangeSelectedObject(int num) {
-        if (!anim.GetBool("PutTrap")) {
-            selectedObj = selectedObj + num;
-            if (selectedObj < 0) {
-                selectedObj = objs.Length-1;
-            }
-            if (selectedObj >= objs.Length) {
-                selectedObj = 0;
-            }
-            SoundManager.instance.Play("SelectObject", audioHands);
-        }
-    }
 
 
     // Callback from animations to notify it is finished
@@ -265,11 +182,10 @@ public class HunterController : MonoBehaviour {
     private void FinishAllActions() {
         wc.StopChangeWeapon();
         wc.StopAttack();
-        
+        oc.StopPutTrap();
+        oc.StopPickTrap();
         anim.SetBool("MakeNoise", false);
-        anim.SetBool("PutTrap", false);
-        anim.SetBool("PickTrap", false);
-        trapToPick = null;
+        
     }
 
     private void Dead() {
@@ -278,25 +194,6 @@ public class HunterController : MonoBehaviour {
         Destroy(GetComponent<Collider>());
         Destroy(minimap);
         dead = true;
-    }
-    
-    private GameObject GetNearestTrap() {
-        float nearest = PICK_DISTANCE;
-        GameObject nearestTrap = null;
-        GameObject[] traps = GameObject.FindGameObjectsWithTag("Trap");
-
-        foreach (GameObject trap in traps) {
-            ITrapController tc = trap.GetComponent<ITrapController>();
-            if (tc != null && tc.Pickable()) {
-                float distance = Vector3.Distance(transform.position, trap.transform.position);
-                if (distance < nearest) {
-                    nearest = distance;
-                    nearestTrap = trap;
-                }
-            }
-        }
-
-        return nearestTrap;
     }
 
     private void Step(AnimationEvent evt) {

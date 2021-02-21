@@ -4,5 +4,5 @@ using UnityEngine;
 
 interface ITrapController{
     bool Pickable();
-    void PickTrap(HunterController hc);
+    void PickTrap(PlayerObjectController oc);
 }

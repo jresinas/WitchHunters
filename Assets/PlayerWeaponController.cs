@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WeaponsController : MonoBehaviour {
+public class PlayerWeaponController : MonoBehaviour {
     public float BOLT_RELOAD_TIME = 1f;
     private float STAMINA_ATTACK_MELEE2H_SPEND = 0.5f;
     private float STAMINA_ATTACK_CROSSBOW_SPEND = 0.1f;

@@ -27,9 +27,9 @@ public class ExplosiveBoxController : MonoBehaviour, ITrapController
         return true;
     }
 
-    public void PickTrap(HunterController hc) {
+    public void PickTrap(PlayerObjectController oc) {
         if (Pickable()) {
-            hc.objs[TRAP_ID].amount++;
+            oc.objs[TRAP_ID].amount++;
             Destroy(gameObject);
         }
     }

@@ -135,7 +135,7 @@ GameObject:
   - component: {fileID: 521448748}
   - component: {fileID: 521448750}
   m_Layer: 0
-  m_Name: GameManager (1)
+  m_Name: GameManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -188,7 +188,8 @@ MonoBehaviour:
     prefab: {fileID: 452154651952630315, guid: 9f7045ac70c77d04db5f58709af7a1b4, type: 3}
   player: {fileID: 8578441018206897632}
   hc: {fileID: 8578441018206897637}
-  wc: {fileID: 0}
+  wc: {fileID: 8578441018206897633}
+  oc: {fileID: 8578441018206897640}
   input: {fileID: 521448750}
   inputMode: 0
 --- !u!4 &521448749
@@ -219,6 +220,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hc: {fileID: 8578441018206897637}
   wc: {fileID: 8578441018206897633}
+  oc: {fileID: 8578441018206897640}
 --- !u!1 &1305162315
 GameObject:
   m_ObjectHideFlags: 0
@@ -232,7 +234,7 @@ GameObject:
   - component: {fileID: 1305162317}
   - component: {fileID: 1305162316}
   m_Layer: 1
-  m_Name: GroundFog (1)
+  m_Name: GroundFog
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5060,7 +5062,7 @@ GameObject:
   - component: {fileID: 1639033175}
   - component: {fileID: 1639033174}
   m_Layer: 0
-  m_Name: SoundManager (1)
+  m_Name: SoundManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5285,7 +5287,7 @@ GameObject:
   - component: {fileID: 2145951088}
   - component: {fileID: 2145951089}
   m_Layer: 0
-  m_Name: SceneManager (1)
+  m_Name: SceneManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5320,6 +5322,7 @@ MonoBehaviour:
   scene: Night
   hc: {fileID: 8578441018206897637}
   wc: {fileID: 8578441018206897633}
+  oc: {fileID: 8578441018206897640}
 --- !u!1 &8578441016890277195
 GameObject:
   m_ObjectHideFlags: 0
@@ -8469,12 +8472,13 @@ GameObject:
   - component: {fileID: 8578441018206897639}
   - component: {fileID: 8578441018206897638}
   - component: {fileID: 8578441018206897637}
+  - component: {fileID: 8578441018206897633}
+  - component: {fileID: 8578441018206897640}
   - component: {fileID: 8578441018206897636}
   - component: {fileID: 8578441018206897635}
   - component: {fileID: 8578441018206897634}
-  - component: {fileID: 8578441018206897633}
   m_Layer: 7
-  m_Name: Player (1)
+  m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8732,8 +8736,6 @@ MonoBehaviour:
   life: 0
   stamina: 0
   dead: 0
-  objs: []
-  selectedObj: 0
   nextState: 0
 --- !u!65 &8578441018206897638
 BoxCollider:
@@ -8764,6 +8766,20 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 116
   m_CollisionDetection: 0
+--- !u!114 &8578441018206897640
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8578441018206897632}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26b003c4406d880438d76580c96e4f68, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objs: []
+  selectedObj: 0
 --- !u!1 &8578441018213444604
 GameObject:
   m_ObjectHideFlags: 0

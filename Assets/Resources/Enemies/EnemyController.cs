@@ -191,4 +191,8 @@ public class EnemyController : MonoBehaviour {
     public void SetMeleeAttacking(int state) {
         meleeAttacking = (state > 0); 
     }
+
+    public void Lure(Vector3 position) {
+        SetTarget(position, 999);
+    }
 }

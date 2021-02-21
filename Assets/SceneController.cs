@@ -6,7 +6,8 @@ public class SceneController : MonoBehaviour
 {
     public static SceneController instance = null;
     public HunterController hc;
-    public WeaponsController wc;
+    public PlayerWeaponController wc;
+    public PlayerObjectController oc;
     //private bool pause = false;
 
 
@@ -16,9 +17,9 @@ public class SceneController : MonoBehaviour
 
     // Start is called before the first frame update
     void Start() {
-        hc.objs = new PlayerObject[10];
+        oc.objs = new PlayerObject[10];
         for (int i = 0; i < GameManager.instance.traps.Length; i++) {
-            hc.objs[i] = new PlayerObject(GameManager.instance.traps[i], 2); 
+            oc.objs[i] = new PlayerObject(GameManager.instance.traps[i], 2); 
         }
 
         wc.weapons = new PlayerWeapon[2];

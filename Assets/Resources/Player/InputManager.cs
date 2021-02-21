@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class InputManager : MonoBehaviour{
     public HunterController hc;
-    public WeaponsController wc;
+    public PlayerWeaponController wc;
+    public PlayerObjectController oc;
     // Control not holding attack button
     bool holdAttackButton = false;
     bool holdSelectObjectButton = false;
@@ -75,18 +76,18 @@ public class InputManager : MonoBehaviour{
             }
 
             if (Input.GetButtonDown("UseObject")) {
-                hc.UseObject();
+                oc.UseObject();
             }
 
             if (Input.GetButtonDown("PickTrap")) {
-                hc.PickTrap();
+                oc.PickTrap();
             }
         }
 
         float selectObject = Input.GetAxis("SelectObject");
         if (Mathf.Abs(selectObject) == 1 && !holdSelectObjectButton) {
             holdSelectObjectButton = true;
-            hc.ChangeSelectedObject((int)selectObject);
+            oc.ChangeSelectedObject((int)selectObject);
         }
         if (selectObject == 0) {
             holdSelectObjectButton = false;

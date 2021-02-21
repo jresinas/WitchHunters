@@ -41,10 +41,10 @@ public class BearTrapController : MonoBehaviour, ITrapController
         return enemyTrapped == null;
     }
 
-    public void PickTrap(HunterController hc) {
+    public void PickTrap(PlayerObjectController oc) {
         //hc.traps.Add("BearTrap");
         if (Pickable()) {
-            hc.objs[TRAP_ID].amount++;
+            oc.objs[TRAP_ID].amount++;
             Destroy(gameObject);
         }
     }

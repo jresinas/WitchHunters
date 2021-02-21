@@ -13,7 +13,8 @@ public class GameManager : MonoBehaviour {
 
     public GameObject player;
     public HunterController hc;
-    public WeaponsController wc;
+    public PlayerWeaponController wc;
+    public PlayerObjectController oc;
     public InputManager input;
 
     public IScene scene;
@@ -25,9 +26,6 @@ public class GameManager : MonoBehaviour {
     private void Awake() {
         instance = this;
         DontDestroyOnLoad(gameObject);
-        hc = player.GetComponent<HunterController>();
-        wc = player.GetComponent<WeaponsController>();
-        input = player.GetComponent<InputManager>();
     }
 
     // Start is called before the first frame update
