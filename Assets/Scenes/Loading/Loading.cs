@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Loading : MonoBehaviour {
     public string scene;
-    public HunterController hc;
     public PlayerWeaponController wc;
     public PlayerObjectController oc;
 

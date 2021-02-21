@@ -8,7 +8,7 @@ public class PlayerObjectController : MonoBehaviour {
     private float PUT_DISTANCE = 1f;
 
     Animator anim;
-    HunterController hc;
+    PlayerController pc;
 
     // List of inventory objects
     public PlayerObject[] objs;
@@ -19,7 +19,7 @@ public class PlayerObjectController : MonoBehaviour {
     private ITrapController trapToPick = null;
 
     private void Awake() {
-        hc = GetComponent<HunterController>();
+        pc = GetComponent<PlayerController>();
         anim = GetComponent<Animator>();
     }
 
@@ -95,7 +95,7 @@ public class PlayerObjectController : MonoBehaviour {
             if (selectedObj >= objs.Length) {
                 selectedObj = 0;
             }
-            SoundManager.instance.Play("SelectObject", hc.audioHands);
+            SoundManager.instance.Play("SelectObject", pc.audioHands);
         }
     }
 

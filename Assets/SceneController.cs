@@ -5,7 +5,6 @@ using UnityEngine;
 public class SceneController : MonoBehaviour
 {
     public static SceneController instance = null;
-    public HunterController hc;
     public PlayerWeaponController wc;
     public PlayerObjectController oc;
     //private bool pause = false;

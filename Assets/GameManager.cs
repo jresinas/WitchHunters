@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour {
     public Bolt[] bolts = { };
 
     public GameObject player;
-    public HunterController hc;
+    public PlayerController pc;
     public PlayerWeaponController wc;
     public PlayerObjectController oc;
     public InputManager input;

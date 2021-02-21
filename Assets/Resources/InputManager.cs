@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class InputManager : MonoBehaviour{
-    public HunterController hc;
+    public PlayerController pc;
     public PlayerWeaponController wc;
     public PlayerObjectController oc;
     // Control not holding attack button
@@ -11,7 +11,7 @@ public class InputManager : MonoBehaviour{
     bool holdSelectObjectButton = false;
 
     void Update() {
-        if (!hc.dead && !GameManager.instance.IsPaused()) {
+        if (!pc.dead && !GameManager.instance.IsPaused()) {
             switch (GameManager.instance.inputMode) {
                 case 0:
                     break;
@@ -31,7 +31,7 @@ public class InputManager : MonoBehaviour{
     }
 
     private void NormalInputs() {
-        if (!hc.Busy()) {
+        if (!pc.Busy()) {
             // Movement and rotation
             float verticalInput = Input.GetAxis("Vertical");
             float horizontalInput = Input.GetAxis("Horizontal");
@@ -44,13 +44,13 @@ public class InputManager : MonoBehaviour{
             Vector3 view = new Vector3(horizontalViewInput, 0f, verticalViewInput);
 
             if (move != Vector3.zero || view != Vector3.zero) {
-                hc.Move(move, view, runInput > 0.5);
+                pc.Move(move, view, runInput > 0.5);
             } else {
-                hc.Idle();
+                pc.Idle();
             }
         }
 
-        if (!hc.HandsBusy()) {
+        if (!pc.HandsBusy()) {
             // Change weapon
             if (Input.GetButtonDown("ChangeWeapon")) {
                 wc.ChangeWeapon();
@@ -72,7 +72,7 @@ public class InputManager : MonoBehaviour{
 
             // Make noise
             if (Input.GetButtonDown("MakeNoise")) {
-                hc.MakeNoise();
+                pc.MakeNoise();
             }
 
             if (Input.GetButtonDown("UseObject")) {

@@ -187,7 +187,7 @@ MonoBehaviour:
     icon: {fileID: 0}
     prefab: {fileID: 452154651952630315, guid: 9f7045ac70c77d04db5f58709af7a1b4, type: 3}
   player: {fileID: 8578441018206897632}
-  hc: {fileID: 8578441018206897637}
+  pc: {fileID: 8578441018206897637}
   wc: {fileID: 8578441018206897633}
   oc: {fileID: 8578441018206897640}
   input: {fileID: 521448750}
@@ -218,7 +218,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03099041934d6a040a46957daf41b2cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hc: {fileID: 8578441018206897637}
+  pc: {fileID: 8578441018206897637}
   wc: {fileID: 8578441018206897633}
   oc: {fileID: 8578441018206897640}
 --- !u!1 &1305162315
@@ -5319,8 +5319,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03010f7aa8d79c54fac098ebffa93d07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scene: Night
-  hc: {fileID: 8578441018206897637}
+  scene: Intro
   wc: {fileID: 8578441018206897633}
   oc: {fileID: 8578441018206897640}
 --- !u!1 &8578441016890277195

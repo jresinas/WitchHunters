@@ -127,7 +127,7 @@ public class EnemyController : MonoBehaviour {
 
     // Enemy attack impacts on a player
     public void AttackImpact(Collider collider) {
-        HunterController player = collider.GetComponent<HunterController>();
+        PlayerController player = collider.GetComponent<PlayerController>();
         player.DamageReceived(self.meleeDamage);
     }
 

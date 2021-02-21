@@ -8,7 +8,7 @@ public class HudController : MonoBehaviour
     public GameObject player;
     public Image lifeOrb;
     public Image staminaOrb;
-    private HunterController hc;
+    private PlayerController pc;
     private PlayerWeaponController wc;
     private PlayerObjectController oc;
     public GameObject[] objectSlots;
@@ -27,7 +27,7 @@ public class HudController : MonoBehaviour
         instance = this;
         canvGroup = GetComponent<CanvasGroup>();
         player = GameManager.instance.player;
-        hc = GameManager.instance.hc;
+        pc = GameManager.instance.pc;
         wc = GameManager.instance.wc;
         oc = GameManager.instance.oc;
     }
@@ -48,8 +48,8 @@ public class HudController : MonoBehaviour
     void Update()
     {
         // Update orbs fill
-        lifeOrb.fillAmount = hc.life/hc.MAX_LIFE;
-        staminaOrb.fillAmount = hc.stamina/hc.MAX_STAMINA;
+        lifeOrb.fillAmount = pc.life/pc.MAX_LIFE;
+        staminaOrb.fillAmount = pc.stamina/pc.MAX_STAMINA;
 
         // Animate orbs
         y -= 0.5f*Time.deltaTime;

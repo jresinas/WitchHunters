@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Intro : MonoBehaviour, IScene {
-    HunterController hc;
+    PlayerController pc;
     public IntroCivilianController icc;
     public int stage = 0;
     public static Intro instance = null;
@@ -11,9 +11,9 @@ public class Intro : MonoBehaviour, IScene {
     private void Awake() {
         instance = this;
         GameManager.instance.scene = this;
-        hc = GameManager.instance.hc;
-        hc.EnableSound(true);
-        hc.EnableListen(true);
+        pc = GameManager.instance.pc;
+        pc.EnableSound(true);
+        pc.EnableListen(true);
         RefreshPlayerInventory();
     }
 

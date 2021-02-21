@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Night : MonoBehaviour {
-    HunterController hc;
+    PlayerController pc;
 
     // Start is called before the first frame update
     void Awake(){
-        hc = GameManager.instance.hc;
+        pc = GameManager.instance.pc;
         GameManager.instance.inputMode = 1;
-        hc.EnableSound(true);
-        hc.EnableListen(true);
+        pc.EnableSound(true);
+        pc.EnableListen(true);
         RefreshPlayerInventory();
     }
 

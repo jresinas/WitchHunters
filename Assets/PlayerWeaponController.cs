@@ -8,7 +8,7 @@ public class PlayerWeaponController : MonoBehaviour {
     private float STAMINA_ATTACK_CROSSBOW_SPEND = 0.1f;
 
     Animator anim;
-    HunterController hc;
+    PlayerController pc;
 
     // Empty object in the character back to keep unused weapons
     public GameObject bag;
@@ -28,7 +28,7 @@ public class PlayerWeaponController : MonoBehaviour {
     public float boltReloadProgress;
 
     private void Awake() {
-        hc = GetComponent<HunterController>();
+        pc = GetComponent<PlayerController>();
         anim = GetComponent<Animator>();
         boltReloadProgress = BOLT_RELOAD_TIME;
     }
@@ -76,7 +76,7 @@ public class PlayerWeaponController : MonoBehaviour {
         anim.SetLayerWeight(anim.GetLayerIndex(weapons[w].weapon.type.ToString()), 1f);
         weapons[w].handObject.SetActive(true);
         weapons[w].bagObject.SetActive(false);
-        if (sound) SoundManager.instance.Play(weapons[w].weapon.equipSound, hc.audioHands);
+        if (sound) SoundManager.instance.Play(weapons[w].weapon.equipSound, pc.audioHands);
     }
 
     private void SetMeleeAttacking(int state) {
@@ -88,7 +88,7 @@ public class PlayerWeaponController : MonoBehaviour {
         // if (evt.animatorClipInfo.weight > 0.5) {
         if (boltReloadProgress >= BOLT_RELOAD_TIME && bolts[selectedBolt].amount > 0) {
             boltReloadProgress = 0;
-            Vector3 offset = transform.forward * (1.2f + hc.nextState * 0.25f) + transform.up * 1.2f + transform.right * 0.1f;
+            Vector3 offset = transform.forward * (1.2f + pc.nextState * 0.25f) + transform.up * 1.2f + transform.right * 0.1f;
             GameObject b = Instantiate(bolts[selectedBolt].bolt.prefab, transform.position + offset, transform.rotation);
             bolts[selectedBolt].amount--;
             Destroy(b, 5f);
@@ -100,14 +100,14 @@ public class PlayerWeaponController : MonoBehaviour {
         switch (weapons[selectedWeapon].weapon.type) {
             case WeaponType.Melee:
                 anim.SetBool("Attack", true);
-                SoundManager.instance.Play("Melee2HAttack", hc.audioHands, 0.3f);
-                hc.UpdateStamina(-STAMINA_ATTACK_MELEE2H_SPEND);
+                SoundManager.instance.Play("Melee2HAttack", pc.audioHands, 0.3f);
+                pc.UpdateStamina(-STAMINA_ATTACK_MELEE2H_SPEND);
                 break;
             case WeaponType.Range:
                 if (boltReloadProgress >= BOLT_RELOAD_TIME && bolts[selectedBolt].amount > 0) {
                     anim.SetBool("Attack", true);
-                    SoundManager.instance.Play("CrossbowAttack", hc.audioHands);
-                    hc.UpdateStamina(-STAMINA_ATTACK_CROSSBOW_SPEND);
+                    SoundManager.instance.Play("CrossbowAttack", pc.audioHands);
+                    pc.UpdateStamina(-STAMINA_ATTACK_CROSSBOW_SPEND);
                 }
                 break;
         }

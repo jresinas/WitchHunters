@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HunterController : MonoBehaviour {
+public class PlayerController : MonoBehaviour {
     public float MAX_LIFE = 10f;
     public float MAX_STAMINA = 10f;
     private float STAMINA_DEFAULT_RECOVER = 0.35f;

@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class MeleeWeaponController : MonoBehaviour
 {
-    private HunterController hc;
+    private PlayerController pc;
     private PlayerWeaponController wc;
     private float damage = 3f;
 
     // Start is called before the first frame update
     void Start()
     {
-        hc = GetComponentInParent<HunterController>();
+        pc = GetComponentInParent<PlayerController>();
         wc = GetComponentInParent<PlayerWeaponController>();
     }
 
@@ -25,7 +25,7 @@ public class MeleeWeaponController : MonoBehaviour
         if (collider.gameObject.tag == "Enemy" && wc.meleeAttacking) {
             EnemyController enemy = collider.gameObject.GetComponent<EnemyController>();
             enemy.DamageReceived(damage, transform.position);
-            SoundManager.instance.Play("Melee2HImpact", hc.audioHands);
+            SoundManager.instance.Play("Melee2HImpact", pc.audioHands);
         }
     }
 }
