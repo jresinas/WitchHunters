@@ -5320,7 +5320,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03010f7aa8d79c54fac098ebffa93d07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scene: Night
+  scene: Intro
   wc: {fileID: 8578441018206897633}
   oc: {fileID: 8578441018206897640}
 --- !u!1 &8578441016890277195

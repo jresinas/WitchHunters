@@ -103,7 +103,7 @@ public class InputManager : MonoBehaviour{
     }
 
     private void SpecialInputs() {
-        if (Input.GetButton("Submit")) {
+        if (Input.GetButtonDown("Submit")) {
             GameManager.instance.MakeSelection();
         }
     }

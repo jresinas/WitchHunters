@@ -5,8 +5,10 @@ using UnityEngine;
 public class Intro : MonoBehaviour, IScene {
     PlayerController pc;
     public IntroCivilianController icc;
+    // 1: intro dialog, 2: goes to church, 3: major dialog 
     public int stage = 0;
     public static Intro instance = null;
+    public ConversationController conversation;
 
     private void Awake() {
         instance = this;
@@ -47,8 +49,17 @@ public class Intro : MonoBehaviour, IScene {
 
     public void MakeSelection() {
         if (stage == 1) {
-            icc.StopTalkPlayer();
-            SetStage(2);
+            conversation.NextDialog(this);
         }
+    }
+
+    public void StartConversation(string name) {
+        conversation.StartDialog(name);
+        conversation.NextDialog(this);
+    }
+
+    public void FinishConversation() {
+        icc.StopTalkPlayer();
+        SetStage(2);
     }
 }
