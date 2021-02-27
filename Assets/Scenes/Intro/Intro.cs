@@ -5,6 +5,7 @@ using UnityEngine;
 public class Intro : MonoBehaviour, IScene {
     PlayerController pc;
     public IntroCivilianController icc;
+    public PriestController priest;
     // 1: intro dialog, 2: goes to church, 3: major dialog 
     public int stage = 0;
     public static Intro instance = null;
@@ -38,28 +39,39 @@ public class Intro : MonoBehaviour, IScene {
         switch (stage) {
             // conversation
             case 1:
-                GameManager.instance.inputMode = 2;
+                //GameManager.instance.inputMode = 2;
                 break;
             // end conversation
             case 2:
-                GameManager.instance.inputMode = 1;
+                //GameManager.instance.inputMode = 1;
                 break;
         }
     }
 
     public void MakeSelection() {
-        if (stage == 1) {
+        //if (stage == 1) {
             conversation.NextDialog(this);
-        }
+        //}
     }
 
     public void StartConversation(string name) {
+        GameManager.instance.inputMode = 2;
+        pc.GetComponent<PlayerMoveController>().Idle();
         conversation.StartDialog(name);
         conversation.NextDialog(this);
     }
 
-    public void FinishConversation() {
-        icc.StopTalkPlayer();
-        SetStage(2);
+    public void FinishConversation(string conversation) {
+        GameManager.instance.inputMode = 1;
+        switch (conversation) {
+            case "InitialDialog":
+                icc.StopTalkPlayer();
+                SetStage(2);
+                break;
+            case "PriestDialog":
+                priest.StopTalkPlayer();
+                break;
+        }
+        
     }
 }

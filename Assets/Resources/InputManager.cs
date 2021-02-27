@@ -81,7 +81,7 @@ public class InputManager : MonoBehaviour{
             }
 
             if (Input.GetButtonDown("PickTrap")) {
-                oc.PickTrap();
+                pc.Interaction();
             }
         }
 

@@ -30,11 +30,13 @@ public class BoltController : MonoBehaviour
 
             DestroyBolt();
         }
-        if (collider.gameObject.tag == "Trap" && boltType == 1) {
-            ITrapController tc = collider.GetComponent<ITrapController>();
-            if (tc is ExplosiveBoxController) {
-                ExplosiveBoxController ecb = (ExplosiveBoxController)tc;
-                ecb.Explosion();
+        if (collider.gameObject.tag == "Interactive" && boltType == 1) {
+            //ITrapController tc = collider.GetComponent<ITrapController>();
+            //if (tc is ExplosiveBoxController) {
+            ExplosiveBoxController ebc = collider.GetComponent<ExplosiveBoxController>();
+            if (ebc != null) {
+                //ExplosiveBoxController ebc = (ExplosiveBoxController)tc;
+                ebc.Explosion();
                 DestroyBolt();
             }
         }

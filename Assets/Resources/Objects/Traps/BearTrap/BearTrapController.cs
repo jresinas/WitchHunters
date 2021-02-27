@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BearTrapController : MonoBehaviour, ITrapController
+public class BearTrapController : MonoBehaviour, IInteractive
 {
     private int TRAP_ID = 0;
 
@@ -37,17 +37,20 @@ public class BearTrapController : MonoBehaviour, ITrapController
     }
 
 
-    public bool Pickable() {
+    public bool Available() {
         return enemyTrapped == null;
     }
 
-    public void PickTrap(PlayerObjectController oc) {
+    public void Interact(PlayerController pc) {
+        PlayerObjectController oc = pc.GetComponent<PlayerObjectController>();
         //hc.traps.Add("BearTrap");
-        if (Pickable()) {
+        if (Available()) {
             oc.objs[TRAP_ID].amount++;
             Destroy(gameObject);
         }
     }
 
-
+    public string GetInteractionType() {
+        return "Trap";
+    }
 }

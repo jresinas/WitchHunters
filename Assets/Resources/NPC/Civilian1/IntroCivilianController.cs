@@ -23,8 +23,7 @@ public class IntroCivilianController : MonoBehaviour {
     }
 
     // Update is called once per frame
-    void Update()
-    {
+    void Update() {
         if (Intro.instance != null) {
             switch (Intro.instance.stage) {
                 case 0:

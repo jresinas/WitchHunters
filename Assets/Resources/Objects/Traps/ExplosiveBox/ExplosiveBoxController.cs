@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ExplosiveBoxController : MonoBehaviour, ITrapController
+public class ExplosiveBoxController : MonoBehaviour, IInteractive
 {
     private int TRAP_ID = 1;
     private float EXPLOSION_RANGE = 15f;
@@ -23,12 +23,13 @@ public class ExplosiveBoxController : MonoBehaviour, ITrapController
         
     }
 
-    public bool Pickable() {
+    public bool Available() {
         return true;
     }
 
-    public void PickTrap(PlayerObjectController oc) {
-        if (Pickable()) {
+    public void Interact(PlayerController pc) {
+        PlayerObjectController oc = pc.GetComponent<PlayerObjectController>();
+        if (Available()) {
             oc.objs[TRAP_ID].amount++;
             Destroy(gameObject);
         }
@@ -48,4 +49,7 @@ public class ExplosiveBoxController : MonoBehaviour, ITrapController
         Destroy(gameObject);
     }
 
+    public string GetInteractionType() {
+        return "Trap";
+    }
 }

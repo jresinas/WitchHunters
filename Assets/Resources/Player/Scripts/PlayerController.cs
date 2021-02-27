@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour {
     private float STAMINA_DEFAULT_RECOVER = 0.35f;
     private float STAMINA_MAKE_NOISE_SPEND = 1f;
     private float MAKE_NOISE_RANGE = 15f;
+    private float INTERACTION_DISTANCE = 1.8f;
 
     Animator anim;
     PlayerWeaponController wc;
@@ -89,6 +90,47 @@ public class PlayerController : MonoBehaviour {
                 }
             }
         }
+    }
+
+    public void Interaction() {
+        GameObject target = GetNearestInteractive();
+        if (target != null) {
+            IInteractive targetInteractive = target.GetComponent<IInteractive>();
+            if (targetInteractive != null) {
+                transform.LookAt(target.transform);
+                switch (targetInteractive.GetInteractionType()) {
+                    case "Trap":
+                        oc.PickTrap(targetInteractive);
+                        break;
+                    case "NPC":
+                        TalkNPC(targetInteractive);
+                        break;
+                }
+            }
+        }
+    }
+
+    void TalkNPC(IInteractive targetInteractive) {
+        targetInteractive.Interact(this);
+    }
+
+    private GameObject GetNearestInteractive() {
+        float nearest = INTERACTION_DISTANCE;
+        GameObject nearestInteractive = null;
+        GameObject[] interactives = GameObject.FindGameObjectsWithTag("Interactive");
+
+        foreach (GameObject interactive in interactives) {
+            IInteractive tc = interactive.GetComponent<IInteractive>();
+            if (tc != null && tc.Available()) {
+                float distance = Vector3.Distance(transform.position, interactive.transform.position);
+                if (distance < nearest) {
+                    nearest = distance;
+                    nearestInteractive = interactive;
+                }
+            }
+        }
+
+        return nearestInteractive;
     }
 
     // Callback from animations to notify it is finished

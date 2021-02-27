@@ -51,6 +51,8 @@ public class ConversationController : MonoBehaviour {
     Phrase[] phrases;
     int phraseIndex = 0;
 
+    string currentDialog;
+
     // Avoid pass to next dialog while is fading on/off
     bool isBusy = false;
 
@@ -67,6 +69,7 @@ public class ConversationController : MonoBehaviour {
         }
     }
 
+    // Allow to add actor transform in runtime
     public void SetActor(string name, Transform actor) {
         if (actorsList.ContainsKey(name)) {
             actorsList[name] = actor;
@@ -76,9 +79,11 @@ public class ConversationController : MonoBehaviour {
     }
 
     public void StartDialog(string name) {
+        currentDialog = name;
         if (dialogsList.ContainsKey(name)) {
             phrases = dialogsList[name];
             phraseIndex = 0;
+            endConversation = false;
         } else {
             Debug.Log("Dialog name '"+name+"' cannot be found");
         }
@@ -94,7 +99,7 @@ public class ConversationController : MonoBehaviour {
                 newBubble = null;
                 StartCoroutine(SwitchBubble());
                 endConversation = true;
-                caller.SendMessage("FinishConversation");
+                caller.SendMessage("FinishConversation", currentDialog);
             } else {
                 oldBubble = newBubble;
                 newBubble = CreateBubble(phrases[phraseIndex]);

@@ -7426,6 +7426,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Priest
       objectReference: {fileID: 0}
+    - target: {fileID: 3015823623820113092, guid: 8b5411c09cc585c408d19818cfa534ad, type: 3}
+      propertyPath: m_TagString
+      value: Interactive
+      objectReference: {fileID: 0}
     - target: {fileID: 8390672175858381828, guid: 8b5411c09cc585c408d19818cfa534ad, type: 3}
       propertyPath: m_Controller
       value: 
@@ -10559,6 +10563,28 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1678995520}
   m_CullTransparentMesh: 1
+--- !u!1 &1695700097 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3015823623820113092, guid: 8b5411c09cc585c408d19818cfa534ad, type: 3}
+  m_PrefabInstance: {fileID: 793058405}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1695700098
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1695700097}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ad7ed73adeb9114caca90c245bd7e7c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &1695700099 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2490925141038935678, guid: 8b5411c09cc585c408d19818cfa534ad, type: 3}
+  m_PrefabInstance: {fileID: 793058405}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1700102744
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11902,6 +11928,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   icc: {fileID: 919132148120055045}
+  priest: {fileID: 1695700098}
   stage: 0
   conversation: {fileID: 2014351697}
 --- !u!4 &2014351696
@@ -11934,6 +11961,8 @@ MonoBehaviour:
   actors:
   - name: Civilian
     actor: {fileID: 543450652595337145}
+  - name: Priest
+    actor: {fileID: 1695700099}
   dialogs:
   - name: InitialDialog
     phrases:
@@ -11945,7 +11974,7 @@ MonoBehaviour:
         fadeTime: 0.25
         attachedBubble: 0
         fontSize: 4
-        type: 1
+        type: 0
     - text: ola k ase?
       actorName: Civilian
       options:
@@ -11954,7 +11983,7 @@ MonoBehaviour:
         fadeTime: 0.25
         attachedBubble: 0
         fontSize: 4
-        type: 1
+        type: 0
     - text: bueno venga, noh vemoh!
       actorName: Civilian
       options:
@@ -11963,9 +11992,27 @@ MonoBehaviour:
         fadeTime: 0.25
         attachedBubble: 0
         fontSize: 4
-        type: 1
-  - name: 
-    phrases: []
+        type: 0
+  - name: PriestDialog
+    phrases:
+    - text: Q pasa quillo?
+      actorName: Priest
+      options:
+        flipX: 1
+        size: {x: 3, y: 2}
+        fadeTime: 0
+        attachedBubble: 0
+        fontSize: 0
+        type: 0
+    - text: Q te cuenta?
+      actorName: Priest
+      options:
+        flipX: 1
+        size: {x: 3, y: 2}
+        fadeTime: 0
+        attachedBubble: 0
+        fontSize: 0
+        type: 0
   endConversation: 0
 --- !u!1 &2023118722
 GameObject:

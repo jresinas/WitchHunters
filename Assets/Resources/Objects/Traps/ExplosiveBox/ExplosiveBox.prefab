@@ -95,7 +95,7 @@ GameObject:
   - component: {fileID: 8225715963644250411}
   m_Layer: 0
   m_Name: ExplosiveBox
-  m_TagString: Trap
+  m_TagString: Interactive
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

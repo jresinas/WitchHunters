@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerObjectController : MonoBehaviour {
-    private float PICK_DISTANCE = 1.8f;
+    //private float PICK_DISTANCE = 1.8f;
     private float PUT_DISTANCE = 1f;
 
     Animator anim;
@@ -16,7 +16,7 @@ public class PlayerObjectController : MonoBehaviour {
     public int selectedObj = 0;
 
     // Trap selected to pick from the floor
-    private ITrapController trapToPick = null;
+    private IInteractive trapToPick = null;
 
     private void Awake() {
         pc = GetComponent<PlayerController>();
@@ -67,21 +67,14 @@ public class PlayerObjectController : MonoBehaviour {
         }
     }
 
-    public void PickTrap() {
-        GameObject trap = GetNearestTrap();
-        if (trap != null) {
-            ITrapController tc = trap.GetComponent<ITrapController>();
-            if (tc != null) {
-                transform.LookAt(trap.transform);
-                trapToPick = tc;
-                anim.SetBool("PickTrap", true);
-            }
-        }
+    public void PickTrap(IInteractive trap) {
+        trapToPick = trap;
+        anim.SetBool("PickTrap", true);
     }
 
     private void PickTrapCallback() {
         if (trapToPick != null) {
-            trapToPick.PickTrap(this);
+            trapToPick.Interact(pc);
             trapToPick = null;
         }
     }
@@ -99,24 +92,7 @@ public class PlayerObjectController : MonoBehaviour {
         }
     }
 
-    private GameObject GetNearestTrap() {
-        float nearest = PICK_DISTANCE;
-        GameObject nearestTrap = null;
-        GameObject[] traps = GameObject.FindGameObjectsWithTag("Trap");
-
-        foreach (GameObject trap in traps) {
-            ITrapController tc = trap.GetComponent<ITrapController>();
-            if (tc != null && tc.Pickable()) {
-                float distance = Vector3.Distance(transform.position, trap.transform.position);
-                if (distance < nearest) {
-                    nearest = distance;
-                    nearestTrap = trap;
-                }
-            }
-        }
-
-        return nearestTrap;
-    }
+    
 
     public void StopPickTrap() {
         anim.SetBool("PutTrap", false);
