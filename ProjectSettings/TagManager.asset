@@ -8,7 +8,6 @@ TagManager:
   - Church
   - Enemy
   - ExplosiveBox
-  - Trap
   - Interactive
   layers:
   - Default

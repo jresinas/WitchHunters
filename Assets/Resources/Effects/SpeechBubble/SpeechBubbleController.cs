@@ -16,7 +16,7 @@ public class SpeechBubbleController : MonoBehaviour {
     [SerializeField] Sprite screamBubble;
 
 
-    Vector3 offset = new Vector3(0.2f, 2.2f, 0f);
+    Vector3 offset = new Vector3(-0.5f, 2.2f, 0f);
     // Bubble is attached to character
     bool attached = false;
     float fadeTime = 0.25f;

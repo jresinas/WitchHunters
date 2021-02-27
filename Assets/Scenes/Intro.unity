@@ -11978,7 +11978,7 @@ MonoBehaviour:
     - text: ola k ase?
       actorName: Civilian
       options:
-        flipX: 1
+        flipX: 0
         size: {x: 3, y: 2}
         fadeTime: 0.25
         attachedBubble: 0
