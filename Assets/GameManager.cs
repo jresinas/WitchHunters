@@ -36,6 +36,14 @@ public class GameManager : MonoBehaviour {
         scene.MakeSelection();
     }
 
+    public void SelectUp() {
+        scene.SelectUp();
+    }
+
+    public void SelectDown() {
+        scene.SelectDown();
+    }
+
     public void SetPause() {
         pause = !pause;
         Time.timeScale = pause ? 0 : 1;
@@ -45,5 +53,9 @@ public class GameManager : MonoBehaviour {
 
     public bool IsPaused() {
         return pause;
+    }
+
+    public void ExitGame() {
+        Application.Quit();
     }
 }

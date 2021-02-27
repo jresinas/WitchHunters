@@ -53,6 +53,14 @@ public class Intro : MonoBehaviour, IScene {
         //}
     }
 
+    public void SelectUp() {
+
+    }
+
+    public void SelectDown() {
+
+    }
+
     public void StartConversation(string name) {
         GameManager.instance.inputMode = 2;
         pc.GetComponent<PlayerMoveController>().Idle();

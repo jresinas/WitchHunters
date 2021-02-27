@@ -10,6 +10,7 @@ public class InputManager : MonoBehaviour{
     // Control not holding attack button
     bool holdAttackButton = false;
     bool holdSelectObjectButton = false;
+    bool holdButton = false;
 
     void Update() {
         if (!pc.dead && !GameManager.instance.IsPaused()) {
@@ -103,8 +104,23 @@ public class InputManager : MonoBehaviour{
     }
 
     private void SpecialInputs() {
+        float verticalInput = Input.GetAxis("Vertical");
+        float verticalInputCross = Input.GetAxis("VerticalCross");
+
         if (Input.GetButtonDown("Submit")) {
             GameManager.instance.MakeSelection();
         }
+
+        if (!holdButton && (verticalInput == 1 || verticalInputCross == 1)) {
+            holdButton = true;
+            GameManager.instance.SelectUp();
+        }
+
+        if (!holdButton && (verticalInput == -1 || verticalInputCross == -1)) {
+            holdButton = true;
+            GameManager.instance.SelectDown();
+        }
+
+        if (verticalInput == 0 && verticalInputCross == 0) holdButton = false;
     }
 }

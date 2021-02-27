@@ -28,10 +28,11 @@ public class MainMenuCameraController : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetButton("Submit")) {
-            menu = false;
-            fall = true;
-        }
+    }
+
+    public void StartFalling() {
+        menu = false;
+        fall = true;
     }
 
     private void FixedUpdate() {
