@@ -5,7 +5,7 @@ using UnityEngine.AI;
 
 
 public class IntroCivilianController : MonoBehaviour {
-    public Transform churchDoors;
+    [SerializeField] Transform churchDoors;
 
     NavMeshAgent agent;
     Animator anim;

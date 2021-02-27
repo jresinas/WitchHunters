@@ -7384,7 +7384,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2490925141038935678, guid: 8b5411c09cc585c408d19818cfa534ad, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 48.000916
+      value: 45.000916
       objectReference: {fileID: 0}
     - target: {fileID: 2490925141038935678, guid: 8b5411c09cc585c408d19818cfa534ad, type: 3}
       propertyPath: m_LocalPosition.y
@@ -7434,6 +7434,10 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 954a15896cdb2d248b6bac173349f364, type: 2}
+    - target: {fileID: 8390672175858381828, guid: 8b5411c09cc585c408d19818cfa534ad, type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8b5411c09cc585c408d19818cfa534ad, type: 3}
 --- !u!1 &803133482
@@ -10580,11 +10584,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ad7ed73adeb9114caca90c245bd7e7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  churchDoors: {fileID: 163095647}
 --- !u!4 &1695700099 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2490925141038935678, guid: 8b5411c09cc585c408d19818cfa534ad, type: 3}
   m_PrefabInstance: {fileID: 793058405}
   m_PrefabAsset: {fileID: 0}
+--- !u!195 &1695700101
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1695700097}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 1.5
+  m_Acceleration: 9999
+  avoidancePriority: 50
+  m_AngularSpeed: 500
+  m_StoppingDistance: 0.2
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!1001 &1700102744
 PrefabInstance:
   m_ObjectHideFlags: 0
