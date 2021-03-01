@@ -24,7 +24,7 @@ public class MainMenu : MonoBehaviour, IScene {
 
     // Start is called before the first frame update
     void Start(){
-        GameManager.instance.inputMode = 2;
+        GameManager.instance.SetInputMode(2);
         ChangeOption(0);
     }
 

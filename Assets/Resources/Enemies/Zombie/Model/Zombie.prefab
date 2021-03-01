@@ -404,7 +404,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 636ea8465f1660849b5f8cc8f4dd092c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  anim: {fileID: 0}
+  anim: {fileID: 430884343419630891}
   weapon: {fileID: 4506683}
   weaponGrip: {fileID: 2495323810655361013}
   blood: {fileID: 4995154015362810120, guid: 032ae94f25f2e25428cfaa0ac452b143, type: 3}

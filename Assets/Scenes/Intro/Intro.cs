@@ -14,6 +14,7 @@ public class Intro : MonoBehaviour, IScene {
     private void Awake() {
         instance = this;
         GameManager.instance.scene = this;
+        GameManager.instance.SetInputMode(0);
         pc = GameManager.instance.pc;
         pc.EnableSound(true);
         pc.EnableListen(true);
@@ -62,14 +63,14 @@ public class Intro : MonoBehaviour, IScene {
     }
 
     public void StartConversation(string name) {
-        GameManager.instance.inputMode = 2;
+        GameManager.instance.SetInputMode(2);
         pc.GetComponent<PlayerMoveController>().Idle();
         conversation.StartDialog(name);
         conversation.NextDialog(this);
     }
 
     public void FinishConversation(string conversation) {
-        GameManager.instance.inputMode = 1;
+        GameManager.instance.SetInputMode(1);
         switch (conversation) {
             case "InitialDialog":
                 icc.StopTalkPlayer();

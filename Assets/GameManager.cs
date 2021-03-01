@@ -58,4 +58,8 @@ public class GameManager : MonoBehaviour {
     public void ExitGame() {
         Application.Quit();
     }
+
+    public void SetInputMode(int mode) {
+        inputMode = mode;
+    }
 }

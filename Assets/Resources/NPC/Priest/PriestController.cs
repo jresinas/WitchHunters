@@ -57,6 +57,7 @@ public class PriestController : MonoBehaviour, IInteractive {
     }
 
     void EnterChurch() {
+        GameManager.instance.LoadScene("Night");
         Destroy(gameObject);
     }
 }

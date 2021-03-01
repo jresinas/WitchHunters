@@ -95,12 +95,11 @@ public class PlayerObjectController : MonoBehaviour {
     
 
     public void StopPickTrap() {
-        anim.SetBool("PutTrap", false);
         anim.SetBool("PickTrap", false);
         trapToPick = null;
     }
 
     public void StopPutTrap() {
-        throw new NotImplementedException();
+        anim.SetBool("PutTrap", false);
     }
 }
