@@ -50,7 +50,7 @@ public class SoundManager : MonoBehaviour {
     // Play a random audioclip from the specified name options in the given audioSource. Can be played with delay
     public void Play(string name, AudioSource audioSource, float timeDelay = 0f) {
         if (audioSource != null && audios.ContainsKey(name)) {
-            audioSource.clip = audios[name][Random.Range(0, audios[name].Length - 1)];
+            audioSource.clip = audios[name][Random.Range(0, audios[name].Length)];
             audioSource.PlayDelayed(timeDelay);
         }
     }
@@ -58,7 +58,7 @@ public class SoundManager : MonoBehaviour {
     // Play a random audioclip from the specified name options in the given position
     public void PlayAndDestroy(string name, Vector3 position, float volume = 1f) {
         if (audios.ContainsKey(name)) {
-            AudioSource.PlayClipAtPoint(audios[name][Random.Range(0, audios[name].Length - 1)], position, volume);
+            AudioSource.PlayClipAtPoint(audios[name][Random.Range(0, audios[name].Length)], position, volume);
         }
     }
 

@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.AI;
 
 public class ZombieController : MonoBehaviour, IEnemy {
+    // Time for refresh pathfinding
+    public float SEARCH_TIME { get => 0.5f; }
     // Number of SEARCH_TIME cycles that enemy continues searching player since stop seeing him
     public int CYCLES_SEARCHING { get => 10; }
 
@@ -16,8 +18,8 @@ public class ZombieController : MonoBehaviour, IEnemy {
     private float _life = 5;
     // Zombie speed (when make an step and when stop)
     private float _speed;
-    private float speedStep = 3.7f;
-    private float speedStop = 0.8f;
+    private float speedStep = 1.06f; //3.7f;
+    private float speedStop = 0.229f; //0.8f;
     // Zombie melee damage
     private float _meleeDamage = 1;
 

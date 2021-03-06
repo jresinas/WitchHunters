@@ -4,10 +4,8 @@ using UnityEngine;
 using UnityEngine.AI;
 
 public class EnemyController : MonoBehaviour {
-    // Time for refresh pathfinding
-    private float SEARCH_TIME = 0.5f;
     // Navmesh speed coeficient conversor
-    private float NAVMESH_SPEED_COEFICIENT = 3.5f;
+    //private float NAVMESH_SPEED_COEFICIENT = 3.5f;
 
     private int cyclesSearching = 0;
 
@@ -23,13 +21,14 @@ public class EnemyController : MonoBehaviour {
     // Enemy body part which weapon is attached
     public GameObject weaponGrip;
     //public GameObject floatingText;
-    public GameObject blood;
-    public GameObject minimap;
+    [SerializeField] GameObject blood;
+    [SerializeField] GameObject minimap;
 
-    public GameObject ragdoll;
+    [SerializeField] GameObject ragdoll;
 
-    public Vector3 target;
+    [HideInInspector] public Vector3 target;
     //public bool dead = false;
+    //[HideInInspector] 
     public bool meleeAttacking = false;
 
     // Start is called before the first frame update
@@ -60,7 +59,7 @@ public class EnemyController : MonoBehaviour {
     public IEnumerator FindPath() {
         FindTarget();
 
-        yield return new WaitForSeconds(SEARCH_TIME);
+        yield return new WaitForSeconds(self.SEARCH_TIME);
         StartCoroutine(FindPath());
     }
 
@@ -80,13 +79,20 @@ public class EnemyController : MonoBehaviour {
     }
 
     private bool InLineOfSight(GameObject obj) {
-        RaycastHit hit;
-        if (Physics.Raycast(transform.position, obj.transform.position - transform.position, out hit)) {
-            if (hit.collider.gameObject == player) {
-                return true;
-            }
+        //RaycastHit hit;
+        //if (Physics.Raycast(transform.position, obj.transform.position - transform.position, out hit)) {
+        //    Debug.Log(hit.collider.transform.root.name);
+        //    if (hit.collider.gameObject == player) {
+        //        return true;
+        //    }
+        //}
+        //return false;
+        RaycastHit[] hits = Physics.RaycastAll(transform.position, obj.transform.position - transform.position+Vector3.up, Vector3.Distance(obj.transform.position, transform.position + Vector3.up));
+        foreach (RaycastHit hit in hits) {
+            //Debug.Log(hit.collider.transform.root.gameObject.name);
+            if (hit.collider.transform.root.gameObject != gameObject && hit.collider.transform.root.gameObject != player) return false;
         }
-        return false;
+        return true;
     }
 
     public void SetTarget(Vector3 target, int cycles) {
@@ -105,7 +111,7 @@ public class EnemyController : MonoBehaviour {
     // Main flow for enemy action decision
     private void Decision() {
         if (!Busy()) {
-            if (agent.remainingDistance > agent.stoppingDistance && !FootBusy()) {
+            if (agent.remainingDistance > agent.stoppingDistance && !FootBusy() && !agent.pathPending && agent.hasPath) {
                 self.IsMoving();
             } else if (!agent.pathPending && agent.remainingDistance <= agent.stoppingDistance) {
                 if (Vector3.Distance(player.transform.position, transform.position) <= agent.stoppingDistance || 
@@ -122,7 +128,7 @@ public class EnemyController : MonoBehaviour {
     public void Move() {
         agent.isStopped = false;
         anim.SetBool("Walk", true);
-        agent.speed = self.speed / NAVMESH_SPEED_COEFICIENT;
+        agent.speed = self.speed;// / NAVMESH_SPEED_COEFICIENT;
     }
 
     // Enemy attack impacts on a player

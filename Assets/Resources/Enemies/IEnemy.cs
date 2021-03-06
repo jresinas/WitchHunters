@@ -2,6 +2,9 @@ using System.Collections;
 using UnityEngine;
 
 interface IEnemy {
+    float SEARCH_TIME {
+        get;
+    }
     int CYCLES_SEARCHING {
         get;
     }

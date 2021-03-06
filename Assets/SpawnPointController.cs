@@ -30,7 +30,7 @@ public class SpawnPointController : MonoBehaviour {
 
     GameObject GetEnemy() {
         if (enemyPrefab.Length >= 1) {
-            return enemyPrefab[Random.Range(0, enemyPrefab.Length - 1)];
+            return enemyPrefab[Random.Range(0, enemyPrefab.Length)];
         } else {
             return null;
         }
