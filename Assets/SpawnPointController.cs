@@ -6,10 +6,10 @@ public class SpawnPointController : MonoBehaviour {
     public GameObject[] enemyPrefab;
     // Probability (0,1) per second to spawn
     [Range(0f, 1f)] public float spawnFrecuency;
-    // Minimum time between two spawns
-    public float minFrecuency = 0;
-    // Maximum time between two spawns
-    public float maxFrecuency = 0;
+    // Minimum number of spawns
+    public int minNumber = 0;
+    // Maximum number of spawns
+    public int maxNumber = 1;
 
 
     // Start is called before the first frame update
@@ -23,7 +23,10 @@ public class SpawnPointController : MonoBehaviour {
     }
 
     IEnumerator Timer() {
-        if (Random.Range(0f, 1f) <= spawnFrecuency) Instantiate(GetEnemy(), transform.position, transform.rotation);
+        int number = Random.Range(minNumber, maxNumber + 1);
+        if (Random.Range(0f, 1f) <= spawnFrecuency) {
+            for (int i = 0; i < number; i++) Instantiate(GetEnemy(), transform.position, transform.rotation);
+        }
         yield return new WaitForSeconds(1f);
         StartCoroutine(Timer());
     }

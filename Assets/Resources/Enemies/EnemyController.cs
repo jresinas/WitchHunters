@@ -133,8 +133,16 @@ public class EnemyController : MonoBehaviour {
 
     // Enemy attack impacts on a player
     public void AttackImpact(Collider collider) {
-        PlayerController player = collider.GetComponent<PlayerController>();
-        player.DamageReceived(self.meleeDamage);
+        switch (collider.gameObject.tag) {
+            case "Player":
+                PlayerController player = collider.GetComponent<PlayerController>();
+                player.DamageReceived(self.meleeDamage);
+                break;
+            case "ChurchDoor":
+                ChurchDoorController door = collider.GetComponent<ChurchDoorController>();
+                door.DamageReceived(self.meleeDamage);
+                break;
+        }
     }
 
     public void Trapped(Vector3 position) {

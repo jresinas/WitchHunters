@@ -18,7 +18,7 @@ public class EnemyWeaponController : MonoBehaviour
     }
 
     void OnTriggerEnter(Collider collider) {
-        if (collider.gameObject.tag == "Player" && ec.meleeAttacking) {
+        if (collider.gameObject.tag == "Player" || collider.gameObject.tag == "ChurchDoor" && ec.meleeAttacking) {
             ec.AttackImpact(collider);
         }
     }
